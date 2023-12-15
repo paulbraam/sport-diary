@@ -1,0 +1,7 @@
+{
+  "name": "sport-diary",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
