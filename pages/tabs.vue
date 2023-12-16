@@ -20,7 +20,20 @@
 </template>
 
 <script setup lang="ts">
+const {
+  status,
+  data,
+  lastRefreshedAt,
+  getCsrfToken,
+  getProviders,
+  getSession,
+  signIn,
+  signOut,
+} = useAuth()
+
+console.log(status.value)
+
 definePageMeta({
-  alias: ['/'],
+  alias: ['/']
 })
 </script>
