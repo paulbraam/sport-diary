@@ -1,12 +1,20 @@
+import { defineNuxtConfig } from 'nuxt/config';
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ['@nuxtjs/ionic', '@sidebase/nuxt-auth'],
-  auth: {
-    provider: {
-      type: 'authjs',
-    },
-    globalAppMiddleware: true,
+  modules: ['@nuxtjs/ionic', '@pinia/nuxt'],
+  ssr: false,
+  css: ['~/assets/css/main.css'],
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {}
+    }
   },
-  ssr: false
-})
+  runtimeConfig: {
+    public: {
+      googleClientId: process.env.GOOGLE_SERVER_CLIENT_ID,
+      apiUrl: process.env.API_URL
+    }
+  }
+});
