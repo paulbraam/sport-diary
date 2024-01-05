@@ -4,8 +4,7 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
-    "prebuild": "node scripts/prebuild.js",
-    "generate": "npm run prebuild && nuxt generate",
+    "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "ionic:build": "npm run generate"
