@@ -21,6 +21,8 @@ android {
             ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
         // set default envs
+        resValue "string", "app_id", envs['APP_ID']
+        resValue "string", "app_name", envs['APP_NAME']
         resValue "string", "google_server_client_id", envs['GOOGLE_SERVER_CLIENT_ID']
     }
     buildTypes {
