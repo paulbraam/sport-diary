@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <ion-content>
-      <div class="flex h-screen">
+      <div class="flex h-full">
         <ion-card class="my-auto w-full">
           <ion-card-header class="flex items-center">
             <ion-icon color="dark" :icon="ioniconsLockClosedOutline" class="text-[40px]"></ion-icon>
