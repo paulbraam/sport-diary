@@ -16,5 +16,8 @@ export default defineNuxtConfig({
       googleClientId: process.env.GOOGLE_SERVER_CLIENT_ID,
       apiUrl: process.env.API_URL
     }
+  },
+  experimental: {
+    payloadExtraction: false
   }
 });
