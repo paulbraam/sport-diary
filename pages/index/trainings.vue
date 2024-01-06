@@ -11,6 +11,10 @@
 </template>
 
 <script setup lang="ts">
+const { data } = await useFetch('/api/trainings');
+
+console.log(data.value);
+
 definePageMeta({
   middleware: 'auth'
 });

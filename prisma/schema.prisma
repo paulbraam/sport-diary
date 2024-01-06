@@ -54,3 +54,57 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+model Training {
+  id           String     @id @default(cuid())
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  at           DateTime
+  sets         Set[]
+  userParams   UserParams @relation(fields: [userParamsId], references: [id])
+  userParamsId String
+}
+
+model UserParams {
+  id             String          @id @default(cuid())
+  weight         Int
+  heartRate      Int
+  circumferences Circumference[]
+  Training       Training[]
+}
+
+model Circumference {
+  id           String      @id @default(cuid())
+  type         String
+  value        String
+  UserParams   UserParams? @relation(fields: [userParamsId], references: [id])
+  userParamsId String?
+}
+
+model Set {
+  id          String       @id @default(cuid())
+  Training    Training?    @relation(fields: [trainingId], references: [id])
+  trainingId  String?
+  repetitions Repetition[]
+  exercise    Exercise     @relation(fields: [exerciseId], references: [id])
+  exerciseId  String
+  rest        Int
+}
+
+model Repetition {
+  id        String  @id @default(cuid())
+  Set       Set?    @relation(fields: [setId], references: [id])
+  setId     String?
+  weight    Int
+  count     Int
+  duration  Int
+  intensity Int
+  rest      Int
+}
+
+model Exercise {
+  id   String @id @default(cuid())
+  name String
+  type String // temporal or countable
+  Set  Set[]
+}

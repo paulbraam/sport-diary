@@ -38,6 +38,9 @@ export const useAuthStore = defineStore('auth', () => {
           Object.assign(state, response);
           signInRequest.status = RequestStatus.SUCCESS;
 
+          const authCookie = useAuthCookie();
+          authCookie.value = JSON.stringify({ userId: response.user.id });
+
           return response;
         }
         default:
@@ -95,6 +98,9 @@ export const useAuthStore = defineStore('auth', () => {
       switch (provider) {
         case AuthProvider.GOOGLE: {
           await GoogleAuth.signOut();
+
+          const authCookie = useAuthCookie();
+          authCookie.value = null;
 
           Object.assign(state, { ...INITIAL_AUTH_STATE });
           signOutRequest.status = RequestStatus.SUCCESS;
