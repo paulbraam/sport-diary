@@ -46,6 +46,7 @@
     "@ionic/vue": "^7.6.1",
     "@pinia/nuxt": "^0.5.1",
     "@prisma/client": "^5.7.0",
+    "dayjs": "^1.11.10",
     "dotenv": "^16.3.1",
     "ionic": "^5.4.16",
     "jwt-decode": "^4.0.0",

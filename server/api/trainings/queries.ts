@@ -1,4 +1,5 @@
-import { type Prisma, type Training } from '@prisma/client';
+import { type Training } from '@prisma/client';
+import { type CreateUserTrainingData } from './types';
 import { prisma } from '~/server/db';
 
 export const getTrainingsByUserId = (userId: string): Promise<Training[]> => {
@@ -11,17 +12,21 @@ export const getTrainingsByUserId = (userId: string): Promise<Training[]> => {
 };
 
 export const createTrainingByUserId = (
-  data: Prisma.TrainingCreateInput,
+  data: CreateUserTrainingData,
   userId: string
 ): Promise<Training> => {
+  const { userParams, training } = data;
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return prisma.training.create({
     data: {
-      ...data,
+      ...training,
       User: {
         connect: {
           id: userId
         }
+      },
+      userParams: {
+        create: userParams
       }
     }
   });
