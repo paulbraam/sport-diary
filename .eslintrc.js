@@ -12,7 +12,6 @@ const config = {
   extends: [
     '@nuxtjs/eslint-config-typescript',
     'plugin:vue/vue3-recommended',
-    'airbnb',
     'plugin:import/errors',
     'plugin:import/warnings',
     'plugin:import/typescript',
@@ -53,7 +52,7 @@ const config = {
     'import/no-anonymous-default-export': 'off',
     'import/no-extraneous-dependencies': 'off',
     'import/prefer-default-export': 'off',
-    'import/extensions': ['error', 'never', { css: 'always', json: 'always' }],
+    'import/extensions': ['error', 'never', { css: 'always', json: 'always', vue: 'always' }],
     'import/order': [
       'error',
       {

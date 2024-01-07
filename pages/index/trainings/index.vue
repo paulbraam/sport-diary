@@ -1,8 +1,8 @@
 <template>
   <ion-page>
     <ion-content color="light">
-      <ion-list v-for="training in trainings" :key="training.id" :inset="true">
-        <ion-item-sliding>
+      <ion-list :inset="true">
+        <ion-item-sliding v-for="training in trainings" :key="training.id">
           <ion-item button :detail="true">
             <ion-label>{{ dayjs(training.at).format('YYYY/MM/DD') }}</ion-label>
           </ion-item>

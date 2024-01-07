@@ -2,7 +2,7 @@ import { defineNuxtConfig } from 'nuxt/config';
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ['@nuxtjs/ionic', '@pinia/nuxt'],
+  modules: ['@nuxtjs/ionic', '@pinia/nuxt', '@vee-validate/nuxt'],
   ssr: false,
   css: ['~/assets/css/main.css'],
   postcss: {
