@@ -3,6 +3,9 @@ import { defineNuxtConfig } from 'nuxt/config';
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@nuxtjs/ionic', '@pinia/nuxt', '@vee-validate/nuxt'],
+  build: {
+    transpile: ['vee-validate/dist/rules']
+  },
   ssr: false,
   css: ['~/assets/css/main.css'],
   postcss: {

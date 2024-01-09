@@ -11,14 +11,16 @@ import { RequestStatus } from '~/constants/api';
 
 export const useAuthStore = defineStore('auth', () => {
   const runtimeConfig = useRuntimeConfig();
-  // eslint-disable-next-line prefer-destructuring
+
   const apiUrl = runtimeConfig.public.apiUrl;
   const signInRequest = createRequestState();
   const refreshRequest = createRequestState();
   const signOutRequest = createRequestState();
   const state = reactive<Nullable<AuthState>>({ ...INITIAL_AUTH_STATE });
 
-  const signIn = async (provider: `${AuthProvider}`): Promise<Nullable<SignInResponse>> => {
+  const signIn = async (
+    provider: `${AuthProvider}`
+  ): Promise<Nullable<SignInResponse>> => {
     signInRequest.status = RequestStatus.PENDING;
     signInRequest.error = null;
 
@@ -27,13 +29,16 @@ export const useAuthStore = defineStore('auth', () => {
         case AuthProvider.GOOGLE: {
           const googleUser = await GoogleAuth.signIn();
 
-          const response: SignInResponse = await $fetch(`${apiUrl}/api/auth/signin`, {
-            method: 'POST',
-            body: {
-              account: mapGoogleUserToAccount(googleUser),
-              user: mapGoogleUserToUser(googleUser)
+          const response: SignInResponse = await $fetch(
+            `${apiUrl}/api/auth/signin`,
+            {
+              method: 'POST',
+              body: {
+                account: mapGoogleUserToAccount(googleUser),
+                user: mapGoogleUserToUser(googleUser)
+              }
             }
-          });
+          );
 
           Object.assign(state, response);
           signInRequest.status = RequestStatus.SUCCESS;
@@ -57,7 +62,9 @@ export const useAuthStore = defineStore('auth', () => {
     }
   };
 
-  const refresh = async (provider: `${AuthProvider}`): Promise<Nullable<RefreshResponse>> => {
+  const refresh = async (
+    provider: `${AuthProvider}`
+  ): Promise<Nullable<RefreshResponse>> => {
     refreshRequest.status = RequestStatus.PENDING;
     refreshRequest.error = null;
 
@@ -66,10 +73,13 @@ export const useAuthStore = defineStore('auth', () => {
         case AuthProvider.GOOGLE: {
           const authorization = await GoogleAuth.refresh();
 
-          const response: RefreshResponse = await $fetch(`${apiUrl}/api/auth/refresh`, {
-            method: 'POST',
-            body: authorization
-          });
+          const response: RefreshResponse = await $fetch(
+            `${apiUrl}/api/auth/refresh`,
+            {
+              method: 'POST',
+              body: authorization
+            }
+          );
 
           Object.assign(state, response);
           refreshRequest.status = RequestStatus.SUCCESS;

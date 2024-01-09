@@ -8,7 +8,8 @@ export type CreateUserTrainingRequestBody = {
   userParams: Prisma.UserParamsCreateInput;
 };
 
-export type CreateUserTrainingRequest = ApiRequest<CreateUserTrainingRequestBody>;
+export type CreateUserTrainingRequest =
+  ApiRequest<CreateUserTrainingRequestBody>;
 
 export type CreateUserTrainingResponse = Training;
 

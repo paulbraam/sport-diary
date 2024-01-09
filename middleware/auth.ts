@@ -10,9 +10,12 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
   const { actions, requests, state } = useAuthStore();
 
-  const isRefreshRequestFetched = requests.refresh.status !== RequestStatus.IDLE;
+  const isRefreshRequestFetched =
+    requests.refresh.status !== RequestStatus.IDLE;
 
-  const { user } = isRefreshRequestFetched ? state : await actions.refresh('google');
+  const { user } = isRefreshRequestFetched
+    ? state
+    : await actions.refresh('google');
 
   if (!user) {
     return navigateTo('/login');

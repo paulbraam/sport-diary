@@ -3,7 +3,9 @@ import { AUTH_COOKIE_NAME } from '~/constants/cookies';
 
 export const getAuthCookie = (event: RequestEvent) => {
   const authCookie = getCookie(event, AUTH_COOKIE_NAME);
-  const parsedAuthCookie: ParsedAuthCookie | null = authCookie ? JSON.parse(authCookie) : null;
+  const parsedAuthCookie: ParsedAuthCookie | null = authCookie
+    ? JSON.parse(authCookie)
+    : null;
 
   if (!parsedAuthCookie) {
     throw createError({
