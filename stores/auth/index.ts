@@ -8,6 +8,8 @@ import type { Nullable } from '~/types/common';
 import type { RefreshResponse } from '~/server/api/auth/refresh/types';
 import { createRequestState } from '~/types/store';
 import { RequestStatus } from '~/constants/api';
+import { request } from '~/utils/api';
+import { AuthStorage } from '~/utils/auth';
 
 export const useAuthStore = defineStore(AUTH_STORE_NAME, () => {
   const signInRequest = createRequestState();
@@ -24,21 +26,20 @@ export const useAuthStore = defineStore(AUTH_STORE_NAME, () => {
         case AuthProvider.GOOGLE: {
           const googleUser = await GoogleAuth.signIn();
 
-          const response: SignInResponse = await $fetch('/api/auth/signin', {
+          const { data } = await request<SignInResponse>('/api/auth/signin', {
             method: 'POST',
-            body: {
+            data: {
               account: mapGoogleUserToAccount(googleUser),
               user: mapGoogleUserToUser(googleUser)
             }
           });
 
-          Object.assign(state, response);
+          await AuthStorage.setAuth(googleUser.authentication);
+
+          Object.assign(state, data);
           signInRequest.status = RequestStatus.SUCCESS;
 
-          const authCookie = useAuthCookie();
-          authCookie.value = JSON.stringify({ userId: response.user.id });
-
-          return response;
+          return data;
         }
         default:
           throw new Error('No auth provider provided');
@@ -61,17 +62,19 @@ export const useAuthStore = defineStore(AUTH_STORE_NAME, () => {
     try {
       switch (provider) {
         case AuthProvider.GOOGLE: {
-          const authorization = await GoogleAuth.refresh();
+          const authentication = await GoogleAuth.refresh();
 
-          const response: RefreshResponse = await $fetch('/api/auth/refresh', {
+          const { data } = await request<RefreshResponse>('/api/auth/refresh', {
             method: 'POST',
-            body: authorization
+            data: authentication
           });
 
-          Object.assign(state, response);
+          await AuthStorage.setAuth(authentication);
+
+          Object.assign(state, data);
           refreshRequest.status = RequestStatus.SUCCESS;
 
-          return response;
+          return data;
         }
         default:
           throw new Error('No auth provider provided');
@@ -96,8 +99,7 @@ export const useAuthStore = defineStore(AUTH_STORE_NAME, () => {
         case AuthProvider.GOOGLE: {
           await GoogleAuth.signOut();
 
-          const authCookie = useAuthCookie();
-          authCookie.value = null;
+          await AuthStorage.clearAuth();
 
           Object.assign(state, { ...INITIAL_AUTH_STATE });
           signOutRequest.status = RequestStatus.SUCCESS;

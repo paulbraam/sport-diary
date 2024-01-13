@@ -7,6 +7,12 @@ export default defineEventHandler<RefreshRequest>(async (event) => {
 
   const { idToken } = await readBody(event);
 
+  if (!idToken)
+    throw createError({
+      statusCode: 403,
+      statusText: 'idToken not specified'
+    });
+
   const { sub: providerAccountId } = jwtDecode(idToken);
 
   if (!providerAccountId) {

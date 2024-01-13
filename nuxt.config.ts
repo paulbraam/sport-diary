@@ -21,22 +21,6 @@ export default defineNuxtConfig({
       apiUrl: process.env.API_URL
     }
   },
-  // routeRules: {
-  //   '/api/**': {
-  //     proxy: `${process.env.API_URL}/api/**`
-  //   }
-  // },
-  vite: {
-    server: {
-      proxy: {
-        '/api': {
-          target: process.env.API_URL + '/api',
-          changeOrigin: true
-          // rewrite: (path) => path.replace(/^\/api/, '')
-        }
-      }
-    }
-  },
   experimental: {
     payloadExtraction: false
   }

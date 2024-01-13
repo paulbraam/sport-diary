@@ -1,36 +1,31 @@
-import { EventHandler, type ParsedAuthCookie, type RequestEvent } from './types';
-import { AUTH_COOKIE_NAME } from '~/constants/cookies';
+import { jwtDecode } from 'jwt-decode';
+import { User } from '@prisma/client';
+import { EventHandler, type RequestEvent } from './types';
+import { getUserByProviderAccountId } from './queries';
 
-export const getAuthCookie = (event: RequestEvent) => {
-  const authCookie = getCookie(event, AUTH_COOKIE_NAME);
-  const parsedAuthCookie: ParsedAuthCookie | null = authCookie ? JSON.parse(authCookie) : null;
+export const getUser = async (event: RequestEvent): Promise<User | null> => {
+  const authToken = getHeader(event, 'Authorization');
 
-  return parsedAuthCookie;
-};
-
-export const getAuthContext = (event: RequestEvent): ParsedAuthCookie => {
-  const { auth } = event.context;
-
-  if (!auth) {
-    throw createError({
-      statusCode: 401,
-      statusText: 'Unauthorized'
-    });
+  if (!authToken) {
+    return null;
   }
 
-  return auth;
+  const [, idToken] = authToken.split(' ');
+
+  const { sub: providerAccountId } = jwtDecode(idToken);
+
+  if (!providerAccountId) {
+    return null;
+  }
+
+  return await getUserByProviderAccountId(providerAccountId);
 };
 
 export const protectRoute = (eventHandler: EventHandler): EventHandler => {
   return function (...args: Parameters<EventHandler>) {
     const [event] = args;
-    const { auth } = event.context;
 
-    console.log({
-      protected: event.context
-    });
-
-    if (!auth) {
+    if (!event.context.user) {
       throw createError({
         statusCode: 401,
         statusText: 'Unauthorized'

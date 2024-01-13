@@ -9,6 +9,9 @@ const config: CapacitorConfig = {
       scopes: ['profile', 'email'],
       serverClientId: process.env.GOOGLE_SERVER_CLIENT_ID,
       forceCodeForRefreshToken: true
+    },
+    CapacitorHttp: {
+      enabled: true
     }
   }
 };

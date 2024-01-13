@@ -21,9 +21,9 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
     createTrainingRequest.error = null;
 
     try {
-      const data = await $fetch<CreateUserTrainingResponse>('/api/trainings', {
+      const { data } = await request<CreateUserTrainingResponse>('/api/trainings', {
         method: 'POST',
-        body: payload
+        data: payload
       });
 
       createTrainingRequest.status = RequestStatus.SUCCESS;

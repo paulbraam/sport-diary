@@ -1,5 +1,5 @@
-import { getAuthCookie } from '../utils';
+import { getUser } from '../utils';
 
-export default defineEventHandler((event) => {
-  event.context.auth = getAuthCookie(event);
+export default defineEventHandler(async (event) => {
+  event.context.user = await getUser(event);
 });
