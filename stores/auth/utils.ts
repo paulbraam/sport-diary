@@ -4,12 +4,8 @@ import type { Prisma } from '@prisma/client';
 import { AuthProvider } from './constants';
 import type { GoogleAuthJwtToken } from './types';
 
-export const mapGoogleUserToAccount = (
-  data: GoogleUser
-): Prisma.AccountCreateWithoutUserInput => {
-  const parsedToken = jwtDecode<GoogleAuthJwtToken>(
-    data.authentication.idToken
-  );
+export const mapGoogleUserToAccount = (data: GoogleUser): Prisma.AccountCreateWithoutUserInput => {
+  const parsedToken = jwtDecode<GoogleAuthJwtToken>(data.authentication.idToken);
 
   return {
     type: 'oauth',
@@ -23,9 +19,7 @@ export const mapGoogleUserToAccount = (
   };
 };
 
-export const mapGoogleUserToUser = (
-  data: GoogleUser
-): Prisma.UserCreateInput => {
+export const mapGoogleUserToUser = (data: GoogleUser): Prisma.UserCreateInput => {
   return {
     name: data.name,
     email: data.email,

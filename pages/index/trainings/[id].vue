@@ -2,9 +2,7 @@
   <ion-page>
     <ion-content>
       <div class="flex h-full">
-        <div class="my-auto w-full flex justify-center">
-          Here is supposed to be a training info
-        </div>
+        <div class="my-auto w-full flex justify-center">Here is supposed to be a training info</div>
       </div>
     </ion-content>
   </ion-page>

@@ -41,7 +41,10 @@ import type { GetUserTrainingsResponse } from '~/server/api/trainings/types';
 const {
   data: { value: trainings }
 } = await useFetch<GetUserTrainingsResponse>('/api/trainings', {
-  default: () => []
+  default: () => [],
+  headers: {
+    'Access-Control-Allow-Origin': '*'
+  }
 });
 
 definePageMeta({

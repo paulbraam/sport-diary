@@ -1,0 +1,2 @@
+export const DATE_INPUT_MODAL_BREAKPOINTS = [0, 0.35, 1];
+export const DATE_INPUT_INITIAL_BREAKPOINT = 0.35;

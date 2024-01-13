@@ -4,11 +4,7 @@
       <div class="flex h-full">
         <ion-card class="my-auto w-full">
           <ion-card-header class="flex items-center">
-            <ion-icon
-              color="dark"
-              :icon="ioniconsLockClosedOutline"
-              class="text-[40px]"
-            ></ion-icon>
+            <ion-icon color="dark" :icon="ioniconsLockClosedOutline" class="text-[40px]"></ion-icon>
             <ion-card-title>Sign-In</ion-card-title>
           </ion-card-header>
           <ion-card-content>
@@ -24,13 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardTitle,
-  useIonRouter
-} from '@ionic/vue';
+import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, useIonRouter } from '@ionic/vue';
 import { useAuthStore } from '~/stores/auth';
 
 const router = useIonRouter();
