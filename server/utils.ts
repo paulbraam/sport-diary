@@ -1,6 +1,6 @@
 import { jwtDecode } from 'jwt-decode';
 import { User } from '@prisma/client';
-import { EventHandler, type RequestEvent } from './types';
+import { type RequestEvent } from './types';
 import { getUserByProviderAccountId } from './queries';
 
 export const getUser = async (event: RequestEvent): Promise<User | null> => {
@@ -21,17 +21,11 @@ export const getUser = async (event: RequestEvent): Promise<User | null> => {
   return await getUserByProviderAccountId(providerAccountId);
 };
 
-export const protectRoute = (eventHandler: EventHandler): EventHandler => {
-  return function (...args: Parameters<EventHandler>) {
-    const [event] = args;
-
-    if (!event.context.user) {
-      throw createError({
-        statusCode: 401,
-        statusText: 'Unauthorized'
-      });
-    }
-
-    return eventHandler(...args);
-  };
+export const protectRoute = (event: RequestEvent) => {
+  if (!event.context.user) {
+    throw createError({
+      statusCode: 401,
+      statusText: 'Unauthorized'
+    });
+  }
 };

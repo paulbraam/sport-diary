@@ -9,6 +9,8 @@
 </template>
 
 <script setup lang="ts">
+import { IonPage, IonContent } from '@ionic/vue';
+
 const route = useRoute();
 const trainingId = route.params.id as string;
 

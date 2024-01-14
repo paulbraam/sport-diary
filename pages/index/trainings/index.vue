@@ -33,18 +33,23 @@ import {
   IonItemOption,
   IonIcon,
   IonLabel,
-  IonFabButton
+  IonPage,
+  IonContent,
+  IonItem,
+  IonItemOptions,
+  IonFabButton,
+  onIonViewWillEnter
 } from '@ionic/vue';
 import dayjs from 'dayjs';
-import type { GetUserTrainingsResponse } from '~/server/api/trainings/types';
+import { useTrainingStore } from '~/stores/training';
 
 const {
-  data: { value: trainings }
-} = await useFetch<GetUserTrainingsResponse>('/api/trainings', {
-  default: () => [],
-  headers: {
-    'Access-Control-Allow-Origin': '*'
-  }
+  state: { trainings },
+  actions
+} = useTrainingStore();
+
+onIonViewWillEnter(() => {
+  actions.getTrainings();
 });
 
 definePageMeta({

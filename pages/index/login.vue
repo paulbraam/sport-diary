@@ -20,7 +20,17 @@
 </template>
 
 <script setup lang="ts">
-import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, useIonRouter } from '@ionic/vue';
+import {
+  IonPage,
+  IonContent,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonCardTitle,
+  IonIcon,
+  IonButton,
+  useIonRouter
+} from '@ionic/vue';
 import { useAuthStore } from '~/stores/auth';
 
 const router = useIonRouter();

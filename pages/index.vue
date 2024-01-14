@@ -8,10 +8,17 @@
     </ion-header>
     <ion-content class="ion-padding">
       <ion-list>
-        <ion-item button @click="navigateFromMenuTo('/trainings')">
-          <ion-icon slot="start" aria-hidden="true" :icon="ioniconsFitness" color="dark"></ion-icon>
-          <ion-label>Trainings</ion-label>
-        </ion-item>
+        <ion-menu-toggle>
+          <ion-item button router-link="/trainings">
+            <ion-icon
+              slot="start"
+              aria-hidden="true"
+              :icon="ioniconsFitness"
+              color="dark"
+            ></ion-icon>
+            <ion-label>Trainings</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
         <ion-item button>
           <ion-icon slot="start" aria-hidden="true" :icon="ioniconsFlag" color="dark"></ion-icon>
           <ion-label>Goals</ion-label>
@@ -67,6 +74,7 @@ import {
   IonItem,
   IonLabel,
   IonList,
+  IonMenuToggle,
   IonIcon
 } from '@ionic/vue';
 import { useAuthStore } from '~/stores/auth';
@@ -80,13 +88,12 @@ const {
 
 const isMenuDisabled = computed(() => !state.user);
 
-const navigateFromMenuTo = async (route: string) => {
-  await menuController.close('menu');
-  await router.push(route);
-};
-
 const logOut = async () => {
   await signOut('google');
   await router.push('/login');
 };
+
+definePageMeta({
+  alias: ['/']
+});
 </script>

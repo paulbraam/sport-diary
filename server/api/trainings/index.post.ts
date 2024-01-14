@@ -3,9 +3,10 @@ import { type CreateUserTrainingResponse, type CreateUserTrainingRequest } from 
 import { protectRoute } from '~/server/utils';
 
 export default defineEventHandler<CreateUserTrainingRequest>(
-  protectRoute(async (event): Promise<CreateUserTrainingResponse> => {
+  async (event): Promise<CreateUserTrainingResponse> => {
+    protectRoute(event);
     const payload = await readBody(event);
 
     return createTrainingByUserId(payload, event.context.user.id);
-  })
+  }
 );
