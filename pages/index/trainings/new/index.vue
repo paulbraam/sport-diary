@@ -1,14 +1,9 @@
 <template>
-  <ion-page>
-    <ion-content>
-      <training-form></training-form>
-    </ion-content>
-  </ion-page>
+  <new-training-layout></new-training-layout>
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonContent } from '@ionic/vue';
-import { TrainingForm } from '~/widgets/TrainingForm';
+import { NewTrainingLayout } from '~/layouts/training';
 
 definePageMeta({
   middleware: 'auth'

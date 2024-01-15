@@ -1,5 +1,5 @@
 import * as z from 'zod';
-import type { TrainingFormValidationSchema } from './TrainingForm.types';
+import type { TrainingFormValidationSchema } from './types';
 
 export const trainingFormValidationSchema = toTypedSchema<z.ZodType<TrainingFormValidationSchema>>(
   z.object({

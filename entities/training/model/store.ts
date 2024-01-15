@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import type { Training } from '@prisma/client';
 import type { TrainingsState } from './types';
-import { INITIAL_TRAININGS_STATE, TRAININGS_STORE_NAME } from './constants';
+import { INITIAL_TRAININGS_STATE, TRAININGS_STORE_NAME } from './const';
 import type { Nullable } from '~/types/common';
 import { createRequestState } from '~/types/store';
 import { RequestStatus } from '~/constants/api';
