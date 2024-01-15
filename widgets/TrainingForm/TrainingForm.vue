@@ -2,13 +2,19 @@
   <form :novalidate="true" @submit="onSubmit">
     <ion-list :inset="true">
       <ion-item>
-        <date-input name="training.at" label="Date"></date-input>
+        <date-input name="training.startedAt" label="Start"></date-input>
       </ion-item>
       <ion-item>
-        <number-input name="userParams.weight" label="Weight (kg)" type="number"></number-input>
+        <date-input name="training.endedAt" label="End"></date-input>
+      </ion-item>
+      <ion-item>
+        <number-input name="userParams.weight" label="Weight (kg)"></number-input>
+      </ion-item>
+      <ion-item>
+        <number-input name="userParams.heartRate" label="Heart rate"></number-input>
       </ion-item>
       <ion-item lines="none">
-        <number-input name="userParams.heartRate" label="Heart rate" type="number"></number-input>
+        <textarea-input name="training.comment" label="Comment"></textarea-input>
       </ion-item>
       <ion-item>
         <ion-button class="w-full" size="default" :disabled="isLoading" type="submit">
@@ -25,7 +31,7 @@ import { toastController, IonList, IonItem, IonSpinner, IonButton } from '@ionic
 import { useForm } from 'vee-validate';
 import type { TrainingForm } from './TrainingForm.types';
 import { trainingFormValidationSchema } from './TrainingForm.utils';
-import { DateInput, NumberInput } from '~/components/vee-validate';
+import { DateInput, NumberInput, TextareaInput } from '~/components/vee-validate';
 import { useTrainingStore } from '~/stores/training';
 import { RequestStatus } from '~/constants/api';
 

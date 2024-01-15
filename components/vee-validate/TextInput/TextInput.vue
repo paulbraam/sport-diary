@@ -7,23 +7,13 @@
 
 <script setup lang="ts">
 import type { IonInput, IonNote } from '@ionic/vue';
+import type { TextInputProps } from './TextInput.types';
 
-const props = defineProps({
-  name: {
-    type: String,
-    default: '',
-    required: true
-  },
-  label: {
-    type: String,
-    default: '',
-    required: true
-  },
-  type: {
-    type: String,
-    default: 'text'
-  }
-});
+const props = withDefaults(defineProps<TextInputProps>(), { name: '' });
 
 const { value, errorMessage } = useField(props.name);
+
+defineOptions({
+  inheritAttrs: false
+});
 </script>

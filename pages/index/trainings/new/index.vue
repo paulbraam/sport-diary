@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { IonPage, IonContent } from '@ionic/vue';
-import { TrainingForm } from '~/modules';
+import { TrainingForm } from '~/widgets/TrainingForm';
 
 definePageMeta({
   middleware: 'auth'

@@ -22,28 +22,14 @@
 
 <script setup lang="ts">
 import type { IonInput, IonModal, IonContent, IonDatetime, IonNote } from '@ionic/vue';
+import type { DateInputProps } from './DateInput.types';
 import { DATE_INPUT_MODAL_BREAKPOINTS, DATE_INPUT_INITIAL_BREAKPOINT } from './DateInput.const';
 
-const props = defineProps({
-  name: {
-    type: String,
-    default: '',
-    required: true
-  },
-  label: {
-    type: String,
-    default: '',
-    required: true
-  },
-  type: {
-    type: String,
-    default: 'datetime-local'
-  },
-  presentation: {
-    type: String,
-    default: 'date-time'
-  }
-});
+const props = withDefaults(defineProps<DateInputProps>(), { name: '' });
 
 const { value, errorMessage } = useField(props.name);
+
+defineOptions({
+  inheritAttrs: false
+});
 </script>
