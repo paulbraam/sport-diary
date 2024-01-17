@@ -1,4 +1,4 @@
-import { useAuthStore } from '~/stores/auth';
+import { useAuthStore } from '~/entities/auth';
 
 export default defineNuxtRouteMiddleware(async (to) => {
   // client-only

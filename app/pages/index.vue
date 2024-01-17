@@ -77,7 +77,7 @@ import {
   IonMenuToggle,
   IonIcon
 } from '@ionic/vue';
-import { useAuthStore } from '~/stores/auth';
+import { useAuthStore } from '~/entities/auth';
 
 const router = useIonRouter();
 
