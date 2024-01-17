@@ -1,4 +1,4 @@
-import { RequestStatus } from '~/constants/api';
+import { RequestStatus } from '~/shared/lib/const';
 
 export const createRequestState = <T>() => {
   return reactive<{

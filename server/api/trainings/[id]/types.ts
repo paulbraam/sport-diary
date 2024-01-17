@@ -1,5 +1,5 @@
 import { Training } from '@prisma/client';
-import { ApiRequest } from '~/types/api';
+import { ApiRequest } from '~/shared/lib/types';
 
 export type GetUserTrainingByIdRequest = ApiRequest<unknown, { id: string }>;
 

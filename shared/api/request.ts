@@ -1,7 +1,7 @@
 import { CapacitorHttp, type HttpOptions } from '@capacitor/core';
-import { AuthStorage } from './auth';
-import type { ClientApiRequestOptions, ClientApiResponse } from '~/types/api';
-import { DEFAULT_REQUEST_HEADERS } from '~/constants/api';
+import { AuthStorage } from '~/shared/lib/storage';
+import type { ClientApiRequestOptions, ClientApiResponse } from '~/shared/lib/types';
+import { DEFAULT_REQUEST_HEADERS } from '~/shared/lib/const';
 
 export const request = async <T>(
   path: string,

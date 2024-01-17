@@ -1,5 +1,5 @@
 import { type Account, type User, type Prisma } from '@prisma/client';
-import { type ApiRequest } from '~/types/api';
+import { type ApiRequest } from '~/shared/lib/types';
 
 export interface SignInRequestBody {
   user: Prisma.UserCreateInput;

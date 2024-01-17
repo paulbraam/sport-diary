@@ -1,6 +1,6 @@
 import type { Training } from '@prisma/client';
 import type { CreateUserTrainingRequestBody } from '~/server/api/trainings/types';
-import type { PickWithOptional } from '~/types/common';
+import type { PickWithOptional } from '~/shared/lib/types';
 
 // form
 

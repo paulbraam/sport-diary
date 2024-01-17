@@ -8,6 +8,7 @@ module.exports = {
     './features/**/*.vue',
     './entities/**/*.vue',
     './widgets/**/*.vue',
+    './shared/**/*.vue',
     './plugins/**/*.{js,ts}',
     './app.vue',
     './error.vue'

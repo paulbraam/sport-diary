@@ -13,8 +13,8 @@
 <script setup lang="ts">
 import { IonButton, IonToast, useIonRouter } from '@ionic/vue';
 import type { Training } from '@prisma/client';
-import { RequestStatus } from '~/constants/api';
 import { useTrainingStore, type ITrainingForm } from '~/entities/training';
+import { RequestStatus } from '~/shared/lib/const';
 
 const router = useIonRouter();
 

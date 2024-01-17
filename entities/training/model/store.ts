@@ -2,14 +2,15 @@ import { defineStore } from 'pinia';
 import type { Training } from '@prisma/client';
 import type { TrainingsState } from './types';
 import { INITIAL_TRAININGS_STATE, TRAININGS_STORE_NAME } from './const';
-import type { Nullable } from '~/types/common';
-import { createRequestState } from '~/types/store';
-import { RequestStatus } from '~/constants/api';
+import type { Nullable } from '~/shared/lib/types';
+import { RequestStatus } from '~/shared/lib/const';
 import type {
   CreateUserTrainingResponse,
   CreateUserTrainingRequestBody,
   GetUserTrainingsResponse
 } from '~/server/api/trainings/types';
+import { request } from '~/shared/api';
+import { createRequestState } from '~/shared/lib/utils';
 
 export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
   const createTrainingRequest = createRequestState<Training>();

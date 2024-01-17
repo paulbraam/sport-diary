@@ -28,7 +28,7 @@ import { IonList, IonItem } from '@ionic/vue';
 import { useForm } from 'vee-validate';
 import type { ITrainingForm } from '../../model';
 import { trainingFormValidationSchema } from '../../model';
-import { DateInput, NumberInput, TextareaInput } from '~/components/vee-validate';
+import { DateInput, NumberInput, TextareaInput } from '~/shared/ui/form';
 
 const data = ref<ITrainingForm | null>(null);
 

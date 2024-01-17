@@ -1,6 +1,6 @@
 import { Preferences } from '@capacitor/preferences';
 import type { Authentication } from '@codetrix-studio/capacitor-google-auth';
-import { AUTH_STORAGE_KEY } from '~/constants/auth';
+import { AUTH_STORAGE_KEY } from '~/shared/lib/const';
 
 export class AuthStorage {
   static setAuth = async (auth: Authentication) => {

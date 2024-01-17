@@ -1,5 +1,5 @@
 import type { TrainingsState } from './types';
-import type { Nullable } from '~/types/common';
+import type { Nullable } from '~/shared/lib/types';
 
 export const INITIAL_TRAININGS_STATE: Nullable<TrainingsState> = {
   trainings: [],

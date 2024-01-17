@@ -1,8 +1,8 @@
 import { jwtDecode } from 'jwt-decode';
 import type { User as GoogleUser } from '@codetrix-studio/capacitor-google-auth';
 import type { Prisma } from '@prisma/client';
-import { AuthProvider } from './constants';
-import type { GoogleAuthJwtToken } from './types';
+import type { GoogleAuthJwtToken } from '../model/types';
+import { AuthProvider } from '../model/constants';
 
 export const mapGoogleUserToAccount = (data: GoogleUser): Prisma.AccountCreateWithoutUserInput => {
   const parsedToken = jwtDecode<GoogleAuthJwtToken>(data.authentication.idToken);

@@ -1,5 +1,5 @@
 import type { AuthState } from './types';
-import type { Nullable } from '~/types/common';
+import type { Nullable } from '~/shared/lib/types';
 
 export enum AuthProvider {
   GOOGLE = 'google'

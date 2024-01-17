@@ -1,15 +1,15 @@
 import { defineStore } from 'pinia';
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
+import { mapGoogleUserToAccount, mapGoogleUserToUser } from '../lib';
 import { AUTH_STORE_NAME, AuthProvider, INITIAL_AUTH_STATE } from './constants';
-import { mapGoogleUserToAccount, mapGoogleUserToUser } from './utils';
 import type { AuthState } from './types';
 import type { SignInResponse } from '~/server/api/auth/signin/types';
-import type { Nullable } from '~/types/common';
+import type { Nullable } from '~/shared/lib/types/common';
 import type { RefreshResponse } from '~/server/api/auth/refresh/types';
-import { createRequestState } from '~/types/store';
-import { RequestStatus } from '~/constants/api';
-import { request } from '~/utils/api';
-import { AuthStorage } from '~/utils/auth';
+import { RequestStatus } from '~/shared/lib/const';
+import { createRequestState } from '~/shared/lib/utils';
+import { request } from '~/shared/api';
+import { AuthStorage } from '~/shared/lib/storage';
 
 export const useAuthStore = defineStore(AUTH_STORE_NAME, () => {
   const signInRequest = createRequestState();

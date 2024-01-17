@@ -42,9 +42,9 @@ import {
 import dayjs from 'dayjs';
 import { useTrainingStore } from '~/entities/training';
 
-const { state, actions } = useTrainingStore();
+const { actions, state } = useTrainingStore();
 
-onMounted(() => {
+onIonViewWillEnter(() => {
   actions.getTrainings();
 });
 </script>
