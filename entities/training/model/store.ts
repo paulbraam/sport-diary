@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import type { Training } from '@prisma/client';
 import type { TrainingsState } from './types';
 import { INITIAL_TRAININGS_STATE, TRAININGS_STORE_NAME } from './const';
-import type { Nullable } from '~/shared/lib/types';
+import type { NullableObjectValues } from '~/shared/lib/types';
 import { RequestStatus } from '~/shared/lib/const';
 import type {
   CreateUserTrainingResponse,
@@ -16,7 +16,7 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
   const createTrainingRequest = createRequestState<Training>();
   const getTrainingByIdRequest = createRequestState<Training>();
   const getTrainingsRequest = createRequestState<Training[]>();
-  const state = reactive<Nullable<TrainingsState>>({ ...INITIAL_TRAININGS_STATE });
+  const state = reactive<NullableObjectValues<TrainingsState>>({ ...INITIAL_TRAININGS_STATE });
 
   const getTrainings = async (): Promise<GetUserTrainingsResponse | null> => {
     getTrainingsRequest.status = RequestStatus.PENDING;

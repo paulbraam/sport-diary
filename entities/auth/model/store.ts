@@ -4,7 +4,7 @@ import { mapGoogleUserToAccount, mapGoogleUserToUser } from '../lib';
 import { AUTH_STORE_NAME, AuthProvider, INITIAL_AUTH_STATE } from './constants';
 import type { AuthState } from './types';
 import type { SignInResponse } from '~/server/api/auth/signin/types';
-import type { Nullable } from '~/shared/lib/types/common';
+import type { NullableObjectValues } from '~/shared/lib/types/common';
 import type { RefreshResponse } from '~/server/api/auth/refresh/types';
 import { RequestStatus } from '~/shared/lib/const';
 import { createRequestState } from '~/shared/lib/utils';
@@ -16,9 +16,11 @@ export const useAuthStore = defineStore(AUTH_STORE_NAME, () => {
   const refreshRequest = createRequestState();
   const signOutRequest = createRequestState();
   const initializeRequest = createRequestState();
-  const state = reactive<Nullable<AuthState>>({ ...INITIAL_AUTH_STATE });
+  const state = reactive<NullableObjectValues<AuthState>>({ ...INITIAL_AUTH_STATE });
 
-  const signIn = async (provider: `${AuthProvider}`): Promise<Nullable<SignInResponse>> => {
+  const signIn = async (
+    provider: `${AuthProvider}`
+  ): Promise<NullableObjectValues<SignInResponse>> => {
     signInRequest.status = RequestStatus.PENDING;
     signInRequest.error = null;
 
@@ -56,7 +58,9 @@ export const useAuthStore = defineStore(AUTH_STORE_NAME, () => {
     }
   };
 
-  const refresh = async (provider: `${AuthProvider}`): Promise<Nullable<RefreshResponse>> => {
+  const refresh = async (
+    provider: `${AuthProvider}`
+  ): Promise<NullableObjectValues<RefreshResponse>> => {
     refreshRequest.status = RequestStatus.PENDING;
     refreshRequest.error = null;
 
