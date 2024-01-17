@@ -33,8 +33,8 @@ dependencies:
     specifier: 5.0.6
     version: 5.0.6(@capacitor/core@5.6.0)
   '@codetrix-studio/capacitor-google-auth':
-    specifier: ^3.3.6
-    version: 3.3.6(@capacitor/core@5.6.0)
+    specifier: git://github.com/CodetrixStudio/CapacitorGoogleAuth.git
+    version: github.com/CodetrixStudio/CapacitorGoogleAuth/110d7f7b485bd53622cb09dae11dce33ccbe38ed(@capacitor/core@5.6.0)
   '@ionic/vue':
     specifier: ^7.6.1
     version: 7.6.1
@@ -592,14 +592,6 @@ packages:
     dependencies:
       mime: 3.0.0
     dev: true
-
-  /@codetrix-studio/capacitor-google-auth@3.3.6(@capacitor/core@5.6.0):
-    resolution: {integrity: sha512-SiMjYq5O2rWzEdKrmu3VZQ2nmFdq6LUXPzsNbjs4Ri6WTJVCtzp1HI12t4Dcwi5YoSw8g94Iyi3Can8msj57QA==}
-    peerDependencies:
-      '@capacitor/core': ^5.0.0
-    dependencies:
-      '@capacitor/core': 5.6.0
-    dev: false
 
   /@discoveryjs/json-ext@0.5.7:
     resolution: {integrity: sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==}
@@ -13234,4 +13226,17 @@ packages:
 
   /zod@3.22.4:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
+    dev: false
+
+  github.com/CodetrixStudio/CapacitorGoogleAuth/110d7f7b485bd53622cb09dae11dce33ccbe38ed(@capacitor/core@5.6.0):
+    resolution: {tarball: https://codeload.github.com/CodetrixStudio/CapacitorGoogleAuth/tar.gz/110d7f7b485bd53622cb09dae11dce33ccbe38ed}
+    id: github.com/CodetrixStudio/CapacitorGoogleAuth/110d7f7b485bd53622cb09dae11dce33ccbe38ed
+    name: '@codetrix-studio/capacitor-google-auth'
+    version: 3.3.6
+    prepare: true
+    requiresBuild: true
+    peerDependencies:
+      '@capacitor/core': ^5.0.0
+    dependencies:
+      '@capacitor/core': 5.6.0
     dev: false

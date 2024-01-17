@@ -15,6 +15,7 @@ export const useAuthStore = defineStore(AUTH_STORE_NAME, () => {
   const signInRequest = createRequestState();
   const refreshRequest = createRequestState();
   const signOutRequest = createRequestState();
+  const initializeRequest = createRequestState();
   const state = reactive<Nullable<AuthState>>({ ...INITIAL_AUTH_STATE });
 
   const signIn = async (provider: `${AuthProvider}`): Promise<Nullable<SignInResponse>> => {
@@ -114,13 +115,22 @@ export const useAuthStore = defineStore(AUTH_STORE_NAME, () => {
     }
   };
 
-  const initialize = (provider: `${AuthProvider}`) => {
-    switch (provider) {
-      case AuthProvider.GOOGLE: {
-        GoogleAuth.initialize();
-        break;
+  const initialize = async (provider: `${AuthProvider}`) => {
+    initializeRequest.status = RequestStatus.PENDING;
+    initializeRequest.error = null;
+
+    try {
+      switch (provider) {
+        case AuthProvider.GOOGLE: {
+          await GoogleAuth.initialize();
+          initializeRequest.status = RequestStatus.SUCCESS;
+          break;
+        }
+        default:
       }
-      default:
+    } catch (error) {
+      initializeRequest.error = error;
+      initializeRequest.status = RequestStatus.FAILED;
     }
   };
 
@@ -129,7 +139,8 @@ export const useAuthStore = defineStore(AUTH_STORE_NAME, () => {
     requests: computed(() => ({
       signIn: signInRequest,
       refresh: refreshRequest,
-      signOut: signOutRequest
+      signOut: signOutRequest,
+      initialize: initializeRequest
     })),
     actions: {
       signIn,

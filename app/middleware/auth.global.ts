@@ -1,19 +1,30 @@
-import { RequestStatus } from '~/constants/api';
 import { useAuthStore } from '~/stores/auth';
 
 export default defineNuxtRouteMiddleware(async (to) => {
+  // client-only
   if (process.server) return;
 
+  const { actions, state } = useAuthStore();
+
+  // initialize gapi
+  if (!('gapi' in window)) {
+    await actions.initialize('google');
+  }
+
+  // get current user
+  const { user } = state.user ? state : await actions.refresh('google');
+
+  // handle login page logic
   const isLoginPage = to.path.includes('login');
 
-  if (isLoginPage) return;
+  if (isLoginPage) {
+    if (user) {
+      return navigateTo('/');
+    }
+    return;
+  }
 
-  const { actions, requests, state } = useAuthStore();
-
-  const isRefreshRequestFetched = requests.refresh.status !== RequestStatus.IDLE;
-
-  const { user } = isRefreshRequestFetched ? state : await actions.refresh('google');
-
+  // handle unauthorized logic
   if (!user) {
     return navigateTo('/login');
   }

@@ -6,19 +6,8 @@
 
 <script setup lang="ts">
 import { IonApp, IonRouterOutlet } from '@ionic/vue';
-import { useAuthStore } from './stores/auth';
 
 const runtimeConfig = useRuntimeConfig();
-
-const {
-  actions: { initialize }
-} = useAuthStore();
-
-onBeforeMount(() => {
-  initialize('google');
-});
-
-console.log('initional');
 
 useHead({
   title: 'Sport Diary',

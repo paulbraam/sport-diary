@@ -44,7 +44,7 @@
     "@capacitor/keyboard": "5.0.6",
     "@capacitor/preferences": "^5.0.6",
     "@capacitor/status-bar": "5.0.6",
-    "@codetrix-studio/capacitor-google-auth": "^3.3.6",
+    "@codetrix-studio/capacitor-google-auth": "git://github.com/CodetrixStudio/CapacitorGoogleAuth.git",
     "@ionic/vue": "^7.6.1",
     "@pinia/nuxt": "^0.5.1",
     "@prisma/client": "^5.7.0",
