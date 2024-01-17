@@ -1,5 +1,5 @@
 <template>
-  <ion-input :id="name" v-model="value" :type="type" :label="label" />
+  <ion-input :id="name" v-model="value" v-bind="$attrs" />
   <ion-modal
     v-model="value"
     :trigger="name"
@@ -25,7 +25,7 @@ import type { IonInput, IonModal, IonContent, IonDatetime, IonNote } from '@ioni
 import type { DateInputProps } from './DateInput.types';
 import { DATE_INPUT_MODAL_BREAKPOINTS, DATE_INPUT_INITIAL_BREAKPOINT } from './DateInput.const';
 
-const props = withDefaults(defineProps<DateInputProps>(), { name: '' });
+const props = withDefaults(defineProps<DateInputProps>(), { name: '', presentation: 'date-time' });
 
 const { value, errorMessage } = useField(props.name);
 

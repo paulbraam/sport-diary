@@ -2,10 +2,10 @@
   <form :novalidate="true" @submit="onSubmit">
     <ion-list :inset="true">
       <ion-item>
-        <date-input name="training.startedAt" label="Start"></date-input>
+        <date-input name="training.startedAt" label="Start" type="datetime-local"></date-input>
       </ion-item>
       <ion-item>
-        <date-input name="training.endedAt" label="End"></date-input>
+        <date-input name="training.endedAt" label="End" type="datetime-local"></date-input>
       </ion-item>
       <ion-item>
         <number-input name="userParams.weight" label="Weight (kg)"></number-input>

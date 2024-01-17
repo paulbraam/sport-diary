@@ -75,7 +75,8 @@ import {
   IonLabel,
   IonList,
   IonMenuToggle,
-  IonIcon
+  IonIcon,
+  useIonRouter
 } from '@ionic/vue';
 import { useAuthStore } from '~/entities/auth';
 
@@ -90,7 +91,7 @@ const isMenuDisabled = computed(() => !state.user);
 
 const logOut = async () => {
   await signOut('google');
-  await router.push('/login');
+  router.push('/login');
 };
 
 definePageMeta({
