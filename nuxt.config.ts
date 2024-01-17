@@ -9,6 +9,10 @@ export default defineNuxtConfig({
   },
   ssr: false,
   css: ['~/app/assets/css/main.css'],
+  srcDir: 'src',
+  vite: {
+    root: 'src'
+  },
   dir: {
     pages: 'app/pages',
     middleware: 'app/middleware',

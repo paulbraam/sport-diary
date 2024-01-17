@@ -1,5 +1,5 @@
 import { type Account, type User } from '@prisma/client';
-import { type ApiRequest } from '~/shared/lib/types';
+import { type ApiRequest } from '~~/shared/lib/types';
 
 export interface RefreshRequestBody {
   accessToken: string;
