@@ -1,5 +1,5 @@
 <template>
-  <ion-page>
+  <ion-page id="training-list">
     <ion-content color="light">
       <ion-list :inset="true">
         <ion-item-sliding v-for="training in state.trainings" :key="training.id">

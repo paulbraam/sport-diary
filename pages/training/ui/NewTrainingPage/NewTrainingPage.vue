@@ -1,5 +1,5 @@
 <template>
-  <ion-page>
+  <ion-page id="new-training">
     <ion-content>
       <training-form>
         <template #actions="{ values, success }">

@@ -18,6 +18,8 @@ onBeforeMount(() => {
   initialize('google');
 });
 
+console.log('initional');
+
 useHead({
   title: 'Sport Diary',
   meta: [

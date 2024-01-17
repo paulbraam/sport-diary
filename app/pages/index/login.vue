@@ -1,5 +1,5 @@
 <template>
-  <ion-page>
+  <ion-page id="login">
     <ion-content>
       <div class="flex h-full">
         <ion-card class="my-auto w-full">

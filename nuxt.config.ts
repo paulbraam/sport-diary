@@ -8,7 +8,13 @@ export default defineNuxtConfig({
     transpile: ['vee-validate/dist/rules']
   },
   ssr: false,
-  css: ['~/assets/css/main.css'],
+  css: ['~/app/assets/css/main.css'],
+  dir: {
+    pages: 'app/pages',
+    middleware: 'app/middleware',
+    assets: 'app/assets',
+    public: 'app/public'
+  },
   postcss: {
     plugins: {
       tailwindcss: {},
