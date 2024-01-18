@@ -9,7 +9,7 @@
     <ion-content class="ion-padding">
       <ion-list>
         <ion-menu-toggle>
-          <ion-item button router-link="/trainings">
+          <ion-item button :router-link="RootRoute.TRAININGS">
             <ion-icon
               slot="start"
               aria-hidden="true"
@@ -51,8 +51,9 @@
   <ion-page id="main-content">
     <ion-header>
       <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-menu-button></ion-menu-button>
+        <ion-buttons v-show="!isMenuDisabled" slot="start">
+          <ion-menu-button v-if="isRootRoute"></ion-menu-button>
+          <ion-back-button v-else default-href="/"></ion-back-button>
         </ion-buttons>
         <ion-title>Sport Diary</ion-title>
       </ion-toolbar>
@@ -76,11 +77,17 @@ import {
   IonList,
   IonMenuToggle,
   IonIcon,
+  IonBackButton,
   useIonRouter
 } from '@ionic/vue';
+import { RootRoute } from '../lib/const';
 import { useAuthStore } from '~/entities/auth';
 
 const router = useIonRouter();
+
+const route = useRoute();
+
+const isRootRoute = computed(() => (Object.values(RootRoute) as string[]).includes(route.path));
 
 const {
   state,

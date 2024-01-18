@@ -36,7 +36,7 @@ watch(
       const training = await actions.createTraining(data);
       if (training) {
         emit('success', training);
-        router.push(`/trainings/${training.id}`);
+        router.replace(`/trainings/${training.id}`);
       }
     }
   }
