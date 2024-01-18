@@ -1,0 +1,52 @@
+name: Deploy the web
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Copy repository contents via scp
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          HOST: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PORT: ${{ secrets.PORT }}
+          KEY: ${{ secrets.SSH_KEY }}
+          source: '.'
+          target: '/var/www/app'
+
+      - name: Creating .env file
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PORT: ${{ secrets.PORT }}
+          KEY: ${{ secrets.SSH_KEY }}
+          script: |
+            cd /var/www/app
+            rm -f -- .env
+            touch .env
+            echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env
+            echo GOOGLE_SERVER_CLIENT_ID=${{ secrets.GOOGLE_SERVER_CLIENT_ID }} >> .env
+            echo APP_ID=${{ secrets.APP_ID }} >> .env
+            echo APP_NAME=${{ secrets.APP_NAME }} >> .env
+            echo API_URL=${{ secrets.API_URL }} >> .env
+            cat .env
+
+      - name: Building the app
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PORT: ${{ secrets.PORT }}
+          KEY: ${{ secrets.SSH_KEY }}
+          script: |
+            cd /var/www/app
+            docker-compose up -d --build
