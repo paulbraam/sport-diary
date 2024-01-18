@@ -1,8 +1,13 @@
-version: "3"
+version: '3.5'
 
 services:
-  sport-diary:
-    container_name: sport-diary
+  nginx:
+    restart: always
+    build: ./nginx
+    ports:
+      - '80:80'
+  app:
+    container_name: app
     build:
       context: .
       dockerfile: Dockerfile
