@@ -27,7 +27,7 @@ ADD . /app
 RUN pnpm run build
 
 # start final image
-FROM node:16-alpine
+FROM node:20-alpine
 
 WORKDIR /app
 
