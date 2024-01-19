@@ -1,7 +1,7 @@
 # Source: https://dev.to/rafaelmagalhaes/docker-and-nuxt-3-18nm
 
-# use node 20 alpine image as build image
-FROM node:20-alpine as builder
+# use node image as build image
+FROM node:18-alpine as builder
 
 # create work directory in app folder
 WORKDIR /app
@@ -27,7 +27,7 @@ ADD . /app
 RUN pnpm run build
 
 # start final image
-FROM node:20-alpine
+FROM node:18-alpine
 
 WORKDIR /app
 
