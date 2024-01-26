@@ -48,7 +48,7 @@ export const useAuthStore = defineStore(AUTH_STORE_NAME, () => {
           throw new Error('No auth provider provided');
       }
     } catch (error) {
-      signInRequest.error = error;
+      signInRequest.error = error as Error;
       signInRequest.status = RequestStatus.FAILED;
 
       return {
@@ -85,7 +85,7 @@ export const useAuthStore = defineStore(AUTH_STORE_NAME, () => {
           throw new Error('No auth provider provided');
       }
     } catch (error) {
-      refreshRequest.error = error;
+      refreshRequest.error = error as Error;
       refreshRequest.status = RequestStatus.FAILED;
 
       return {
@@ -114,7 +114,7 @@ export const useAuthStore = defineStore(AUTH_STORE_NAME, () => {
           throw new Error('No auth provider provided');
       }
     } catch (error) {
-      signOutRequest.error = error;
+      signOutRequest.error = error as Error;
       signOutRequest.status = RequestStatus.FAILED;
     }
   };
@@ -133,7 +133,7 @@ export const useAuthStore = defineStore(AUTH_STORE_NAME, () => {
         default:
       }
     } catch (error) {
-      initializeRequest.error = error;
+      initializeRequest.error = error as Error;
       initializeRequest.status = RequestStatus.FAILED;
     }
   };
