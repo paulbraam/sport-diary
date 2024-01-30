@@ -57,59 +57,138 @@ model VerificationToken {
 }
 
 model Training {
-  id           String     @id @default(cuid())
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-  startedAt    DateTime
-  endedAt      DateTime?
-  sets         Set[]
-  userParams   UserParams @relation(fields: [userParamsId], references: [id])
-  userParamsId String
-  User         User?      @relation(fields: [userId], references: [id])
-  userId       String?
-  comment      String?
-}
-
-model UserParams {
   id             String          @id @default(cuid())
-  weight         Int?
-  heartRate      Int?
-  circumferences Circumference[]
-  Training       Training[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  startedAt      DateTime
+  endedAt        DateTime?
+  sets           TrainingSet[]
+  bodyParameters BodyParameter[]
+  User           User?           @relation(fields: [userId], references: [id])
+  userId         String?
+  comment        String?
 }
 
-model Circumference {
-  id           String      @id @default(cuid())
-  type         String
-  value        String
-  UserParams   UserParams? @relation(fields: [userParamsId], references: [id])
-  userParamsId String?
+model BodyParameter {
+  id                  String                   @id @default(cuid())
+  name                String
+  unit                CatalogBodyParameterUnit @relation(fields: [bodyParameterUnitId], references: [id])
+  Training            Training?                @relation(fields: [trainingId], references: [id])
+  trainingId          String?
+  bodyParameterUnitId String
 }
 
-model Set {
-  id          String       @id @default(cuid())
-  Training    Training?    @relation(fields: [trainingId], references: [id])
+model TrainingSet {
+  id          String               @id @default(cuid())
+  Training    Training?            @relation(fields: [trainingId], references: [id])
   trainingId  String?
-  repetitions Repetition[]
-  exercise    Exercise     @relation(fields: [exerciseId], references: [id])
-  exerciseId  String
+  repetitions TrainingRepetition[]
+  exercise    CatalogExercise      @relation(fields: [exerciseId], references: [id])
   rest        Int
+  exerciseId  String
 }
 
-model Repetition {
-  id        String  @id @default(cuid())
-  Set       Set?    @relation(fields: [setId], references: [id])
+model TrainingRepetition {
+  id        String       @id @default(cuid())
+  Set       TrainingSet? @relation(fields: [setId], references: [id])
   setId     String?
-  weight    Int
   count     Int
-  duration  Int
-  intensity Int
+  value     Int
+  intensity Intensity
   rest      Int
 }
 
-model Exercise {
-  id   String @id @default(cuid())
-  name String
-  type String // temporal or countable
-  Set  Set[]
+// catalogs
+
+model CatalogBodyParameterUnit {
+  id            String          @id @default(cuid())
+  name          String
+  BodyParameter BodyParameter[]
+}
+
+model CatalogExercise {
+  id               String             @id @default(cuid())
+  name             String
+  level            ExerciseLevel
+  force            ExerciseForce?
+  mechanic         ExerciseMechanic?
+  equipment        ExerciseEquipment?
+  primaryMuscles   ExerciseMuscle[]
+  secondaryMuscles ExerciseMuscle[]
+  instructions     String[]
+  category         ExerciseCategory
+  TrainingSet      TrainingSet[]
+}
+
+// enums
+
+enum Intensity {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum ExerciseCategory {
+  STRENGTH
+  STRETCHING
+  PLYOMETRICS
+  STRONGMAN
+  POWERLIFTING
+  CARDIO
+  OLYMPIC_WEIGHTLIFTING
+  CROSSFIT
+  WEIGHTED_BODYWEIGHT
+  ASSISTED_BODYWEIGHT
+}
+
+enum ExerciseMechanic {
+  COMPOUND
+  ISOLATION
+}
+
+enum ExerciseLevel {
+  BEGINNER
+  INTERMEDIATE
+  EXPERT
+}
+
+enum ExerciseEquipment {
+  BODY
+  MACHINE
+  KETTLEBELLS
+  DUMBBELL
+  CABLE
+  BARBELL
+  BANDS
+  MEDICINE_BALL
+  EXERCISE_BALL
+  E_Z_CURL_BAR
+  FOAM_ROLL
+  OTHER
+}
+
+enum ExerciseMuscle {
+  ABDOMINALS
+  HAMSTRINGS
+  CALVES
+  SHOULDERS
+  ADDUCTORS
+  GLUTES
+  QUADRICEPS
+  BICEPS
+  FOREARMS
+  ABDUCTORS
+  TRICEPS
+  CHEST
+  LOWER_BACK
+  TRAPS
+  MIDDLE_BACK
+  LATS
+  NECK
+}
+
+enum ExerciseForce {
+  PULL
+  PUSH
+  STATIC
 }

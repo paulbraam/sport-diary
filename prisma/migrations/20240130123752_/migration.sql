@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "CatalogExercise" ALTER COLUMN "equipment" DROP NOT NULL,
+ALTER COLUMN "force" DROP NOT NULL,
+ALTER COLUMN "mechanic" DROP NOT NULL;
