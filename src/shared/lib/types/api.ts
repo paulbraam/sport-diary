@@ -1,12 +1,8 @@
 import type { HttpOptions, HttpResponse } from '@capacitor/core';
 
-type ApiRequestWithOrWithoutBody<B> = B extends object
-  ? Record<'body', B>
-  : NonNullableObjectValues<unknown>;
+type ApiRequestWithOrWithoutBody<B> = B extends object ? Record<'body', B> : unknown;
 
-type ApiRequestWithOrWithoutQuery<Q> = Q extends object
-  ? Record<'query', Q>
-  : NonNullableObjectValues<unknown>;
+type ApiRequestWithOrWithoutQuery<Q> = Q extends object ? Record<'query', Q> : unknown;
 
 export type ApiRequest<B = void, Q = void> = ApiRequestWithOrWithoutBody<B> &
   ApiRequestWithOrWithoutQuery<Q>;

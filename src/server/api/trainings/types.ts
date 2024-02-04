@@ -4,8 +4,7 @@ import { type ApiRequest } from '~/shared/lib/types';
 // POST
 
 export type CreateUserTrainingRequestBody = {
-  training: Prisma.TrainingCreateWithoutUserParamsInput;
-  userParams: Prisma.UserParamsCreateInput;
+  training: Prisma.TrainingCreateInput;
 };
 
 export type CreateUserTrainingRequest = ApiRequest<CreateUserTrainingRequestBody>;

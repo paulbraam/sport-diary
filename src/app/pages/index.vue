@@ -9,7 +9,7 @@
     <ion-content class="ion-padding">
       <ion-list>
         <ion-menu-toggle>
-          <ion-item button :router-link="RootRoute.TRAININGS">
+          <ion-item button router-link="/trainings">
             <ion-icon
               slot="start"
               aria-hidden="true"
@@ -32,15 +32,17 @@
           ></ion-icon>
           <ion-label>Statistics</ion-label>
         </ion-item>
-        <ion-item button>
-          <ion-icon
-            slot="start"
-            aria-hidden="true"
-            :icon="ioniconsSettings"
-            color="dark"
-          ></ion-icon>
-          <ion-label>Settings</ion-label>
-        </ion-item>
+        <ion-menu-toggle>
+          <ion-item button router-link="/settings">
+            <ion-icon
+              slot="start"
+              aria-hidden="true"
+              :icon="ioniconsSettings"
+              color="dark"
+            ></ion-icon>
+            <ion-label>Settings</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
         <ion-item button @click="logOut()">
           <ion-icon slot="start" aria-hidden="true" :icon="ioniconsExit" color="danger"></ion-icon>
           <ion-label>Sign out</ion-label>
@@ -80,19 +82,22 @@ import {
   IonBackButton,
   useIonRouter
 } from '@ionic/vue';
-import { RootRoute } from '../lib/const';
 import { useAuthStore } from '~/entities/auth';
 
 const router = useIonRouter();
-
 const route = useRoute();
-
-const isRootRoute = computed(() => (Object.values(RootRoute) as string[]).includes(route.path));
 
 const {
   state,
   actions: { signOut }
 } = useAuthStore();
+
+const isRootRoute = computed(() => {
+  const MIN_NON_ROOT_SEGMENT_LENGTH = 2;
+  const segments = route.path.split('/').filter((item) => !!item);
+
+  return segments.length < MIN_NON_ROOT_SEGMENT_LENGTH;
+});
 
 const isMenuDisabled = computed(() => !state.user);
 
