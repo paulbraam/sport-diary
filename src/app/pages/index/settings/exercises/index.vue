@@ -1,9 +1,9 @@
 <template>
   <ion-page id="training-list">
     <ion-content color="light">
-      <ion-list :inset="true">
-        <ion-item button :detail="true">
-          <ion-label>Brench Press</ion-label>
+      <ion-list>
+        <ion-item v-for="exercise in userExercises" :key="exercise.id" button :detail="true">
+          <ion-label>{{ exercise.name }}</ion-label>
         </ion-item>
       </ion-list>
       <ion-fab slot="fixed" vertical="bottom" horizontal="end">
@@ -18,6 +18,11 @@
 <script setup lang="ts">
 import { IonList, IonLabel, IonPage, IonContent, IonItem, modalController } from '@ionic/vue';
 import { UserExercisesModal } from '~/entities/exercise';
+import { useUserSettingsStore } from '~/entities/user';
+
+const { actions, state } = useUserSettingsStore();
+
+const userExercises = computed(() => state.settings?.exercises ?? []);
 
 const openUserExercisesModal = async () => {
   const modal = await modalController.create({
@@ -26,4 +31,8 @@ const openUserExercisesModal = async () => {
 
   modal.present();
 };
+
+onBeforeMount(() => {
+  actions.getUserSettings();
+});
 </script>

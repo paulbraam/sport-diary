@@ -2,15 +2,15 @@
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-button @click="cancelChanges()">Cancel</ion-button>
+        <ion-button @click="onClose">Cancel</ion-button>
       </ion-buttons>
       <ion-title>Select exercises</ion-title>
       <ion-buttons slot="end">
-        <ion-button @click="confirmChanges()">Done</ion-button>
+        <ion-button @click="onUpdateUserExercisesClick">Done</ion-button>
       </ion-buttons>
     </ion-toolbar>
     <ion-toolbar>
-      <ion-searchbar :debounce="500" @ion-input="handleContainsInputChange($event)"></ion-searchbar>
+      <ion-searchbar :debounce="200" @ion-input="onContainsInputChange($event)"></ion-searchbar>
       <ion-button id="filters" slot="end" fill="clear" @click="openFiltersModal">
         <ion-icon
           slot="icon-only"
@@ -23,13 +23,24 @@
   </ion-header>
   <ion-content class="ion-padding">
     <ion-list id="modal-list" :inset="true">
-      <ion-item v-for="item in state.exercises" :key="item.id">
-        <ion-checkbox :value="item.id" :checked="true" @ion-change="checkboxChange($event)">{{
-          item.name
-        }}</ion-checkbox>
+      <ion-item v-for="item in catalogExercises" :key="item.id">
+        <ion-checkbox
+          :value="item.id"
+          :checked="item.isAdded"
+          @ion-change="onExerciseCheckboxChange($event)"
+          >{{ item.name }}</ion-checkbox
+        >
       </ion-item>
     </ion-list>
   </ion-content>
+  <ion-loading :is-open="isLoading" message="Updating your exercises..."></ion-loading>
+  <ion-toast
+    :is-open="!!error"
+    :message="error?.message"
+    :duration="5000"
+    color="danger"
+    position="top"
+  ></ion-toast>
 </template>
 
 <script setup lang="ts">
@@ -42,20 +53,54 @@ import {
   IonButtons,
   IonSearchbar,
   modalController,
-  type SearchbarCustomEvent
+  type SearchbarCustomEvent,
+  type CheckboxCustomEvent
 } from '@ionic/vue';
 import { onBeforeMount } from 'vue';
 import { ExercisesFiltersModal } from '../ExercisesFiltersModal';
 import { exerciseFiltersInitialValues } from '../../model/const';
 import { useCatalogExercisesStore } from '~/entities/exercise';
 import type { GetCatalogExercisesQueryParams } from '~/server/api/catalog/exercises/types';
+import { useUserSettingsStore } from '~/entities/user';
+import { RequestStatus } from '~/shared/lib/const';
 
+const catalogExercisesStore = useCatalogExercisesStore();
+const userSettingsStore = useUserSettingsStore();
+
+const error = computed(() => userSettingsStore.requests.updateUserExercises.error as Error);
+const isLoading = computed(
+  () => userSettingsStore.requests.updateUserExercises.status === RequestStatus.PENDING
+);
+
+const userExerciseIds = ref(userSettingsStore.state.settings.exercises.map((item) => item.id));
+const catalogExercises = computed(() => {
+  return (catalogExercisesStore.state.exercises ?? []).map((catalogExercise) => {
+    const isAdded = userExerciseIds.value.includes(catalogExercise.id);
+    return {
+      ...catalogExercise,
+      isAdded
+    };
+  });
+});
 const filters = ref<GetCatalogExercisesQueryParams>();
 const contains = ref<string>('');
 
-const handleContainsInputChange = (event: SearchbarCustomEvent) => {
+const onExerciseCheckboxChange = (event: CheckboxCustomEvent) => {
+  const exerciseId = event.target.value;
+  const isChecked = event.detail.checked;
+  userExerciseIds.value = isChecked
+    ? [...userExerciseIds.value, exerciseId]
+    : userExerciseIds.value.filter((id) => id !== exerciseId);
+};
+
+const onContainsInputChange = (event: SearchbarCustomEvent) => {
   const value = event.target.value;
   contains.value = value || '';
+};
+
+const onUpdateUserExercisesClick = async () => {
+  await userSettingsStore.actions.updateUserExercises(userExerciseIds.value);
+  await modalController.dismiss(null, undefined);
 };
 
 const openFiltersModal = async () => {
@@ -72,7 +117,9 @@ const openFiltersModal = async () => {
   }
 };
 
-const { state, actions } = useCatalogExercisesStore();
+const onClose = () => {
+  modalController.dismiss(null, undefined);
+};
 
 watch([() => filters.value, () => contains.value], ([filters, contains]) => {
   const allFilters = {
@@ -80,10 +127,13 @@ watch([() => filters.value, () => contains.value], ([filters, contains]) => {
     ...(filters || {}),
     contains
   };
-  actions.getCatalogExercises(allFilters);
+  catalogExercisesStore.actions.getCatalogExercises(allFilters);
 });
 
 onBeforeMount(() => {
-  actions.getCatalogExercises({ ...exerciseFiltersInitialValues, contains: contains.value });
+  catalogExercisesStore.actions.getCatalogExercises({
+    ...exerciseFiltersInitialValues,
+    contains: contains.value
+  });
 });
 </script>

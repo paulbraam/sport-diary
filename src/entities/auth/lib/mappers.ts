@@ -19,7 +19,7 @@ export const mapGoogleUserToAccount = (data: GoogleUser): Prisma.AccountCreateWi
   };
 };
 
-export const mapGoogleUserToUser = (data: GoogleUser): Prisma.UserCreateInput => {
+export const mapGoogleUserToUser = (data: GoogleUser): Prisma.UserCreateWithoutSettingsInput => {
   return {
     name: data.name,
     email: data.email,

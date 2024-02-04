@@ -38,14 +38,22 @@ model Session {
 }
 
 model User {
-  id            String     @id @default(cuid())
+  id            String       @id @default(cuid())
   name          String?
-  email         String?    @unique
+  email         String?      @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
   trainings     Training[]
+  settings      UserSettings @relation(fields: [settingsId], references: [id])
+  settingsId    String
+}
+
+model UserSettings {
+  id        String            @id @default(cuid())
+  exercises CatalogExercise[]
+  User      User[]
 }
 
 model VerificationToken {
@@ -118,6 +126,8 @@ model CatalogExercise {
   instructions     String[]
   category         ExerciseCategory
   TrainingSet      TrainingSet[]
+  UserSettings     UserSettings?      @relation(fields: [userSettingsId], references: [id])
+  userSettingsId   String?
 }
 
 // enums
