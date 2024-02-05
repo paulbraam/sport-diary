@@ -6,9 +6,13 @@
           <ion-item button detail>
             <ion-label>{{ exercise.name }}</ion-label>
           </ion-item>
-          <ion-item-options slot="end" @ion-swipe="actions.deleteUserExercise(exercise.id)">
+          <ion-item-options slot="end" @ion-swipe="onUserExerciseDelete(exercise.id)">
             <ion-item-option color="danger" :expandable="true">
-              <ion-icon slot="icon-only" :icon="ioniconsTrash"></ion-icon>
+              <ion-icon
+                slot="icon-only"
+                :icon="ioniconsTrash"
+                @click="onUserExerciseDelete(exercise.id)"
+              ></ion-icon>
             </ion-item-option>
           </ion-item-options>
         </ion-item-sliding>
@@ -35,7 +39,8 @@ import {
   modalController,
   IonItemSliding,
   IonItemOptions,
-  IonItemOption
+  IonItemOption,
+  alertController
 } from '@ionic/vue';
 import { UserExercisesModal, useUserExerciseFiltersStore } from '~/entities/exercise';
 import { useUserSettingsStore } from '~/entities/user';
@@ -55,6 +60,25 @@ const openUserExercisesModal = async () => {
   await modal.onWillDismiss();
 
   resetUserExerciseFilters();
+};
+
+const onUserExerciseDelete = async (exerciseId: string) => {
+  const alert = await alertController.create({
+    header: 'Do you really want to remove your exercise?',
+    message: 'This action is potentially distructive',
+    buttons: [
+      'Cancel',
+      {
+        text: 'OK',
+        role: 'confirm',
+        handler: () => {
+          actions.deleteUserExercise(exerciseId);
+        }
+      }
+    ]
+  });
+
+  await alert.present();
 };
 
 onBeforeMount(() => {
