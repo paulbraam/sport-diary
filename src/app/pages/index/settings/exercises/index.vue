@@ -37,10 +37,11 @@ import {
   IonItemOptions,
   IonItemOption
 } from '@ionic/vue';
-import { UserExercisesModal } from '~/entities/exercise';
+import { UserExercisesModal, useUserExerciseFiltersStore } from '~/entities/exercise';
 import { useUserSettingsStore } from '~/entities/user';
 
 const { actions, state } = useUserSettingsStore();
+const { reset: resetUserExerciseFilters } = useUserExerciseFiltersStore();
 
 const userExercises = computed(() => state.settings?.exercises ?? []);
 
@@ -50,6 +51,10 @@ const openUserExercisesModal = async () => {
   });
 
   modal.present();
+
+  await modal.onWillDismiss();
+
+  resetUserExerciseFilters();
 };
 
 onBeforeMount(() => {

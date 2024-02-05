@@ -58,7 +58,16 @@ export const useCatalogExercisesStore = defineStore(CATALOG_EXERCISES_STORE_NAME
   };
 });
 
-export const userExerciseFiltersState = useState<ExerciseFiltersForm>(
-  'user_exercise_filters',
-  () => exerciseFiltersInitialValues
-);
+export const useUserExerciseFiltersStore = () => {
+  const state = useState<ExerciseFiltersForm>(
+    'user_exercise_filters',
+    () => exerciseFiltersInitialValues
+  );
+
+  return {
+    state,
+    reset: () => {
+      state.value = exerciseFiltersInitialValues;
+    }
+  };
+};

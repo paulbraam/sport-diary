@@ -59,7 +59,7 @@ import {
 import { onBeforeMount } from 'vue';
 import { ExercisesFiltersModal } from '../ExercisesFiltersModal';
 import { exerciseFiltersInitialValues } from '../../model/const';
-import { useCatalogExercisesStore, userExerciseFiltersState } from '~/entities/exercise';
+import { useCatalogExercisesStore, useUserExerciseFiltersStore } from '~/entities/exercise';
 import type { GetCatalogExercisesQueryParams } from '~/server/api/catalog/exercises/types';
 import { useUserSettingsStore } from '~/entities/user';
 import { RequestStatus } from '~/shared/lib/const';
@@ -82,10 +82,11 @@ const catalogExercises = computed(() => {
     };
   });
 });
+const { state: userExerciseFilters } = useUserExerciseFiltersStore();
 const contains = ref<string>('');
 
 const appliedFiltersCount = computed(() =>
-  Object.values(userExerciseFiltersState.value).reduce((acc, value) => {
+  Object.values(userExerciseFilters.value).reduce((acc, value) => {
     return value ? acc + 1 : acc;
   }, 0)
 );
@@ -118,7 +119,7 @@ const openFiltersModal = async () => {
   const { data, role } = await modal.onWillDismiss<GetCatalogExercisesQueryParams>();
 
   if (role === 'apply' && data) {
-    userExerciseFiltersState.value = data;
+    userExerciseFilters.value = data;
   }
 };
 
@@ -126,7 +127,7 @@ const onClose = () => {
   modalController.dismiss(null, undefined);
 };
 
-watch([() => userExerciseFiltersState.value, () => contains.value], ([filters, contains]) => {
+watch([() => userExerciseFilters.value, () => contains.value], ([filters, contains]) => {
   const allFilters = {
     ...exerciseFiltersInitialValues,
     ...(filters || {}),
@@ -137,7 +138,7 @@ watch([() => userExerciseFiltersState.value, () => contains.value], ([filters, c
 
 onBeforeMount(() => {
   catalogExercisesStore.actions.getCatalogExercises({
-    ...exerciseFiltersInitialValues,
+    ...userExerciseFilters.value,
     contains: contains.value
   });
 });
