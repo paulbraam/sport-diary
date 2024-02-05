@@ -33,6 +33,9 @@
           </select-input>
         </ion-item>
       </ion-list>
+      <ion-button class="w-full" size="default" fill="clear" @click="onClearFiltersClick">
+        Clear
+      </ion-button>
     </ion-content>
   </form>
 </template>
@@ -45,11 +48,13 @@ import {
   IonHeader,
   IonToolbar,
   IonButtons,
+  IonButton,
   modalController
 } from '@ionic/vue';
 import {
   exerciseCategorySelectOptions,
   exerciseEquipmentSelectOptions,
+  exerciseFiltersInitialValues,
   exerciseForceSelectOptions,
   exerciseMuscleSelectOptions
 } from '../../model/const';
@@ -58,7 +63,7 @@ import { userExerciseFiltersState } from '../../model';
 import { SelectInput } from '~/shared/ui/form';
 import type { GetCatalogExercisesQueryParams } from '~/server/api/catalog/exercises/types';
 
-const { handleSubmit } = useForm<GetCatalogExercisesQueryParams>({
+const { handleSubmit, setValues } = useForm<GetCatalogExercisesQueryParams>({
   validationSchema: exerciseFiltersModalFormValidationSchema,
   initialValues: userExerciseFiltersState.value
 });
@@ -70,4 +75,8 @@ const closeFiltersModal = () => {
 const onSubmit = handleSubmit((values) => {
   modalController.dismiss(values, 'apply');
 });
+
+const onClearFiltersClick = () => {
+  setValues(exerciseFiltersInitialValues);
+};
 </script>
