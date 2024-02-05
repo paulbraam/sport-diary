@@ -1,7 +1,10 @@
 import { deleteUserExercise } from './queries';
 import { DeleteUserExerciseResponse } from './types';
+import { protectRoute } from '~/server/utils';
 
 export default defineEventHandler((event): Promise<DeleteUserExerciseResponse> => {
+  protectRoute(event);
+
   const exerciseId = event.context.params?.id;
 
   if (!exerciseId) {

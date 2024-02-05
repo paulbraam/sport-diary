@@ -3,7 +3,7 @@
     <ion-content color="light">
       <ion-list :inset="true">
         <ion-item-sliding v-for="training in state.trainings" :key="training.id">
-          <ion-item button :detail="true">
+          <ion-item button :detail="true" :router-link="`/trainings/${training.id}`">
             <ion-label>{{ dayjs(training.startedAt).format('YYYY/MM/DD') }}</ion-label>
           </ion-item>
           <ion-item-options slot="end">

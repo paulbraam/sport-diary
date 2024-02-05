@@ -79,6 +79,8 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
       getTrainingByIdRequest.status = RequestStatus.SUCCESS;
       getTrainingByIdRequest.data = data;
 
+      state.currentTraining = data;
+
       return data;
     } catch (error) {
       getTrainingByIdRequest.status = RequestStatus.FAILED;

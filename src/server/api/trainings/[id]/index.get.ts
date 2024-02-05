@@ -6,8 +6,12 @@ export default defineEventHandler<GetUserTrainingByIdRequest>(
   async (event): Promise<GetUserTrainingByIdResponse> => {
     protectRoute(event);
 
-    const { id } = getQuery(event);
+    const trainingId = event.context.params?.id;
 
-    return await getTrainingById(id);
+    if (!trainingId) {
+      throw createError({ statusCode: 404, statusText: 'Training id not found' });
+    }
+
+    return await getTrainingById(trainingId);
   }
 );
