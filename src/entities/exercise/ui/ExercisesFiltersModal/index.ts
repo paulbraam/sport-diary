@@ -1,1 +1,1 @@
-export { default as ExercisesFiltersModal } from './ExercisesFiltersModal.vue';
+export { default as ExercisesFiltersModal } from './component.vue';

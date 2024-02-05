@@ -1,1 +1,1 @@
-export { default as UserExercisesModal } from './UserExercisesModal.vue';
+export { default as UserExercisesModal } from './component.vue';

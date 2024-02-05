@@ -1,1 +1,1 @@
-export { default as UserSettingsPage } from './UserSettingsPage.vue';
+export { default as UserSettingsPage } from './component.vue';

@@ -1,1 +1,1 @@
-export { default as CreateTrainingButton } from './CreateTrainingButton.vue';
+export { default as CreateTrainingButton } from './component.vue';

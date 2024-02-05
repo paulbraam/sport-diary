@@ -1,1 +1,1 @@
-export { default as TrainingForm } from './TrainingForm.vue';
+export { default as TrainingForm } from './component.vue';

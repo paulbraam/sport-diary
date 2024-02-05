@@ -1,1 +1,1 @@
-export { default as UserExercisesPage } from './UserExercisesPage.vue';
+export { default as UserExercisesPage } from './component.vue';
