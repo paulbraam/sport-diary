@@ -12,12 +12,11 @@
     <ion-toolbar>
       <ion-searchbar :debounce="200" @ion-input="onContainsInputChange($event)"></ion-searchbar>
       <ion-button id="filters" slot="end" fill="clear" @click="openFiltersModal">
-        <ion-icon
-          slot="icon-only"
-          aria-hidden="true"
-          :icon="ioniconsFilter"
-          color="dark"
-        ></ion-icon>
+        <ion-badge color="primary" class="absolute right-[-10px]">{{
+          appliedFiltersCount
+        }}</ion-badge>
+        <ion-icon slot="icon-only" aria-hidden="true" :icon="ioniconsFilter" color="dark">
+        </ion-icon>
       </ion-button>
     </ion-toolbar>
   </ion-header>
@@ -28,8 +27,9 @@
           :value="item.id"
           :checked="item.isAdded"
           @ion-change="onExerciseCheckboxChange($event)"
-          >{{ item.name }}</ion-checkbox
         >
+          <span class="text-wrap">{{ item.name }}</span>
+        </ion-checkbox>
       </ion-item>
     </ion-list>
   </ion-content>
@@ -59,7 +59,7 @@ import {
 import { onBeforeMount } from 'vue';
 import { ExercisesFiltersModal } from '../ExercisesFiltersModal';
 import { exerciseFiltersInitialValues } from '../../model/const';
-import { useCatalogExercisesStore } from '~/entities/exercise';
+import { useCatalogExercisesStore, userExerciseFiltersState } from '~/entities/exercise';
 import type { GetCatalogExercisesQueryParams } from '~/server/api/catalog/exercises/types';
 import { useUserSettingsStore } from '~/entities/user';
 import { RequestStatus } from '~/shared/lib/const';
@@ -82,8 +82,13 @@ const catalogExercises = computed(() => {
     };
   });
 });
-const filters = ref<GetCatalogExercisesQueryParams>();
 const contains = ref<string>('');
+
+const appliedFiltersCount = computed(() =>
+  Object.values(userExerciseFiltersState.value).reduce((acc, value) => {
+    return value ? acc + 1 : acc;
+  }, 0)
+);
 
 const onExerciseCheckboxChange = (event: CheckboxCustomEvent) => {
   const exerciseId = event.target.value;
@@ -112,8 +117,8 @@ const openFiltersModal = async () => {
 
   const { data, role } = await modal.onWillDismiss<GetCatalogExercisesQueryParams>();
 
-  if (role === 'apply') {
-    filters.value = data;
+  if (role === 'apply' && data) {
+    userExerciseFiltersState.value = data;
   }
 };
 
@@ -121,7 +126,7 @@ const onClose = () => {
   modalController.dismiss(null, undefined);
 };
 
-watch([() => filters.value, () => contains.value], ([filters, contains]) => {
+watch([() => userExerciseFiltersState.value, () => contains.value], ([filters, contains]) => {
   const allFilters = {
     ...exerciseFiltersInitialValues,
     ...(filters || {}),

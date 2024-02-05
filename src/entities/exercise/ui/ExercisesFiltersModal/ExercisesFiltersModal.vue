@@ -50,17 +50,17 @@ import {
 import {
   exerciseCategorySelectOptions,
   exerciseEquipmentSelectOptions,
-  exerciseFiltersInitialValues,
   exerciseForceSelectOptions,
   exerciseMuscleSelectOptions
 } from '../../model/const';
 import { exerciseFiltersModalFormValidationSchema } from '../../model/utils';
+import { userExerciseFiltersState } from '../../model';
 import { SelectInput } from '~/shared/ui/form';
 import type { GetCatalogExercisesQueryParams } from '~/server/api/catalog/exercises/types';
 
 const { handleSubmit } = useForm<GetCatalogExercisesQueryParams>({
   validationSchema: exerciseFiltersModalFormValidationSchema,
-  initialValues: exerciseFiltersInitialValues
+  initialValues: userExerciseFiltersState.value
 });
 
 const closeFiltersModal = () => {

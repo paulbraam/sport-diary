@@ -2,9 +2,16 @@
   <ion-page id="training-list">
     <ion-content color="light">
       <ion-list>
-        <ion-item v-for="exercise in userExercises" :key="exercise.id" button :detail="true">
-          <ion-label>{{ exercise.name }}</ion-label>
-        </ion-item>
+        <ion-item-sliding v-for="exercise in userExercises" :key="exercise.id">
+          <ion-item button :detail="true">
+            <ion-label>{{ exercise.name }}</ion-label>
+          </ion-item>
+          <ion-item-options slot="end">
+            <ion-item-option color="danger" :expandable="true">
+              <ion-icon slot="icon-only" :icon="ioniconsTrash"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
       </ion-list>
       <ion-fab slot="fixed" vertical="bottom" horizontal="end">
         <ion-fab-button @click="openUserExercisesModal">
