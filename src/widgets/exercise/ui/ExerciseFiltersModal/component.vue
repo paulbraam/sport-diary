@@ -51,17 +51,18 @@ import {
   IonButton,
   modalController
 } from '@ionic/vue';
+
+import { SelectInput } from '~/shared/ui/form';
+import type { GetCatalogExercisesQueryParams } from '~/server/api/catalog/exercises/types';
 import {
   exerciseCategorySelectOptions,
   exerciseEquipmentSelectOptions,
   exerciseFiltersInitialValues,
+  exerciseFiltersModalFormValidationSchema,
   exerciseForceSelectOptions,
-  exerciseMuscleSelectOptions
-} from '../../model/const';
-import { exerciseFiltersModalFormValidationSchema } from '../../model/utils';
-import { useUserExerciseFiltersStore } from '../../model';
-import { SelectInput } from '~/shared/ui/form';
-import type { GetCatalogExercisesQueryParams } from '~/server/api/catalog/exercises/types';
+  exerciseMuscleSelectOptions,
+  useUserExerciseFiltersStore
+} from '~/entities/exercise';
 
 const { state: userExerciseFilters } = useUserExerciseFiltersStore();
 

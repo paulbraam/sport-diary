@@ -6,18 +6,13 @@
       </ion-buttons>
       <ion-title>Select exercises</ion-title>
       <ion-buttons slot="end">
-        <ion-button @click="onUpdateUserExercisesClick">Done</ion-button>
+        <update-user-exercises-button :exercise-ids="userExerciseIds">
+        </update-user-exercises-button>
       </ion-buttons>
     </ion-toolbar>
     <ion-toolbar>
       <ion-searchbar :debounce="200" @ion-input="onContainsInputChange($event)"></ion-searchbar>
-      <ion-button id="filters" slot="end" fill="clear" @click="openFiltersModal">
-        <ion-badge color="primary" class="absolute right-[-10px]">{{
-          appliedFiltersCount
-        }}</ion-badge>
-        <ion-icon slot="icon-only" aria-hidden="true" :icon="ioniconsFilter" color="dark">
-        </ion-icon>
-      </ion-button>
+      <exercise-filter-button></exercise-filter-button>
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding">
@@ -33,14 +28,6 @@
       </ion-item>
     </ion-list>
   </ion-content>
-  <ion-loading :is-open="isLoading" message="Updating your exercises..."></ion-loading>
-  <ion-toast
-    :is-open="!!error"
-    :message="error?.message"
-    :duration="5000"
-    color="danger"
-    position="top"
-  ></ion-toast>
 </template>
 
 <script setup lang="ts">
@@ -56,21 +43,12 @@ import {
   type SearchbarCustomEvent,
   type CheckboxCustomEvent
 } from '@ionic/vue';
-import { onBeforeMount } from 'vue';
-import { ExercisesFiltersModal } from '../ExercisesFiltersModal';
-import { exerciseFiltersInitialValues } from '../../model/const';
 import { useCatalogExercisesStore, useUserExerciseFiltersStore } from '~/entities/exercise';
-import type { GetCatalogExercisesQueryParams } from '~/server/api/catalog/exercises/types';
 import { useUserSettingsStore } from '~/entities/user';
-import { RequestStatus } from '~/shared/lib/const';
+import { ExerciseFilterButton, UpdateUserExercisesButton } from '~/features/exercises';
 
 const catalogExercisesStore = useCatalogExercisesStore();
 const userSettingsStore = useUserSettingsStore();
-
-const error = computed(() => userSettingsStore.requests.updateUserExercises.error as Error);
-const isLoading = computed(
-  () => userSettingsStore.requests.updateUserExercises.status === RequestStatus.PENDING
-);
 
 const userExerciseIds = ref(userSettingsStore.state.settings.exercises.map((item) => item.id));
 const catalogExercises = computed(() => {
@@ -85,12 +63,6 @@ const catalogExercises = computed(() => {
 const { state: userExerciseFilters } = useUserExerciseFiltersStore();
 const contains = ref<string>('');
 
-const appliedFiltersCount = computed(() =>
-  Object.values(userExerciseFilters.value).reduce((acc, value) => {
-    return value ? acc + 1 : acc;
-  }, 0)
-);
-
 const onExerciseCheckboxChange = (event: CheckboxCustomEvent) => {
   const exerciseId = event.target.value;
   const isChecked = event.detail.checked;
@@ -104,33 +76,13 @@ const onContainsInputChange = (event: SearchbarCustomEvent) => {
   contains.value = value || '';
 };
 
-const onUpdateUserExercisesClick = async () => {
-  await userSettingsStore.actions.updateUserExercises(userExerciseIds.value);
-  await modalController.dismiss(null, undefined);
-};
-
-const openFiltersModal = async () => {
-  const modal = await modalController.create({
-    component: ExercisesFiltersModal
-  });
-
-  modal.present();
-
-  const { data, role } = await modal.onWillDismiss<GetCatalogExercisesQueryParams>();
-
-  if (role === 'apply' && data) {
-    userExerciseFilters.value = data;
-  }
-};
-
 const onClose = () => {
   modalController.dismiss(null, undefined);
 };
 
 watch([() => userExerciseFilters.value, () => contains.value], ([filters, contains]) => {
   const allFilters = {
-    ...exerciseFiltersInitialValues,
-    ...(filters || {}),
+    ...filters,
     contains
   };
   catalogExercisesStore.actions.getCatalogExercises(allFilters);

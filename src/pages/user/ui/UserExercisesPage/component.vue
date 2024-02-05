@@ -2,20 +2,12 @@
   <ion-page id="training-list">
     <ion-content color="light">
       <ion-list v-if="userExercises.length" inset>
-        <ion-item-sliding v-for="exercise in userExercises" :key="exercise.id">
-          <ion-item button detail>
-            <ion-label>{{ exercise.name }}</ion-label>
-          </ion-item>
-          <ion-item-options slot="end" @ion-swipe="onUserExerciseDelete(exercise.id)">
-            <ion-item-option color="danger" :expandable="true">
-              <ion-icon
-                slot="icon-only"
-                :icon="ioniconsTrash"
-                @click="onUserExerciseDelete(exercise.id)"
-              ></ion-icon>
-            </ion-item-option>
-          </ion-item-options>
-        </ion-item-sliding>
+        <user-exercise-list-item
+          v-for="exercise in userExercises"
+          :key="exercise.id"
+          :exercise="exercise"
+        >
+        </user-exercise-list-item>
       </ion-list>
       <div v-else class="flex h-full">
         <div class="my-auto w-full flex justify-center">No exercises so far</div>
@@ -30,20 +22,13 @@
 </template>
 
 <script setup lang="ts">
+import { IonList, IonPage, IonContent, modalController } from '@ionic/vue';
 import {
-  IonList,
-  IonLabel,
-  IonPage,
-  IonContent,
-  IonItem,
-  modalController,
-  IonItemSliding,
-  IonItemOptions,
-  IonItemOption,
-  alertController
-} from '@ionic/vue';
-import { UserExercisesModal, useUserExerciseFiltersStore } from '~/entities/exercise';
+  UserExerciseListItem,
+  useUserExerciseFiltersStore
+} from '~/entities/exercise';
 import { useUserSettingsStore } from '~/entities/user';
+import { UserExercisesModal } from '~/widgets/exercise';
 
 const { actions, state } = useUserSettingsStore();
 const { reset: resetUserExerciseFilters } = useUserExerciseFiltersStore();
@@ -60,25 +45,6 @@ const openUserExercisesModal = async () => {
   await modal.onWillDismiss();
 
   resetUserExerciseFilters();
-};
-
-const onUserExerciseDelete = async (exerciseId: string) => {
-  const alert = await alertController.create({
-    header: 'Do you really want to remove your exercise?',
-    message: 'This action is potentially distructive',
-    buttons: [
-      'Cancel',
-      {
-        text: 'OK',
-        role: 'confirm',
-        handler: () => {
-          actions.deleteUserExercise(exerciseId);
-        }
-      }
-    ]
-  });
-
-  await alert.present();
 };
 
 onBeforeMount(() => {
