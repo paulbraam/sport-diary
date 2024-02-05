@@ -14,11 +14,9 @@ export const createTrainingByUserId = (
   data: CreateUserTrainingData,
   userId: string
 ): Promise<Training> => {
-  const { training } = data;
-
   return prisma.training.create({
     data: {
-      ...training,
+      ...data,
       User: {
         connect: {
           id: userId

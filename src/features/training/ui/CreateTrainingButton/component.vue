@@ -28,7 +28,7 @@ const emit = defineEmits<CreateTrainingButtonEmits>();
 
 const { actions, requests } = useTrainingStore();
 
-const error = computed(() => requests.createTraining.error);
+const error = computed(() => requests.createTraining.error as Error);
 const isLoading = computed(() => requests.createTraining.status === RequestStatus.PENDING);
 
 watch(

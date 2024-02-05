@@ -35,7 +35,7 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
       return data;
     } catch (error) {
       getTrainingsRequest.status = RequestStatus.FAILED;
-      getTrainingsRequest.error = error as Error;
+      getTrainingsRequest.error = error;
 
       return null;
     }
@@ -59,7 +59,7 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
       return data;
     } catch (error) {
       createTrainingRequest.status = RequestStatus.FAILED;
-      createTrainingRequest.error = error as Error;
+      createTrainingRequest.error = error;
 
       return null;
     }
@@ -82,7 +82,7 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
       return data;
     } catch (error) {
       getTrainingByIdRequest.status = RequestStatus.FAILED;
-      getTrainingByIdRequest.error = error as Error;
+      getTrainingByIdRequest.error = error;
 
       return null;
     }
