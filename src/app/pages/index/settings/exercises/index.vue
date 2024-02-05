@@ -1,18 +1,21 @@
 <template>
   <ion-page id="training-list">
     <ion-content color="light">
-      <ion-list>
+      <ion-list v-if="userExercises.length" inset>
         <ion-item-sliding v-for="exercise in userExercises" :key="exercise.id">
-          <ion-item button :detail="true">
+          <ion-item button detail>
             <ion-label>{{ exercise.name }}</ion-label>
           </ion-item>
-          <ion-item-options slot="end">
+          <ion-item-options slot="end" @ion-swipe="actions.deleteUserExercise(exercise.id)">
             <ion-item-option color="danger" :expandable="true">
               <ion-icon slot="icon-only" :icon="ioniconsTrash"></ion-icon>
             </ion-item-option>
           </ion-item-options>
         </ion-item-sliding>
       </ion-list>
+      <div v-else class="flex h-full">
+        <div class="my-auto w-full flex justify-center">No exercises so far</div>
+      </div>
       <ion-fab slot="fixed" vertical="bottom" horizontal="end">
         <ion-fab-button @click="openUserExercisesModal">
           <ion-icon :icon="ioniconsAdd"></ion-icon>
@@ -23,7 +26,17 @@
 </template>
 
 <script setup lang="ts">
-import { IonList, IonLabel, IonPage, IonContent, IonItem, modalController } from '@ionic/vue';
+import {
+  IonList,
+  IonLabel,
+  IonPage,
+  IonContent,
+  IonItem,
+  modalController,
+  IonItemSliding,
+  IonItemOptions,
+  IonItemOption
+} from '@ionic/vue';
 import { UserExercisesModal } from '~/entities/exercise';
 import { useUserSettingsStore } from '~/entities/user';
 

@@ -9,13 +9,45 @@ import type {
   UserSettingsWithExercises
 } from '~/server/api/user/settings/types';
 import type { UpdateUserExercisesResponse } from '~/server/api/user/settings/exercises/types';
+import type { DeleteUserExerciseResponse } from '~/server/api/user/settings/exercises/[id]/types';
 
 export const useUserSettingsStore = defineStore(USER_SETTINGS_STORE_NAME, () => {
   const getUserSettingsRequest = createRequestState<UserSettingsWithExercises>();
   const updateUserExercisesRequest = createRequestState<UserSettingsWithExercises['exercises']>();
+  const deleteUserExerciseRequest = createRequestState();
   const state = reactive<UserSettingsState>({
     ...USER_SETTINGS_INITIAL_STATE
   });
+
+  const deleteUserExercise = async (
+    exerciseId: string
+  ): Promise<DeleteUserExerciseResponse | null> => {
+    deleteUserExerciseRequest.status = RequestStatus.PENDING;
+    deleteUserExerciseRequest.error = null;
+
+    try {
+      const { data } = await request<DeleteUserExerciseResponse>(
+        `/api/user/settings/exercises/${exerciseId}`,
+        {
+          method: 'DELETE'
+        }
+      );
+
+      deleteUserExerciseRequest.status = RequestStatus.SUCCESS;
+      deleteUserExerciseRequest.data = data;
+
+      state.settings.exercises = state.settings.exercises.filter(
+        (exercise) => exercise.id !== data.id
+      );
+
+      return data;
+    } catch (error) {
+      deleteUserExerciseRequest.status = RequestStatus.FAILED;
+      deleteUserExerciseRequest.error = error;
+
+      return null;
+    }
+  };
 
   const updateUserExercises = async (
     exerciseIds: string[]
@@ -72,11 +104,13 @@ export const useUserSettingsStore = defineStore(USER_SETTINGS_STORE_NAME, () => 
     state,
     requests: computed(() => ({
       getUserSettings: getUserSettingsRequest,
-      updateUserExercises: updateUserExercisesRequest
+      updateUserExercises: updateUserExercisesRequest,
+      deleteUserExercise: deleteUserExerciseRequest
     })),
     actions: {
       getUserSettings,
-      updateUserExercises
+      updateUserExercises,
+      deleteUserExercise
     }
   };
 });
