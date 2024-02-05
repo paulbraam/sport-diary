@@ -30,7 +30,14 @@ export const createOrRegisterUserAndAccount = async (
       ...payload.account,
       user: {
         create: {
-          ...payload.user
+          ...payload.user,
+          settings: {
+            create: {
+              exercises: {
+                create: []
+              }
+            }
+          }
         }
       }
     },

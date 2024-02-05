@@ -1,0 +1,1 @@
+export const DEFAULT_EXERCISES_LIMIT = 10;

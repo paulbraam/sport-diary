@@ -1,1 +1,1 @@
-export { default as TrainingListPage } from './TrainingListPage.vue';
+export { default as TrainingListPage } from './component.vue';

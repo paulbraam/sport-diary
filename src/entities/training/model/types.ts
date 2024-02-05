@@ -9,24 +9,14 @@ type TrainingValidationSchema = PickWithOptional<
   'startedAt' | 'endedAt' | 'comment'
 >;
 
-type UserParamsValidationSchema = PickWithOptional<
-  CreateUserTrainingRequestBody['userParams'],
-  'weight' | 'heartRate'
->;
-
 export interface TrainingFormValidationSchema {
   training: TrainingValidationSchema;
-  userParams: UserParamsValidationSchema;
 }
 
 export type ITrainingForm = {
   training: {
     startedAt: string;
     endedAt: string;
-  };
-  userParams: {
-    weight: number;
-    heartRate: number;
   };
 };
 
