@@ -23,10 +23,7 @@
 
 <script setup lang="ts">
 import { IonList, IonPage, IonContent, modalController } from '@ionic/vue';
-import {
-  UserExerciseListItem,
-  useUserExerciseFiltersStore
-} from '~/entities/exercise';
+import { UserExerciseListItem, useUserExerciseFiltersStore } from '~/entities/exercise';
 import { useUserSettingsStore } from '~/entities/user';
 import { UserExercisesModal } from '~/widgets/exercise';
 

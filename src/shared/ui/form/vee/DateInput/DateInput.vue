@@ -1,5 +1,5 @@
 <template>
-  <ion-input :id="name" v-model="value" v-bind="$attrs" />
+  <ion-input :id="name" v-model="value" v-bind="$attrs" @click.prevent />
   <ion-modal
     v-model="value"
     :trigger="name"

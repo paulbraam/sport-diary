@@ -4,21 +4,12 @@ import type { PickWithOptional } from '~/shared/lib/types';
 
 // form
 
-type TrainingValidationSchema = PickWithOptional<
-  CreateUserTrainingRequestBody['training'],
+export type TrainingFormValidationSchema = PickWithOptional<
+  CreateUserTrainingRequestBody,
   'startedAt' | 'endedAt' | 'comment'
 >;
 
-export interface TrainingFormValidationSchema {
-  training: TrainingValidationSchema;
-}
-
-export type ITrainingForm = {
-  training: {
-    startedAt: string;
-    endedAt: string;
-  };
-};
+export type ITrainingForm = TrainingFormValidationSchema;
 
 // store
 

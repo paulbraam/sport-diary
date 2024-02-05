@@ -12,22 +12,24 @@
 
 <script setup lang="ts">
 import { IonButton, IonToast, useIonRouter } from '@ionic/vue';
-import type { Training } from '@prisma/client';
-import { useTrainingStore, type ITrainingForm } from '~/entities/training';
+import type {
+  CreateTrainingButtonEmits,
+  CreateTrainingButtonProps
+} from './CreateTrainingButton.types';
+import { useTrainingStore } from '~/entities/training';
 import { RequestStatus } from '~/shared/lib/const';
 
 const router = useIonRouter();
 
-const props = withDefaults(defineProps<{ values: ITrainingForm | null }>(), {
+const props = withDefaults(defineProps<CreateTrainingButtonProps>(), {
   values: null
 });
+const emit = defineEmits<CreateTrainingButtonEmits>();
 
 const { actions, requests } = useTrainingStore();
 
-const error = requests.createTraining.error as Error | null;
-const isLoading = requests.createTraining.status === RequestStatus.PENDING;
-
-const emit = defineEmits<{ (eventName: 'success', value: Training): void }>();
+const error = computed(() => requests.createTraining.error as Error);
+const isLoading = computed(() => requests.createTraining.status === RequestStatus.PENDING);
 
 watch(
   () => props.values,
