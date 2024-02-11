@@ -92,7 +92,7 @@ model TrainingSet {
   trainingId  String?
   repetitions TrainingRepetition[]
   exercise    CatalogExercise      @relation(fields: [exerciseId], references: [id])
-  rest        Int
+  rest        Int?
   exerciseId  String
 }
 

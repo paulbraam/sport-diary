@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia';
-import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
+import { GoogleAuth, type Authentication } from '@codetrix-studio/capacitor-google-auth';
 import { mapGoogleUserToAccount, mapGoogleUserToUser } from '../lib';
 import { AUTH_STORE_NAME, AuthProvider, INITIAL_AUTH_STATE } from './constants';
 import type { AuthState } from './types';
-import type { SignInResponse } from '~/server/api/auth/signin/types';
+import type { SignInRequestBody, SignInResponse } from '~/server/api/auth/signin/types';
 import type { NullableObjectValues } from '~/shared/lib/types/common';
 import type { RefreshResponse } from '~/server/api/auth/refresh/types';
 import { RequestStatus } from '~/shared/lib/const';
@@ -29,7 +29,7 @@ export const useAuthStore = defineStore(AUTH_STORE_NAME, () => {
         case AuthProvider.GOOGLE: {
           const googleUser = await GoogleAuth.signIn();
 
-          const { data } = await request<SignInResponse>('/api/auth/signin', {
+          const { data } = await request<SignInResponse, SignInRequestBody>('/api/auth/signin', {
             method: 'POST',
             data: {
               account: mapGoogleUserToAccount(googleUser),
@@ -69,7 +69,7 @@ export const useAuthStore = defineStore(AUTH_STORE_NAME, () => {
         case AuthProvider.GOOGLE: {
           const authentication = await GoogleAuth.refresh();
 
-          const { data } = await request<RefreshResponse>('/api/auth/refresh', {
+          const { data } = await request<RefreshResponse, Authentication>('/api/auth/refresh', {
             method: 'POST',
             data: authentication
           });

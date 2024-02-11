@@ -1,9 +1,11 @@
 import type { TrainingsState } from './types';
-import type { NullableObjectValues } from '~/shared/lib/types';
 
-export const INITIAL_TRAININGS_STATE: NullableObjectValues<TrainingsState> = {
+export const INITIAL_TRAININGS_STATE: TrainingsState = {
   trainings: [],
-  currentTraining: null
+  currentTrainings: {},
+  currentTrainingSets: {}
 };
 
 export const TRAININGS_STORE_NAME = 'trainings';
+
+export const TRAINING_SET_FORM_ID = 'training-set-form';

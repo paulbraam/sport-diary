@@ -1,4 +1,5 @@
 import type { Training } from '@prisma/client';
+import type { TrainingSetWithExercise } from '~/server/api/trainings/sets/types';
 import type { CreateUserTrainingRequestBody } from '~/server/api/trainings/types';
 import type { PickWithOptional } from '~/shared/lib/types';
 
@@ -15,5 +16,6 @@ export type ITrainingForm = TrainingFormValidationSchema;
 
 export interface TrainingsState {
   trainings: Training[];
-  currentTraining: Training;
+  currentTrainings: Record<string, Training>;
+  currentTrainingSets: Record<string, TrainingSetWithExercise[]>;
 }

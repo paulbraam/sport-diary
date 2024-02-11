@@ -8,7 +8,10 @@ import type {
   GetUserSettingsResponse,
   UserSettingsWithExercises
 } from '~/server/api/user/settings/types';
-import type { UpdateUserExercisesResponse } from '~/server/api/user/settings/exercises/types';
+import type {
+  UpdateUserExercisesRequestBody,
+  UpdateUserExercisesResponse
+} from '~/server/api/user/settings/exercises/types';
 import type { DeleteUserExerciseResponse } from '~/server/api/user/settings/exercises/[id]/types';
 
 export const useUserSettingsStore = defineStore(USER_SETTINGS_STORE_NAME, () => {
@@ -56,12 +59,15 @@ export const useUserSettingsStore = defineStore(USER_SETTINGS_STORE_NAME, () => 
     updateUserExercisesRequest.error = null;
 
     try {
-      const { data } = await request<UpdateUserExercisesResponse>('/api/user/settings/exercises', {
-        method: 'PUT',
-        data: {
-          exerciseIds
+      const { data } = await request<UpdateUserExercisesResponse, UpdateUserExercisesRequestBody>(
+        '/api/user/settings/exercises',
+        {
+          method: 'PUT',
+          data: {
+            exerciseIds
+          }
         }
-      });
+      );
 
       updateUserExercisesRequest.status = RequestStatus.SUCCESS;
       updateUserExercisesRequest.data = data;

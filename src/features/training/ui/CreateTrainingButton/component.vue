@@ -12,10 +12,7 @@
 
 <script setup lang="ts">
 import { IonButton, IonToast, useIonRouter } from '@ionic/vue';
-import type {
-  CreateTrainingButtonEmits,
-  CreateTrainingButtonProps
-} from './CreateTrainingButton.types';
+import type { CreateTrainingButtonEmits, CreateTrainingButtonProps } from './types';
 import { useTrainingStore } from '~/entities/training';
 import { RequestStatus } from '~/shared/lib/const';
 
