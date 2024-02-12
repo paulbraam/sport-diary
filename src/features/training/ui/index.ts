@@ -1,3 +1,3 @@
 export * from './CreateTrainingButton';
-export * from './AddTrainingSetButton';
-export * from './CreateTrainingSetSubmitButton';
+export * from './AddTrainingExerciseButton';
+export * from './CreateTrainingExerciseSubmitButton';

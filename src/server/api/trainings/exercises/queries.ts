@@ -1,9 +1,9 @@
-import { CreateTrainingSetRequestBody } from './types';
+import { CreateTrainingExerciseRequestBody } from './types';
 import { prisma } from '~/server/db';
 
-export const createTrainingSet = (payload: CreateTrainingSetRequestBody) => {
+export const createTrainingExercise = (payload: CreateTrainingExerciseRequestBody) => {
   const { exerciseId, trainingId } = payload;
-  return prisma.trainingSet.create({
+  return prisma.trainingExercise.create({
     data: {
       exercise: {
         connect: {
@@ -22,8 +22,8 @@ export const createTrainingSet = (payload: CreateTrainingSetRequestBody) => {
   });
 };
 
-export const getTrainingSetsByTrainingId = (trainingId: string) => {
-  return prisma.trainingSet.findMany({
+export const getTrainingExercisesByTrainingId = (trainingId: string) => {
+  return prisma.trainingExercise.findMany({
     where: {
       Training: {
         id: trainingId

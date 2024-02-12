@@ -1,5 +1,5 @@
 <template>
-  <form :id="TRAINING_SET_FORM_ID" class="h-full" :novalidate="true" @submit="onSubmit">
+  <form :id="TRAINING_EXERCISE_FORM_ID" class="h-full" :novalidate="true" @submit="onSubmit">
     <ion-list>
       <ion-item>
         <select-input name="exerciseId" label="Упражнение" :options="userExerciseSelectOptions">
@@ -11,13 +11,13 @@
 
 <script setup lang="ts">
 import { IonList, IonItem } from '@ionic/vue';
-import { TRAINING_SET_FORM_ID } from '../../model/const';
-import { trainingSetFormValidationSchema } from './const';
-import type { TrainingSetFormEmits } from './types';
+import { TRAINING_EXERCISE_FORM_ID } from '../../model/const';
+import { trainingExerciseFormValidationSchema } from './const';
+import type { TrainingExerciseFormEmits } from './types';
 import { useUserSettingsStore } from '~/entities/user';
 import { SelectInput } from '~/shared/ui/form';
 
-const emit = defineEmits<TrainingSetFormEmits>();
+const emit = defineEmits<TrainingExerciseFormEmits>();
 
 const { state, actions } = useUserSettingsStore();
 
@@ -29,7 +29,7 @@ const userExerciseSelectOptions = computed(() =>
 );
 
 const { handleSubmit } = useForm({
-  validationSchema: trainingSetFormValidationSchema
+  validationSchema: trainingExerciseFormValidationSchema
 });
 
 const onSubmit = handleSubmit((values) => {

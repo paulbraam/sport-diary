@@ -1,1 +1,1 @@
-export * from './CreateTrainingSetModal';
+export * from './CreateTrainingExerciseModal';

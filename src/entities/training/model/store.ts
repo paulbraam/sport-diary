@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import type { Training, TrainingSet } from '@prisma/client';
+import type { Training } from '@prisma/client';
 import type { TrainingsState } from './types';
 import { INITIAL_TRAININGS_STATE, TRAININGS_STORE_NAME } from './const';
 import { RequestStatus } from '~/shared/lib/const';
@@ -11,18 +11,19 @@ import type {
 import { request } from '~/shared/api';
 import { createRequestState } from '~/shared/lib/utils';
 import type {
-  CreateTrainingSetRequestBody,
-  CreateTrainingSetResponse,
-  GetTrainingSetsRequestParams,
-  GetTrainingSetsResponse
-} from '~/server/api/trainings/sets/types';
+  CreateTrainingExerciseRequestBody,
+  CreateTrainingExerciseResponse,
+  GetTrainingExercisesRequestParams,
+  GetTrainingExercisesResponse,
+  TrainingExerciseWithCatalogExercise
+} from '~/server/api/trainings/exercises/types';
 
 export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
   const createTrainingRequest = createRequestState<Training>();
   const getTrainingByIdRequest = createRequestState<Training>();
   const getTrainingsRequest = createRequestState<Training[]>();
-  const createTrainingSetRequest = createRequestState<TrainingSet>();
-  const getTrainingSetsRequest = createRequestState<TrainingSet[]>();
+  const createTrainingExerciseRequest = createRequestState<TrainingExerciseWithCatalogExercise>();
+  const getTrainingExercisesRequest = createRequestState<TrainingExerciseWithCatalogExercise[]>();
   const state = reactive<TrainingsState>({ ...INITIAL_TRAININGS_STATE });
 
   const getTrainings = async (): Promise<GetUserTrainingsResponse | null> => {
@@ -100,57 +101,57 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
     }
   };
 
-  const createTrainingSet = async (
-    payload: CreateTrainingSetRequestBody
-  ): Promise<CreateTrainingSetResponse | null> => {
-    createTrainingSetRequest.status = RequestStatus.PENDING;
-    createTrainingSetRequest.error = null;
+  const createTrainingExercise = async (
+    payload: CreateTrainingExerciseRequestBody
+  ): Promise<CreateTrainingExerciseResponse | null> => {
+    createTrainingExerciseRequest.status = RequestStatus.PENDING;
+    createTrainingExerciseRequest.error = null;
 
     try {
-      const { data } = await request<CreateTrainingSetResponse, CreateTrainingSetRequestBody>(
-        `/api/trainings/sets`,
-        {
-          method: 'POST',
-          data: payload
-        }
-      );
+      const { data } = await request<
+        CreateTrainingExerciseResponse,
+        CreateTrainingExerciseRequestBody
+      >(`/api/trainings/sets`, {
+        method: 'POST',
+        data: payload
+      });
 
-      const currentTrainingSets = state.currentTrainingSets[payload.trainingId] || [];
-      state.currentTrainingSets[payload.trainingId] = [...currentTrainingSets, data];
+      const currentTrainingExercises = state.currentTrainingExercises[payload.trainingId] || [];
+      state.currentTrainingExercises[payload.trainingId] = [...currentTrainingExercises, data];
 
-      createTrainingSetRequest.status = RequestStatus.SUCCESS;
-      createTrainingSetRequest.data = data;
+      createTrainingExerciseRequest.status = RequestStatus.SUCCESS;
+      createTrainingExerciseRequest.data = data;
 
       return data;
     } catch (error) {
-      createTrainingSetRequest.status = RequestStatus.FAILED;
-      createTrainingSetRequest.error = error;
+      createTrainingExerciseRequest.status = RequestStatus.FAILED;
+      createTrainingExerciseRequest.error = error;
 
       return null;
     }
   };
 
-  const getTrainingSets = async (
-    params: GetTrainingSetsRequestParams
-  ): Promise<GetTrainingSetsResponse | null> => {
-    getTrainingSetsRequest.status = RequestStatus.PENDING;
-    getTrainingSetsRequest.error = null;
+  const getTrainingExercises = async (
+    params: GetTrainingExercisesRequestParams
+  ): Promise<GetTrainingExercisesResponse | null> => {
+    getTrainingExercisesRequest.status = RequestStatus.PENDING;
+    getTrainingExercisesRequest.error = null;
 
     try {
-      const { data } = await request<GetTrainingSetsResponse>(`/api/trainings/sets`, {
+      const { data } = await request<GetTrainingExercisesResponse>(`/api/trainings/sets`, {
         method: 'GET',
         params
       });
 
-      state.currentTrainingSets[params.trainingId] = data;
+      state.currentTrainingExercises[params.trainingId] = data;
 
-      getTrainingSetsRequest.status = RequestStatus.SUCCESS;
-      getTrainingSetsRequest.data = data;
+      getTrainingExercisesRequest.status = RequestStatus.SUCCESS;
+      getTrainingExercisesRequest.data = data;
 
       return data;
     } catch (error) {
-      getTrainingSetsRequest.status = RequestStatus.FAILED;
-      getTrainingSetsRequest.error = error;
+      getTrainingExercisesRequest.status = RequestStatus.FAILED;
+      getTrainingExercisesRequest.error = error;
 
       return null;
     }
@@ -162,15 +163,15 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
       createTraining: createTrainingRequest,
       getTrainings: getTrainingsRequest,
       getTrainingById: getTrainingByIdRequest,
-      createTrainingSet: createTrainingSetRequest,
-      getTrainingSets: getTrainingSetsRequest
+      createTrainingExercise: createTrainingExerciseRequest,
+      getTrainingExercises: getTrainingExercisesRequest
     })),
     actions: {
       createTraining,
       getTrainings,
       getTrainingById,
-      createTrainingSet,
-      getTrainingSets
+      createTrainingExercise,
+      getTrainingExercises
     }
   };
 });
