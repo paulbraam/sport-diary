@@ -99,10 +99,11 @@ model TrainingExercise {
 model TrainingSet {
   id                 String            @id @default(cuid())
   setId              String?
-  count              Int
-  value              Int
-  intensity          Intensity
-  rest               Int
+  reps               Int?
+  duration           Int?
+  weight             Int?
+  intensity          Intensity?
+  rest               Int?
   TrainingExercise   TrainingExercise? @relation(fields: [trainingExerciseId], references: [id])
   trainingExerciseId String?
   CatalogExercise    CatalogExercise?  @relation(fields: [catalogExerciseId], references: [id])

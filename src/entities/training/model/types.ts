@@ -1,5 +1,5 @@
 import type { Training } from '@prisma/client';
-import type { TrainingExerciseWithCatalogExercise } from '~/server/api/trainings/exercises/types';
+import type { TrainingExerciseWithCatalogExerciseAndSets } from '~/server/api/trainings/exercises/types';
 import type { CreateUserTrainingRequestBody } from '~/server/api/trainings/types';
 import type { PickWithOptional } from '~/shared/lib/types';
 
@@ -17,5 +17,8 @@ export type ITrainingForm = TrainingFormValidationSchema;
 export interface TrainingsState {
   trainings: Training[];
   currentTrainings: Record<string, Training | undefined>;
-  currentTrainingExercises: Record<string, TrainingExerciseWithCatalogExercise[] | undefined>;
+  currentTrainingExercises: Record<
+    string,
+    TrainingExerciseWithCatalogExerciseAndSets[] | undefined
+  >;
 }

@@ -17,7 +17,8 @@ export const createTrainingExercise = (payload: CreateTrainingExerciseRequestBod
       }
     },
     include: {
-      exercise: true
+      exercise: true,
+      sets: true
     }
   });
 };
@@ -30,7 +31,8 @@ export const getTrainingExercisesByTrainingId = (trainingId: string) => {
       }
     },
     include: {
-      exercise: true
+      exercise: true,
+      sets: true
     }
   });
 };

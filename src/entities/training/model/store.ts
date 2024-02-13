@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import type { Training } from '@prisma/client';
+import { type TrainingSet, type Training } from '@prisma/client';
 import type { TrainingsState } from './types';
 import { INITIAL_TRAININGS_STATE, TRAININGS_STORE_NAME } from './const';
 import { RequestStatus } from '~/shared/lib/const';
@@ -15,15 +15,25 @@ import type {
   CreateTrainingExerciseResponse,
   GetTrainingExercisesRequestParams,
   GetTrainingExercisesResponse,
-  TrainingExerciseWithCatalogExercise
+  TrainingExerciseWithCatalogExerciseAndSets
 } from '~/server/api/trainings/exercises/types';
+import type {
+  CreateTrainingSetRequestBody,
+  CreateTrainingSetResponse
+} from '~/server/api/trainings/sets/types';
+import type { GetTrainingExerciseResponse } from '~/server/api/trainings/exercises/[id]/types';
 
 export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
   const createTrainingRequest = createRequestState<Training>();
   const getTrainingByIdRequest = createRequestState<Training>();
   const getTrainingsRequest = createRequestState<Training[]>();
-  const createTrainingExerciseRequest = createRequestState<TrainingExerciseWithCatalogExercise>();
-  const getTrainingExercisesRequest = createRequestState<TrainingExerciseWithCatalogExercise[]>();
+  const createTrainingExerciseRequest =
+    createRequestState<TrainingExerciseWithCatalogExerciseAndSets>();
+  const getTrainingExercisesRequest =
+    createRequestState<TrainingExerciseWithCatalogExerciseAndSets[]>();
+  const getTrainingExerciseByIdRequest =
+    createRequestState<TrainingExerciseWithCatalogExerciseAndSets>();
+  const createTrainingSetRequest = createRequestState<TrainingSet>();
   const state = reactive<TrainingsState>({ ...INITIAL_TRAININGS_STATE });
 
   const getTrainings = async (): Promise<GetUserTrainingsResponse | null> => {
@@ -157,6 +167,69 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
     }
   };
 
+  const getTrainingExerciseById = async (
+    exerciseId: string
+  ): Promise<GetTrainingExerciseResponse | null> => {
+    getTrainingExerciseByIdRequest.status = RequestStatus.PENDING;
+    getTrainingExerciseByIdRequest.error = null;
+
+    try {
+      const { data } = await request<GetTrainingExerciseResponse>(
+        `/api/trainings/exercises/${exerciseId}`,
+        {
+          method: 'GET'
+        }
+      );
+
+      const trainingId = data.trainingId;
+
+      if (trainingId) {
+        const currentTrainingExercises = state.currentTrainingExercises[trainingId] || [];
+        const filteredExercisesList = currentTrainingExercises.filter(
+          (item) => item.id !== data.id
+        );
+        state.currentTrainingExercises[trainingId] = [...filteredExercisesList, data];
+      }
+
+      getTrainingExerciseByIdRequest.status = RequestStatus.SUCCESS;
+      getTrainingExerciseByIdRequest.data = data;
+
+      return data;
+    } catch (error) {
+      getTrainingExerciseByIdRequest.status = RequestStatus.FAILED;
+      getTrainingExerciseByIdRequest.error = error;
+
+      return null;
+    }
+  };
+
+  const createTrainingSet = async (
+    payload: CreateTrainingSetRequestBody
+  ): Promise<CreateTrainingSetResponse | null> => {
+    createTrainingSetRequest.status = RequestStatus.PENDING;
+    createTrainingSetRequest.error = null;
+
+    try {
+      const { data } = await request<CreateTrainingSetResponse, CreateTrainingSetRequestBody>(
+        `/api/trainings/sets`,
+        {
+          method: 'POST',
+          data: payload
+        }
+      );
+
+      createTrainingSetRequest.status = RequestStatus.SUCCESS;
+      createTrainingSetRequest.data = data;
+
+      return data;
+    } catch (error) {
+      createTrainingSetRequest.status = RequestStatus.FAILED;
+      createTrainingSetRequest.error = error;
+
+      return null;
+    }
+  };
+
   return {
     state,
     requests: computed(() => ({
@@ -164,14 +237,18 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
       getTrainings: getTrainingsRequest,
       getTrainingById: getTrainingByIdRequest,
       createTrainingExercise: createTrainingExerciseRequest,
-      getTrainingExercises: getTrainingExercisesRequest
+      getTrainingExercises: getTrainingExercisesRequest,
+      createTrainingSet: createTrainingSetRequest,
+      getTrainingExerciseById: getTrainingExerciseByIdRequest
     })),
     actions: {
       createTraining,
       getTrainings,
       getTrainingById,
       createTrainingExercise,
-      getTrainingExercises
+      getTrainingExercises,
+      createTrainingSet,
+      getTrainingExerciseById
     }
   };
 });
