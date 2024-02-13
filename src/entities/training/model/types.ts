@@ -15,10 +15,9 @@ export type ITrainingForm = TrainingFormValidationSchema;
 // store
 
 export interface TrainingsState {
-  trainings: Training[];
-  currentTrainings: Record<string, Training | undefined>;
-  currentTrainingExercises: Record<
-    string,
-    TrainingExerciseWithCatalogExerciseAndSets[] | undefined
+  trainings: Map<Training['id'], Training>;
+  trainingExercises: Map<
+    TrainingExerciseWithCatalogExerciseAndSets['id'],
+    TrainingExerciseWithCatalogExerciseAndSets
   >;
 }

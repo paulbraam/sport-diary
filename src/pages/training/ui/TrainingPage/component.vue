@@ -26,12 +26,17 @@ const trainingId = route.params.id as string;
 
 const { state, actions } = useTrainingStore();
 
-const training = computed(() => state.currentTrainings[trainingId]);
+const training = computed(() => state.trainings.get(trainingId));
 
-const trainingExercises = computed(() => state.currentTrainingExercises[trainingId] || []);
+const trainingExercises = computed(() => {
+  return [...state.trainingExercises.values()].filter((item) => item.trainingId === trainingId);
+});
 
-onIonViewWillEnter(() => {
-  actions.getTrainingById(trainingId);
-  actions.getTrainingExercises({ trainingId });
+onIonViewWillEnter(async () => {
+  const training = await actions.getTrainingById(trainingId);
+  if (training) actions.updateTraining(training);
+
+  const trainingExercises = await actions.getTrainingExercises({ trainingId });
+  if (trainingExercises) actions.setTrainingExercises(trainingExercises);
 });
 </script>

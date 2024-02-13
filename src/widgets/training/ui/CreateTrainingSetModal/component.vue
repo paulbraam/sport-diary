@@ -37,13 +37,15 @@ const closeModal = () => {
 };
 
 const onSubmit = async (data: TrainingSetPayload) => {
-  const response = await actions.createTrainingSet({
+  const trainingSet = await actions.createTrainingSet({
     trainingExerciseId,
     data
   });
 
-  if (response) {
-    await actions.getTrainingExerciseById(trainingExerciseId);
+  if (trainingSet) {
+    const trainingExercise = await actions.getTrainingExerciseById(trainingExerciseId);
+    if (trainingExercise) actions.updateTrainingExercise(trainingExercise);
+
     await modalController.dismiss(null, 'apply');
   }
 };

@@ -37,11 +37,14 @@ const closeModal = () => {
 };
 
 const onSubmit = async ({ exerciseId }: Pick<CreateTrainingExerciseRequestBody, 'exerciseId'>) => {
-  const response = await actions.createTrainingExercise({
+  const trainingExercise = await actions.createTrainingExercise({
     trainingId,
     exerciseId
   });
 
-  if (response) modalController.dismiss(null, 'apply');
+  if (trainingExercise) {
+    actions.updateTrainingExercise(trainingExercise);
+    modalController.dismiss(null, 'apply');
+  }
 };
 </script>

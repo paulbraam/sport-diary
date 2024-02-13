@@ -36,6 +36,40 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
   const createTrainingSetRequest = createRequestState<TrainingSet>();
   const state = reactive<TrainingsState>({ ...INITIAL_TRAININGS_STATE });
 
+  // state updates
+
+  const setTrainings = (trainings: Training[]) => {
+    state.trainings = trainings.reduce((acc, item) => {
+      acc.set(item.id, item);
+      return acc;
+    }, new Map());
+  };
+
+  const updateTraining = (training: Training) => {
+    state.trainings.set(training.id, training);
+  };
+
+  const removeTraining = (trainingId: string) => {
+    state.trainings.delete(trainingId);
+  };
+
+  const setTrainingExercises = (exercises: TrainingExerciseWithCatalogExerciseAndSets[]) => {
+    state.trainingExercises = exercises.reduce((acc, item) => {
+      acc.set(item.id, item);
+      return acc;
+    }, new Map());
+  };
+
+  const updateTrainingExercise = (exercise: TrainingExerciseWithCatalogExerciseAndSets) => {
+    state.trainingExercises.set(exercise.id, exercise);
+  };
+
+  const removeTrainingExercise = (exerciseId: string) => {
+    state.trainingExercises.delete(exerciseId);
+  };
+
+  // async actions
+
   const getTrainings = async (): Promise<GetUserTrainingsResponse | null> => {
     getTrainingsRequest.status = RequestStatus.PENDING;
     getTrainingsRequest.error = null;
@@ -47,8 +81,6 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
 
       getTrainingsRequest.status = RequestStatus.SUCCESS;
       getTrainingsRequest.data = data;
-
-      state.trainings = data;
 
       return data;
     } catch (error) {
@@ -100,8 +132,6 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
       getTrainingByIdRequest.status = RequestStatus.SUCCESS;
       getTrainingByIdRequest.data = data;
 
-      state.currentTrainings[trainingId] = data;
-
       return data;
     } catch (error) {
       getTrainingByIdRequest.status = RequestStatus.FAILED;
@@ -126,9 +156,6 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
         data: payload
       });
 
-      const currentTrainingExercises = state.currentTrainingExercises[payload.trainingId] || [];
-      state.currentTrainingExercises[payload.trainingId] = [...currentTrainingExercises, data];
-
       createTrainingExerciseRequest.status = RequestStatus.SUCCESS;
       createTrainingExerciseRequest.data = data;
 
@@ -152,8 +179,6 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
         method: 'GET',
         params
       });
-
-      state.currentTrainingExercises[params.trainingId] = data;
 
       getTrainingExercisesRequest.status = RequestStatus.SUCCESS;
       getTrainingExercisesRequest.data = data;
@@ -180,16 +205,6 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
           method: 'GET'
         }
       );
-
-      const trainingId = data.trainingId;
-
-      if (trainingId) {
-        const currentTrainingExercises = state.currentTrainingExercises[trainingId] || [];
-        const filteredExercisesList = currentTrainingExercises.filter(
-          (item) => item.id !== data.id
-        );
-        state.currentTrainingExercises[trainingId] = [...filteredExercisesList, data];
-      }
 
       getTrainingExerciseByIdRequest.status = RequestStatus.SUCCESS;
       getTrainingExerciseByIdRequest.data = data;
@@ -242,6 +257,12 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
       getTrainingExerciseById: getTrainingExerciseByIdRequest
     })),
     actions: {
+      setTrainings,
+      updateTraining,
+      removeTraining,
+      setTrainingExercises,
+      updateTrainingExercise,
+      removeTrainingExercise,
       createTraining,
       getTrainings,
       getTrainingById,

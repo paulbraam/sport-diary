@@ -2,7 +2,7 @@
   <ion-page id="training-list">
     <ion-content color="light">
       <ion-list :inset="true">
-        <ion-item-sliding v-for="training in state.trainings" :key="training.id">
+        <ion-item-sliding v-for="training in trainings" :key="training.id">
           <ion-item button :detail="true" :router-link="`/trainings/${training.id}`">
             <ion-label>{{ dayjs(training.startedAt).format('YYYY/MM/DD') }}</ion-label>
           </ion-item>
@@ -44,7 +44,10 @@ import { useTrainingStore } from '~/entities/training';
 
 const { actions, state } = useTrainingStore();
 
-onIonViewWillEnter(() => {
-  actions.getTrainings();
+const trainings = computed(() => [...state.trainings.values()]);
+
+onIonViewWillEnter(async () => {
+  const trainings = await actions.getTrainings();
+  if (trainings) actions.setTrainings(trainings);
 });
 </script>
