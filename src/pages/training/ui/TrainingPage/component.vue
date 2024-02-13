@@ -3,7 +3,7 @@
     <ion-content>
       <training-card v-if="training" :training="training"></training-card>
       <ion-title>Training exercises</ion-title>
-      <div v-if="trainingExercises">
+      <div v-if="trainingExercises.length">
         <training-exercise-card
           v-for="trainingExercise in trainingExercises"
           :key="trainingExercise.id"
@@ -28,7 +28,7 @@ const { state, actions } = useTrainingStore();
 
 const training = computed(() => state.currentTrainings[trainingId]);
 
-const trainingExercises = computed(() => state.currentTrainingExercises[trainingId]);
+const trainingExercises = computed(() => state.currentTrainingExercises[trainingId] || []);
 
 onIonViewWillEnter(() => {
   actions.getTrainingById(trainingId);

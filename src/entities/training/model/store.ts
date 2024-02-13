@@ -111,7 +111,7 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
       const { data } = await request<
         CreateTrainingExerciseResponse,
         CreateTrainingExerciseRequestBody
-      >(`/api/trainings/sets`, {
+      >(`/api/trainings/exercises`, {
         method: 'POST',
         data: payload
       });
@@ -138,7 +138,7 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
     getTrainingExercisesRequest.error = null;
 
     try {
-      const { data } = await request<GetTrainingExercisesResponse>(`/api/trainings/sets`, {
+      const { data } = await request<GetTrainingExercisesResponse>(`/api/trainings/exercises`, {
         method: 'GET',
         params
       });
