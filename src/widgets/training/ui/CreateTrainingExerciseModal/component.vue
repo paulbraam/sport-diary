@@ -43,7 +43,7 @@ const onSubmit = async ({ exerciseId }: Pick<CreateTrainingExerciseRequestBody, 
   });
 
   if (trainingExercise) {
-    actions.updateTrainingExercise(trainingExercise);
+    actions.addTrainingExerciseToState(trainingExercise);
     modalController.dismiss(null, 'apply');
   }
 };

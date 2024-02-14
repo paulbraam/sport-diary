@@ -34,9 +34,9 @@ const trainingExercises = computed(() => {
 
 onIonViewWillEnter(async () => {
   const training = await actions.getTrainingById(trainingId);
-  if (training) actions.updateTraining(training);
+  if (training) actions.addTrainingToState(training);
 
   const trainingExercises = await actions.getTrainingExercises({ trainingId });
-  if (trainingExercises) actions.setTrainingExercises(trainingExercises);
+  if (trainingExercises) actions.setTrainingExercisesState(trainingExercises);
 });
 </script>

@@ -48,6 +48,6 @@ const trainings = computed(() => [...state.trainings.values()]);
 
 onIonViewWillEnter(async () => {
   const trainings = await actions.getTrainings();
-  if (trainings) actions.setTrainings(trainings);
+  if (trainings) actions.setTrainingsState(trainings);
 });
 </script>

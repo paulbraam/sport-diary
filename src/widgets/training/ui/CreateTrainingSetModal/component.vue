@@ -44,7 +44,7 @@ const onSubmit = async (data: TrainingSetPayload) => {
 
   if (trainingSet) {
     const trainingExercise = await actions.getTrainingExerciseById(trainingExerciseId);
-    if (trainingExercise) actions.updateTrainingExercise(trainingExercise);
+    if (trainingExercise) actions.addTrainingExerciseToState(trainingExercise);
 
     await modalController.dismiss(null, 'apply');
   }

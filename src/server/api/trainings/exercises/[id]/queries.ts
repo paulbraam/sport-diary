@@ -20,3 +20,17 @@ export const getTrainingExerciseById = async (
 
   return trainingExercise;
 };
+
+export const deleteTrainingExerciseById = (
+  id: string
+): Promise<TrainingExerciseWithCatalogExerciseAndSets> => {
+  return prisma.trainingExercise.delete({
+    where: {
+      id
+    },
+    include: {
+      exercise: true,
+      sets: true
+    }
+  });
+};

@@ -21,7 +21,10 @@ import type {
   CreateTrainingSetRequestBody,
   CreateTrainingSetResponse
 } from '~/server/api/trainings/sets/types';
-import type { GetTrainingExerciseResponse } from '~/server/api/trainings/exercises/[id]/types';
+import type {
+  DeleteTrainingExerciseResponse,
+  GetTrainingExerciseResponse
+} from '~/server/api/trainings/exercises/[id]/types';
 
 export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
   const createTrainingRequest = createRequestState<Training>();
@@ -34,37 +37,39 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
   const getTrainingExerciseByIdRequest =
     createRequestState<TrainingExerciseWithCatalogExerciseAndSets>();
   const createTrainingSetRequest = createRequestState<TrainingSet>();
+  const deleteTrainingExerciseByIdRequest =
+    createRequestState<TrainingExerciseWithCatalogExerciseAndSets>();
   const state = reactive<TrainingsState>({ ...INITIAL_TRAININGS_STATE });
 
   // state updates
 
-  const setTrainings = (trainings: Training[]) => {
+  const setTrainingsState = (trainings: Training[]) => {
     state.trainings = trainings.reduce((acc, item) => {
       acc.set(item.id, item);
       return acc;
     }, new Map());
   };
 
-  const updateTraining = (training: Training) => {
+  const addTrainingToState = (training: Training) => {
     state.trainings.set(training.id, training);
   };
 
-  const removeTraining = (trainingId: string) => {
+  const removeTrainingFromState = (trainingId: string) => {
     state.trainings.delete(trainingId);
   };
 
-  const setTrainingExercises = (exercises: TrainingExerciseWithCatalogExerciseAndSets[]) => {
+  const setTrainingExercisesState = (exercises: TrainingExerciseWithCatalogExerciseAndSets[]) => {
     state.trainingExercises = exercises.reduce((acc, item) => {
       acc.set(item.id, item);
       return acc;
     }, new Map());
   };
 
-  const updateTrainingExercise = (exercise: TrainingExerciseWithCatalogExerciseAndSets) => {
+  const addTrainingExerciseToState = (exercise: TrainingExerciseWithCatalogExerciseAndSets) => {
     state.trainingExercises.set(exercise.id, exercise);
   };
 
-  const removeTrainingExercise = (exerciseId: string) => {
+  const removeTrainingExerciseFromState = (exerciseId: string) => {
     state.trainingExercises.delete(exerciseId);
   };
 
@@ -218,6 +223,32 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
     }
   };
 
+  const deleteTrainingExerciseById = async (
+    exerciseId: string
+  ): Promise<DeleteTrainingExerciseResponse | null> => {
+    deleteTrainingExerciseByIdRequest.status = RequestStatus.PENDING;
+    deleteTrainingExerciseByIdRequest.error = null;
+
+    try {
+      const { data } = await request<DeleteTrainingExerciseResponse>(
+        `/api/trainings/exercises/${exerciseId}`,
+        {
+          method: 'DELETE'
+        }
+      );
+
+      deleteTrainingExerciseByIdRequest.status = RequestStatus.SUCCESS;
+      deleteTrainingExerciseByIdRequest.data = data;
+
+      return data;
+    } catch (error) {
+      deleteTrainingExerciseByIdRequest.status = RequestStatus.FAILED;
+      deleteTrainingExerciseByIdRequest.error = error;
+
+      return null;
+    }
+  };
+
   const createTrainingSet = async (
     payload: CreateTrainingSetRequestBody
   ): Promise<CreateTrainingSetResponse | null> => {
@@ -254,22 +285,24 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
       createTrainingExercise: createTrainingExerciseRequest,
       getTrainingExercises: getTrainingExercisesRequest,
       createTrainingSet: createTrainingSetRequest,
-      getTrainingExerciseById: getTrainingExerciseByIdRequest
+      getTrainingExerciseById: getTrainingExerciseByIdRequest,
+      deleteTrainingExerciseById: deleteTrainingExerciseByIdRequest
     })),
     actions: {
-      setTrainings,
-      updateTraining,
-      removeTraining,
-      setTrainingExercises,
-      updateTrainingExercise,
-      removeTrainingExercise,
+      setTrainingsState,
+      addTrainingToState,
+      removeTrainingFromState,
+      setTrainingExercisesState,
+      addTrainingExerciseToState,
+      removeTrainingExerciseFromState,
       createTraining,
       getTrainings,
       getTrainingById,
       createTrainingExercise,
       getTrainingExercises,
       createTrainingSet,
-      getTrainingExerciseById
+      getTrainingExerciseById,
+      deleteTrainingExerciseById
     }
   };
 });
