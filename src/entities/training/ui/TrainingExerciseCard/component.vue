@@ -2,12 +2,11 @@
   <ion-card>
     <ion-card-header class="flex flex-row items-center px-4 py-2">
       <ion-card-title class="flex-grow">{{ trainingExercise.exercise.name }}</ion-card-title>
-      <delete-training-exercise-button
-        :training-exercise-id="trainingExercise.id"
-      ></delete-training-exercise-button>
+      <delete-training-exercise-button :training-exercise-id="trainingExercise.id">
+      </delete-training-exercise-button>
     </ion-card-header>
     <ion-card-content>
-      <ion-list inset>
+      <ion-list v-if="trainingExercise.sets.length" inset>
         <training-set-list-item
           v-for="set in trainingExercise.sets"
           :key="set.id"
@@ -15,9 +14,8 @@
         >
         </training-set-list-item>
       </ion-list>
-      <add-training-set-button
-        :training-exercise-id="trainingExercise.id"
-      ></add-training-set-button>
+      <add-training-set-button :training-exercise-id="trainingExercise.id">
+      </add-training-set-button>
     </ion-card-content>
   </ion-card>
 </template>

@@ -25,6 +25,7 @@ import type {
   DeleteTrainingExerciseResponse,
   GetTrainingExerciseResponse
 } from '~/server/api/trainings/exercises/[id]/types';
+import type { DeleteTrainingSetResponse } from '~/server/api/trainings/sets/[id]/types';
 
 export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
   const createTrainingRequest = createRequestState<Training>();
@@ -36,9 +37,10 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
     createRequestState<TrainingExerciseWithCatalogExerciseAndSets[]>();
   const getTrainingExerciseByIdRequest =
     createRequestState<TrainingExerciseWithCatalogExerciseAndSets>();
-  const createTrainingSetRequest = createRequestState<TrainingSet>();
   const deleteTrainingExerciseByIdRequest =
     createRequestState<TrainingExerciseWithCatalogExerciseAndSets>();
+  const createTrainingSetRequest = createRequestState<TrainingSet>();
+  const deleteTrainingSetByIdRequest = createRequestState<TrainingSet>();
   const state = reactive<TrainingsState>({ ...INITIAL_TRAININGS_STATE });
 
   // state updates
@@ -276,6 +278,32 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
     }
   };
 
+  const deleteTrainingSetById = async (
+    trainingSetId: string
+  ): Promise<DeleteTrainingSetResponse | null> => {
+    deleteTrainingSetByIdRequest.status = RequestStatus.PENDING;
+    deleteTrainingSetByIdRequest.error = null;
+
+    try {
+      const { data } = await request<DeleteTrainingSetResponse>(
+        `/api/trainings/sets/${trainingSetId}`,
+        {
+          method: 'DELETE'
+        }
+      );
+
+      deleteTrainingSetByIdRequest.status = RequestStatus.SUCCESS;
+      deleteTrainingSetByIdRequest.data = data;
+
+      return data;
+    } catch (error) {
+      deleteTrainingSetByIdRequest.status = RequestStatus.FAILED;
+      deleteTrainingSetByIdRequest.error = error;
+
+      return null;
+    }
+  };
+
   return {
     state,
     requests: computed(() => ({
@@ -285,6 +313,7 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
       createTrainingExercise: createTrainingExerciseRequest,
       getTrainingExercises: getTrainingExercisesRequest,
       createTrainingSet: createTrainingSetRequest,
+      deleteTrainingSetById: deleteTrainingSetByIdRequest,
       getTrainingExerciseById: getTrainingExerciseByIdRequest,
       deleteTrainingExerciseById: deleteTrainingExerciseByIdRequest
     })),
@@ -301,6 +330,7 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
       createTrainingExercise,
       getTrainingExercises,
       createTrainingSet,
+      deleteTrainingSetById,
       getTrainingExerciseById,
       deleteTrainingExerciseById
     }

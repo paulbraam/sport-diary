@@ -25,7 +25,10 @@ import {
   IonItemOption,
   alertController
 } from '@ionic/vue';
+import { useTrainingStore } from '../../model';
 import type { TrainingSetListItemProps } from './types';
+
+const { actions } = useTrainingStore();
 
 const props = defineProps<TrainingSetListItemProps>();
 
@@ -40,8 +43,18 @@ const onTrainingSetDelete = async (setId: string) => {
       {
         text: 'OK',
         role: 'confirm',
-        handler: () => {
-          console.log(setId);
+        handler: async () => {
+          const deletedSet = await actions.deleteTrainingSetById(setId);
+          const trainingExerciseId = deletedSet?.trainingExerciseId;
+
+          if (trainingExerciseId) {
+            const currentTrainingExercise =
+              await actions.getTrainingExerciseById(trainingExerciseId);
+
+            if (currentTrainingExercise) {
+              actions.addTrainingExerciseToState(currentTrainingExercise);
+            }
+          }
         }
       }
     ]
