@@ -7,8 +7,8 @@
 
 <script setup lang="ts">
 import type { IonTextarea, IonNote } from '@ionic/vue';
-import type { TextareaInputProps } from './TextareaInput.types';
-import { DEFAULT_TEXTAREA_INPUT_ROWS } from './TextareaInput.const';
+import type { TextareaInputProps } from './types';
+import { DEFAULT_TEXTAREA_INPUT_ROWS } from './const';
 
 const props = withDefaults(defineProps<TextareaInputProps>(), { name: '' });
 

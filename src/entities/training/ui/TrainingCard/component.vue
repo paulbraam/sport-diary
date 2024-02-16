@@ -1,20 +1,19 @@
 <template>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Training</ion-card-title>
-      <ion-card-subtitle class="flex flex-col">
+  <card title="Training">
+    <template #content>
+      <div class="flex flex-col">
         <div>Start: {{ startedAt }}</div>
         <div v-if="endedAt">End: {{ endedAt }}</div>
-      </ion-card-subtitle>
-    </ion-card-header>
-    <ion-card-content v-if="comment">Comment: {{ comment }}</ion-card-content>
-  </ion-card>
+        <div v-if="comment">Comment: {{ comment }}</div>
+      </div>
+    </template>
+  </card>
 </template>
 
 <script setup lang="ts">
-import { IonCard, IonCardTitle, IonCardContent, IonCardHeader, IonCardSubtitle } from '@ionic/vue';
 import type { TrainingCardProps } from './types';
 import { formatDate } from '~/shared/lib/utils';
+import { Card } from '~/shared/ui';
 
 const { training } = defineProps<TrainingCardProps>();
 

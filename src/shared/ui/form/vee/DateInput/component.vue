@@ -22,8 +22,8 @@
 
 <script setup lang="ts">
 import type { IonInput, IonModal, IonContent, IonDatetime, IonNote } from '@ionic/vue';
-import type { DateInputProps } from './DateInput.types';
-import { DATE_INPUT_MODAL_BREAKPOINTS, DATE_INPUT_INITIAL_BREAKPOINT } from './DateInput.const';
+import type { DateInputProps } from './types';
+import { DATE_INPUT_MODAL_BREAKPOINTS, DATE_INPUT_INITIAL_BREAKPOINT } from './const';
 
 const props = withDefaults(defineProps<DateInputProps>(), { name: '', presentation: 'date-time' });
 

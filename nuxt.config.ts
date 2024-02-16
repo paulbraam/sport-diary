@@ -13,7 +13,24 @@ const prismaIndexBrowser = path.normalize(path.relative(process.cwd(), prismaCli
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ['@nuxtjs/ionic', '@pinia/nuxt', '@vee-validate/nuxt'],
+  modules: [
+    '@nuxtjs/ionic',
+    '@pinia/nuxt',
+    '@vee-validate/nuxt',
+    [
+      '@nuxtjs/google-fonts',
+      {
+        families: {
+          'Inter Tight': [400, 500, 600, 700]
+        }
+      }
+    ]
+  ],
+  ionic: {
+    config: {
+      innerHTMLTemplatesEnabled: true
+    }
+  },
   build: {
     transpile: ['vee-validate/dist/rules']
   },

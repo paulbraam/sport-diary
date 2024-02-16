@@ -1,1 +1,1 @@
-export { default as DateInput } from './DateInput.vue';
+export { default as DateInput } from './component.vue';

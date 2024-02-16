@@ -1,5 +1,5 @@
 <template>
-  <ion-input v-model="value" :type="type" v-bind="$attrs" />
+  <ion-input v-model.number="value" v-bind="$attrs" type="number" />
   <ion-note v-if="errorMessage" color="danger">
     {{ errorMessage }}
   </ion-note>
@@ -7,9 +7,9 @@
 
 <script setup lang="ts">
 import type { IonInput, IonNote } from '@ionic/vue';
-import type { TextInputProps } from './TextInput.types';
+import type { NumberInputProps } from './types';
 
-const props = withDefaults(defineProps<TextInputProps>(), { name: '' });
+const props = withDefaults(defineProps<NumberInputProps>(), { name: '' });
 
 const { value, errorMessage } = useField(props.name);
 

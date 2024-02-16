@@ -1,6 +1,6 @@
 <template>
   <form class="h-full" :novalidate="true" @submit="onSubmit">
-    <ion-header>
+    <app-header>
       <ion-toolbar>
         <ion-buttons slot="start">
           <ion-button @click="closeFiltersModal">Close</ion-button>
@@ -9,7 +9,7 @@
           <ion-button color="primary" type="submit">Apply</ion-button>
         </ion-buttons>
       </ion-toolbar>
-    </ion-header>
+    </app-header>
     <ion-content class="ion-padding">
       <ion-list>
         <ion-item>
@@ -45,13 +45,11 @@ import {
   IonList,
   IonContent,
   IonItem,
-  IonHeader,
   IonToolbar,
   IonButtons,
   IonButton,
   modalController
 } from '@ionic/vue';
-
 import { SelectInput } from '~/shared/ui/form';
 import type { GetCatalogExercisesQueryParams } from '~/server/api/catalog/exercises/types';
 import {
@@ -63,6 +61,7 @@ import {
   exerciseMuscleSelectOptions,
   useUserExerciseFiltersStore
 } from '~/entities/exercise';
+import { AppHeader } from '~/shared/ui';
 
 const { state: userExerciseFilters } = useUserExerciseFiltersStore();
 

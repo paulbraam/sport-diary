@@ -1,5 +1,5 @@
 <template>
-  <ion-header>
+  <app-header>
     <ion-toolbar>
       <ion-buttons slot="start">
         <ion-button @click="closeModal">Close</ion-button>
@@ -8,25 +8,19 @@
         <create-training-exercise-submit-button></create-training-exercise-submit-button>
       </ion-buttons>
     </ion-toolbar>
-  </ion-header>
+  </app-header>
   <ion-content class="ion-padding">
     <training-exercise-form @submit="onSubmit"></training-exercise-form>
   </ion-content>
 </template>
 
 <script setup lang="ts">
-import {
-  IonContent,
-  IonHeader,
-  IonToolbar,
-  IonButtons,
-  IonButton,
-  modalController
-} from '@ionic/vue';
+import { IonContent, IonToolbar, IonButtons, IonButton, modalController } from '@ionic/vue';
 import type { CreateTrainingExerciseModalProps } from './types';
 import { TrainingExerciseForm, useTrainingStore } from '~/entities/training';
 import { CreateTrainingExerciseSubmitButton } from '~/features/training';
 import type { CreateTrainingExerciseRequestBody } from '~/server/api/trainings/exercises/types';
+import { AppHeader } from '~/shared/ui';
 
 const { trainingId } = defineProps<CreateTrainingExerciseModalProps>();
 

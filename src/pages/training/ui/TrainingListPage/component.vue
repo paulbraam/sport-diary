@@ -1,10 +1,11 @@
 <template>
   <ion-page id="training-list">
     <ion-content color="light">
-      <ion-list :inset="true">
+      <ion-list v-if="trainings.length" :inset="true">
         <training-list-item v-for="training in trainings" :key="training.id" :training="training">
         </training-list-item>
       </ion-list>
+      <div v-else class="h-full w-full flex justify-center items-center">No trainings so far</div>
       <ion-fab slot="fixed" vertical="bottom" horizontal="end">
         <ion-fab-button router-link="/trainings/new">
           <ion-icon :icon="ioniconsAdd"></ion-icon>

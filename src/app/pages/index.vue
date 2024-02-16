@@ -1,11 +1,11 @@
 <!-- eslint-disable vue/no-multiple-template-root -->
 <template>
   <ion-menu menu-id="menu" content-id="main-content" :disabled="isMenuDisabled">
-    <ion-header>
-      <ion-toolbar>
+    <app-header class="ion-no-border border-bottom">
+      <ion-toolbar class="ion-no-border">
         <ion-title>Menu</ion-title>
       </ion-toolbar>
-    </ion-header>
+    </app-header>
     <ion-content class="ion-padding">
       <ion-list>
         <ion-menu-toggle>
@@ -51,7 +51,7 @@
     </ion-content>
   </ion-menu>
   <ion-page id="main-content">
-    <ion-header>
+    <app-header>
       <ion-toolbar>
         <ion-buttons v-show="!isMenuDisabled" slot="start">
           <ion-menu-button v-if="isRootRoute"></ion-menu-button>
@@ -59,7 +59,7 @@
         </ion-buttons>
         <ion-title>Sport Diary</ion-title>
       </ion-toolbar>
-    </ion-header>
+    </app-header>
     <ion-content class="ion-padding"><ion-router-outlet /></ion-content>
   </ion-page>
 </template>
@@ -68,7 +68,6 @@
 import {
   IonButtons,
   IonContent,
-  IonHeader,
   IonMenu,
   IonMenuButton,
   IonPage,
@@ -83,6 +82,7 @@ import {
   useIonRouter
 } from '@ionic/vue';
 import { useAuthStore } from '~/entities/auth';
+import { AppHeader } from '~/shared/ui';
 
 const router = useIonRouter();
 const route = useRoute();
