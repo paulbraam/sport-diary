@@ -5,6 +5,7 @@
         <div>Start: {{ startedAt }}</div>
         <div v-if="endedAt">End: {{ endedAt }}</div>
         <div v-if="comment">Comment: {{ comment }}</div>
+        <slot name="actions"></slot>
       </div>
     </template>
   </card>
