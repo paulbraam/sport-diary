@@ -5,11 +5,8 @@
     </ion-item>
     <ion-item-options slot="end" @ion-swipe="onUserExerciseDelete(exercise.id)">
       <ion-item-option color="danger" :expandable="true">
-        <ion-icon
-          slot="icon-only"
-          :icon="ioniconsTrash"
-          @click="onUserExerciseDelete(exercise.id)"
-        ></ion-icon>
+        <ion-icon slot="icon-only" :icon="ioniconsTrash" @click="onUserExerciseDelete(exercise.id)">
+        </ion-icon>
       </ion-item-option>
     </ion-item-options>
   </ion-item-sliding>

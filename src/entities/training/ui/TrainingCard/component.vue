@@ -13,18 +13,12 @@
 
 <script setup lang="ts">
 import { IonCard, IonCardTitle, IonCardContent, IonCardHeader, IonCardSubtitle } from '@ionic/vue';
-import dayjs from 'dayjs';
 import type { TrainingCardProps } from './types';
+import { formatDate } from '~/shared/lib/utils';
 
 const { training } = defineProps<TrainingCardProps>();
 
-const startedAt = computed(() => {
-  const date = training.startedAt;
-  return date ? dayjs(date).format('YYYY/MM/DD HH:mm') : null;
-});
-const endedAt = computed(() => {
-  const date = training.endedAt;
-  return date ? dayjs(date).format('YYYY/MM/DD HH:mm') : null;
-});
+const startedAt = computed(() => formatDate(training.startedAt));
+const endedAt = computed(() => formatDate(training.endedAt));
 const comment = computed(() => training.comment);
 </script>
