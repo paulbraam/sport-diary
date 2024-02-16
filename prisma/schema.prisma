@@ -65,14 +65,14 @@ model VerificationToken {
 }
 
 model Training {
-  id             String          @id @default(cuid())
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
+  id             String             @id @default(cuid())
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
   startedAt      DateTime
   endedAt        DateTime?
-  sets           TrainingSet[]
+  exercises      TrainingExercise[]
   bodyParameters BodyParameter[]
-  User           User?           @relation(fields: [userId], references: [id])
+  User           User?              @relation(fields: [userId], references: [id])
   userId         String?
   comment        String?
 }
@@ -86,24 +86,28 @@ model BodyParameter {
   bodyParameterUnitId String
 }
 
-model TrainingSet {
-  id          String               @id @default(cuid())
-  Training    Training?            @relation(fields: [trainingId], references: [id])
-  trainingId  String?
-  repetitions TrainingRepetition[]
-  exercise    CatalogExercise      @relation(fields: [exerciseId], references: [id])
-  rest        Int
-  exerciseId  String
+model TrainingExercise {
+  id         String          @id @default(cuid())
+  Training   Training?       @relation(fields: [trainingId], references: [id])
+  trainingId String?
+  sets       TrainingSet[]
+  exercise   CatalogExercise @relation(fields: [exerciseId], references: [id])
+  rest       Int?
+  exerciseId String
 }
 
-model TrainingRepetition {
-  id        String       @id @default(cuid())
-  Set       TrainingSet? @relation(fields: [setId], references: [id])
-  setId     String?
-  count     Int
-  value     Int
-  intensity Intensity
-  rest      Int
+model TrainingSet {
+  id                 String            @id @default(cuid())
+  setId              String?
+  reps               Int?
+  duration           Int?
+  weight             Int?
+  intensity          Intensity?
+  rest               Int?
+  TrainingExercise   TrainingExercise? @relation(fields: [trainingExerciseId], references: [id])
+  trainingExerciseId String?
+  CatalogExercise    CatalogExercise?  @relation(fields: [catalogExerciseId], references: [id])
+  catalogExerciseId  String?
 }
 
 // catalogs
@@ -128,6 +132,7 @@ model CatalogExercise {
   TrainingSet      TrainingSet[]
   UserSettings     UserSettings?      @relation(fields: [userSettingsId], references: [id])
   userSettingsId   String?
+  TrainingExercise TrainingExercise[]
 }
 
 // enums

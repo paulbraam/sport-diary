@@ -1,8 +1,7 @@
 import { defineStore } from 'pinia';
-import type { Training } from '@prisma/client';
+import { type TrainingSet, type Training } from '@prisma/client';
 import type { TrainingsState } from './types';
 import { INITIAL_TRAININGS_STATE, TRAININGS_STORE_NAME } from './const';
-import type { NullableObjectValues } from '~/shared/lib/types';
 import { RequestStatus } from '~/shared/lib/const';
 import type {
   CreateUserTrainingResponse,
@@ -11,12 +10,72 @@ import type {
 } from '~/server/api/trainings/types';
 import { request } from '~/shared/api';
 import { createRequestState } from '~/shared/lib/utils';
+import type {
+  CreateTrainingExerciseRequestBody,
+  CreateTrainingExerciseResponse,
+  GetTrainingExercisesRequestParams,
+  GetTrainingExercisesResponse,
+  TrainingExerciseWithCatalogExerciseAndSets
+} from '~/server/api/trainings/exercises/types';
+import type {
+  CreateTrainingSetRequestBody,
+  CreateTrainingSetResponse
+} from '~/server/api/trainings/sets/types';
+import type {
+  DeleteTrainingExerciseResponse,
+  GetTrainingExerciseResponse
+} from '~/server/api/trainings/exercises/[id]/types';
+import type { DeleteTrainingSetResponse } from '~/server/api/trainings/sets/[id]/types';
 
 export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
   const createTrainingRequest = createRequestState<Training>();
   const getTrainingByIdRequest = createRequestState<Training>();
   const getTrainingsRequest = createRequestState<Training[]>();
-  const state = reactive<NullableObjectValues<TrainingsState>>({ ...INITIAL_TRAININGS_STATE });
+  const createTrainingExerciseRequest =
+    createRequestState<TrainingExerciseWithCatalogExerciseAndSets>();
+  const getTrainingExercisesRequest =
+    createRequestState<TrainingExerciseWithCatalogExerciseAndSets[]>();
+  const getTrainingExerciseByIdRequest =
+    createRequestState<TrainingExerciseWithCatalogExerciseAndSets>();
+  const deleteTrainingExerciseByIdRequest =
+    createRequestState<TrainingExerciseWithCatalogExerciseAndSets>();
+  const createTrainingSetRequest = createRequestState<TrainingSet>();
+  const deleteTrainingSetByIdRequest = createRequestState<TrainingSet>();
+  const state = reactive<TrainingsState>({ ...INITIAL_TRAININGS_STATE });
+
+  // state updates
+
+  const setTrainingsState = (trainings: Training[]) => {
+    state.trainings = trainings.reduce((acc, item) => {
+      acc.set(item.id, item);
+      return acc;
+    }, new Map());
+  };
+
+  const addTrainingToState = (training: Training) => {
+    state.trainings.set(training.id, training);
+  };
+
+  const removeTrainingFromState = (trainingId: string) => {
+    state.trainings.delete(trainingId);
+  };
+
+  const setTrainingExercisesState = (exercises: TrainingExerciseWithCatalogExerciseAndSets[]) => {
+    state.trainingExercises = exercises.reduce((acc, item) => {
+      acc.set(item.id, item);
+      return acc;
+    }, new Map());
+  };
+
+  const addTrainingExerciseToState = (exercise: TrainingExerciseWithCatalogExerciseAndSets) => {
+    state.trainingExercises.set(exercise.id, exercise);
+  };
+
+  const removeTrainingExerciseFromState = (exerciseId: string) => {
+    state.trainingExercises.delete(exerciseId);
+  };
+
+  // async actions
 
   const getTrainings = async (): Promise<GetUserTrainingsResponse | null> => {
     getTrainingsRequest.status = RequestStatus.PENDING;
@@ -29,8 +88,6 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
 
       getTrainingsRequest.status = RequestStatus.SUCCESS;
       getTrainingsRequest.data = data;
-
-      state.trainings = data;
 
       return data;
     } catch (error) {
@@ -48,10 +105,13 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
     createTrainingRequest.error = null;
 
     try {
-      const { data } = await request<CreateUserTrainingResponse>('/api/trainings', {
-        method: 'POST',
-        data: payload
-      });
+      const { data } = await request<CreateUserTrainingResponse, CreateUserTrainingRequestBody>(
+        '/api/trainings',
+        {
+          method: 'POST',
+          data: payload
+        }
+      );
 
       createTrainingRequest.status = RequestStatus.SUCCESS;
       createTrainingRequest.data = data;
@@ -79,12 +139,166 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
       getTrainingByIdRequest.status = RequestStatus.SUCCESS;
       getTrainingByIdRequest.data = data;
 
-      state.currentTraining = data;
-
       return data;
     } catch (error) {
       getTrainingByIdRequest.status = RequestStatus.FAILED;
       getTrainingByIdRequest.error = error;
+
+      return null;
+    }
+  };
+
+  const createTrainingExercise = async (
+    payload: CreateTrainingExerciseRequestBody
+  ): Promise<CreateTrainingExerciseResponse | null> => {
+    createTrainingExerciseRequest.status = RequestStatus.PENDING;
+    createTrainingExerciseRequest.error = null;
+
+    try {
+      const { data } = await request<
+        CreateTrainingExerciseResponse,
+        CreateTrainingExerciseRequestBody
+      >(`/api/trainings/exercises`, {
+        method: 'POST',
+        data: payload
+      });
+
+      createTrainingExerciseRequest.status = RequestStatus.SUCCESS;
+      createTrainingExerciseRequest.data = data;
+
+      return data;
+    } catch (error) {
+      createTrainingExerciseRequest.status = RequestStatus.FAILED;
+      createTrainingExerciseRequest.error = error;
+
+      return null;
+    }
+  };
+
+  const getTrainingExercises = async (
+    params: GetTrainingExercisesRequestParams
+  ): Promise<GetTrainingExercisesResponse | null> => {
+    getTrainingExercisesRequest.status = RequestStatus.PENDING;
+    getTrainingExercisesRequest.error = null;
+
+    try {
+      const { data } = await request<GetTrainingExercisesResponse>(`/api/trainings/exercises`, {
+        method: 'GET',
+        params
+      });
+
+      getTrainingExercisesRequest.status = RequestStatus.SUCCESS;
+      getTrainingExercisesRequest.data = data;
+
+      return data;
+    } catch (error) {
+      getTrainingExercisesRequest.status = RequestStatus.FAILED;
+      getTrainingExercisesRequest.error = error;
+
+      return null;
+    }
+  };
+
+  const getTrainingExerciseById = async (
+    exerciseId: string
+  ): Promise<GetTrainingExerciseResponse | null> => {
+    getTrainingExerciseByIdRequest.status = RequestStatus.PENDING;
+    getTrainingExerciseByIdRequest.error = null;
+
+    try {
+      const { data } = await request<GetTrainingExerciseResponse>(
+        `/api/trainings/exercises/${exerciseId}`,
+        {
+          method: 'GET'
+        }
+      );
+
+      getTrainingExerciseByIdRequest.status = RequestStatus.SUCCESS;
+      getTrainingExerciseByIdRequest.data = data;
+
+      return data;
+    } catch (error) {
+      getTrainingExerciseByIdRequest.status = RequestStatus.FAILED;
+      getTrainingExerciseByIdRequest.error = error;
+
+      return null;
+    }
+  };
+
+  const deleteTrainingExerciseById = async (
+    exerciseId: string
+  ): Promise<DeleteTrainingExerciseResponse | null> => {
+    deleteTrainingExerciseByIdRequest.status = RequestStatus.PENDING;
+    deleteTrainingExerciseByIdRequest.error = null;
+
+    try {
+      const { data } = await request<DeleteTrainingExerciseResponse>(
+        `/api/trainings/exercises/${exerciseId}`,
+        {
+          method: 'DELETE'
+        }
+      );
+
+      deleteTrainingExerciseByIdRequest.status = RequestStatus.SUCCESS;
+      deleteTrainingExerciseByIdRequest.data = data;
+
+      return data;
+    } catch (error) {
+      deleteTrainingExerciseByIdRequest.status = RequestStatus.FAILED;
+      deleteTrainingExerciseByIdRequest.error = error;
+
+      return null;
+    }
+  };
+
+  const createTrainingSet = async (
+    payload: CreateTrainingSetRequestBody
+  ): Promise<CreateTrainingSetResponse | null> => {
+    createTrainingSetRequest.status = RequestStatus.PENDING;
+    createTrainingSetRequest.error = null;
+
+    try {
+      const { data } = await request<CreateTrainingSetResponse, CreateTrainingSetRequestBody>(
+        `/api/trainings/sets`,
+        {
+          method: 'POST',
+          data: payload
+        }
+      );
+
+      createTrainingSetRequest.status = RequestStatus.SUCCESS;
+      createTrainingSetRequest.data = data;
+
+      return data;
+    } catch (error) {
+      createTrainingSetRequest.status = RequestStatus.FAILED;
+      createTrainingSetRequest.error = error;
+
+      return null;
+    }
+  };
+
+  const deleteTrainingSetById = async (
+    trainingSetId: string
+  ): Promise<DeleteTrainingSetResponse | null> => {
+    deleteTrainingSetByIdRequest.status = RequestStatus.PENDING;
+    deleteTrainingSetByIdRequest.error = null;
+
+    try {
+      const { data } = await request<DeleteTrainingSetResponse>(
+        `/api/trainings/sets/${trainingSetId}`,
+        {
+          method: 'DELETE'
+        }
+      );
+
+      deleteTrainingSetByIdRequest.status = RequestStatus.SUCCESS;
+      deleteTrainingSetByIdRequest.data = data;
+
+      return data;
+    } catch (error) {
+      deleteTrainingSetByIdRequest.status = RequestStatus.FAILED;
+      deleteTrainingSetByIdRequest.error = error;
 
       return null;
     }
@@ -95,12 +309,30 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
     requests: computed(() => ({
       createTraining: createTrainingRequest,
       getTrainings: getTrainingsRequest,
-      getTrainingById: getTrainingByIdRequest
+      getTrainingById: getTrainingByIdRequest,
+      createTrainingExercise: createTrainingExerciseRequest,
+      getTrainingExercises: getTrainingExercisesRequest,
+      createTrainingSet: createTrainingSetRequest,
+      deleteTrainingSetById: deleteTrainingSetByIdRequest,
+      getTrainingExerciseById: getTrainingExerciseByIdRequest,
+      deleteTrainingExerciseById: deleteTrainingExerciseByIdRequest
     })),
     actions: {
+      setTrainingsState,
+      addTrainingToState,
+      removeTrainingFromState,
+      setTrainingExercisesState,
+      addTrainingExerciseToState,
+      removeTrainingExerciseFromState,
       createTraining,
       getTrainings,
-      getTrainingById
+      getTrainingById,
+      createTrainingExercise,
+      getTrainingExercises,
+      createTrainingSet,
+      deleteTrainingSetById,
+      getTrainingExerciseById,
+      deleteTrainingExerciseById
     }
   };
 });

@@ -45,7 +45,7 @@ import {
 } from '@ionic/vue';
 import { useCatalogExercisesStore, useUserExerciseFiltersStore } from '~/entities/exercise';
 import { useUserSettingsStore } from '~/entities/user';
-import { ExerciseFilterButton, UpdateUserExercisesButton } from '~/features/exercises';
+import { ExerciseFilterButton, UpdateUserExercisesButton } from '~/features/exercise';
 
 const catalogExercisesStore = useCatalogExercisesStore();
 const userSettingsStore = useUserSettingsStore();

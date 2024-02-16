@@ -11,4 +11,6 @@ export type ClientApiResponse<T> = Omit<HttpResponse, 'data'> & {
   data: T;
 };
 
-export type ClientApiRequestOptions = Omit<HttpOptions, 'url'>;
+export type ClientApiRequestOptions<T = void> = Omit<HttpOptions, 'url' | 'data'> & {
+  data?: T;
+};

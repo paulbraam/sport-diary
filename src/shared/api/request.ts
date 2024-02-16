@@ -3,9 +3,9 @@ import { AuthStorage } from '~/shared/lib/storage';
 import type { ClientApiRequestOptions, ClientApiResponse } from '~/shared/lib/types';
 import { DEFAULT_REQUEST_HEADERS } from '~/shared/lib/const';
 
-export const request = async <T>(
+export const request = async <T, B = void>(
   path: string,
-  options: ClientApiRequestOptions
+  options: ClientApiRequestOptions<B>
 ): Promise<ClientApiResponse<T>> => {
   const runtimeConfig = useRuntimeConfig();
 

@@ -1,41 +1,42 @@
 <template>
   <ion-page id="training">
     <ion-content>
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title>Training</ion-card-title>
-          <ion-card-subtitle class="flex flex-col">
-            <div>Start: {{ startedAt }}</div>
-            <div v-if="endedAt">End: {{ endedAt }}</div>
-          </ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content v-if="comment">Comment: {{ comment }}</ion-card-content>
-      </ion-card>
+      <training-card v-if="training" :training="training"></training-card>
+      <ion-title>Training exercises</ion-title>
+      <div v-if="trainingExercises.length">
+        <training-exercise-card
+          v-for="trainingExercise in trainingExercises"
+          :key="trainingExercise.id"
+          :training-exercise="trainingExercise"
+        >
+        </training-exercise-card>
+      </div>
+      <add-training-exercise-button :training-id="trainingId"></add-training-exercise-button>
     </ion-content>
   </ion-page>
 </template>
 
 <script setup lang="ts">
 import { IonPage, IonContent } from '@ionic/vue';
-import dayjs from 'dayjs';
-import { useTrainingStore } from '~/entities/training';
-
-const { state, actions } = useTrainingStore();
-
-const startedAt = computed(() => {
-  const date = state.currentTraining?.startedAt;
-  return date ? dayjs(date).format('YYYY/MM/DD HH:mm') : null;
-});
-const endedAt = computed(() => {
-  const date = state.currentTraining?.endedAt;
-  return date ? dayjs(date).format('YYYY/MM/DD HH:mm') : null;
-});
-const comment = computed(() => state.currentTraining?.comment);
+import { TrainingCard, TrainingExerciseCard, useTrainingStore } from '~/entities/training';
+import { AddTrainingExerciseButton } from '~/features/training';
 
 const route = useRoute();
 const trainingId = route.params.id as string;
 
-onIonViewWillEnter(() => {
-  actions.getTrainingById(trainingId);
+const { state, actions } = useTrainingStore();
+
+const training = computed(() => state.trainings.get(trainingId));
+
+const trainingExercises = computed(() => {
+  return [...state.trainingExercises.values()].filter((item) => item.trainingId === trainingId);
+});
+
+onIonViewWillEnter(async () => {
+  const training = await actions.getTrainingById(trainingId);
+  if (training) actions.addTrainingToState(training);
+
+  const trainingExercises = await actions.getTrainingExercises({ trainingId });
+  if (trainingExercises) actions.setTrainingExercisesState(trainingExercises);
 });
 </script>
