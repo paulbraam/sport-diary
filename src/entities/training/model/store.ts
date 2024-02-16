@@ -27,12 +27,17 @@ import type {
 } from '~/server/api/trainings/exercises/[id]/types';
 import type { DeleteTrainingSetResponse } from '~/server/api/trainings/sets/[id]/types';
 import type { DeleteUserTrainingByIdResponse } from '~/server/api/trainings/[id]/types';
+import type {
+  UpdateTrainingStatusRequestBody,
+  UpdateTrainingStatusResponse
+} from '~/server/api/trainings/status/types';
 
 export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
   const createTrainingRequest = createRequestState<Training>();
   const getTrainingByIdRequest = createRequestState<Training>();
   const deleteTrainingByIdRequest = createRequestState<Training>();
   const getTrainingsRequest = createRequestState<Training[]>();
+  const updateTrainingStatusRequest = createRequestState<Training>();
   const createTrainingExerciseRequest =
     createRequestState<TrainingExerciseWithCatalogExerciseAndSets>();
   const getTrainingExercisesRequest =
@@ -171,6 +176,33 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
     } catch (error) {
       deleteTrainingByIdRequest.status = RequestStatus.FAILED;
       deleteTrainingByIdRequest.error = error;
+
+      return null;
+    }
+  };
+
+  const updateTrainingStatus = async (
+    payload: UpdateTrainingStatusRequestBody
+  ): Promise<UpdateTrainingStatusResponse | null> => {
+    updateTrainingStatusRequest.status = RequestStatus.PENDING;
+    updateTrainingStatusRequest.error = null;
+
+    try {
+      const { data } = await request<UpdateTrainingStatusResponse, UpdateTrainingStatusRequestBody>(
+        '/api/trainings/status',
+        {
+          method: 'PUT',
+          data: payload
+        }
+      );
+
+      updateTrainingStatusRequest.status = RequestStatus.SUCCESS;
+      updateTrainingStatusRequest.data = data;
+
+      return data;
+    } catch (error) {
+      updateTrainingStatusRequest.status = RequestStatus.FAILED;
+      updateTrainingStatusRequest.error = error;
 
       return null;
     }
@@ -339,6 +371,7 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
       getTrainings: getTrainingsRequest,
       getTrainingById: getTrainingByIdRequest,
       deleteTrainingById: deleteTrainingSetByIdRequest,
+      updateTrainingStatus: updateTrainingStatusRequest,
       createTrainingExercise: createTrainingExerciseRequest,
       getTrainingExercises: getTrainingExercisesRequest,
       createTrainingSet: createTrainingSetRequest,
@@ -357,6 +390,7 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
       getTrainings,
       getTrainingById,
       deleteTrainingById,
+      updateTrainingStatus,
       createTrainingExercise,
       getTrainingExercises,
       createTrainingSet,
