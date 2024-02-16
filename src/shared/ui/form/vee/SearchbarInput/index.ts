@@ -1,1 +1,1 @@
-export { default as SearchbarInput } from './SearchbarInput.vue';
+export { default as SearchbarInput } from './component.vue';

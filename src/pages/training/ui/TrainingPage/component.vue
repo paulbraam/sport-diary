@@ -2,7 +2,6 @@
   <ion-page id="training">
     <ion-content>
       <training-card v-if="training" :training="training"></training-card>
-      <ion-title>Training exercises</ion-title>
       <div v-if="trainingExercises.length">
         <training-exercise-card
           v-for="trainingExercise in trainingExercises"

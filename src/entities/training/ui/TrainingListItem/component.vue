@@ -1,7 +1,7 @@
 <template>
   <ion-item-sliding @ion-swipe="onTrainingDelete(training.id)">
     <ion-item button detail :router-link="`/trainings/${training.id}`">
-      <div class="flex flex-row gap-4">
+      <div class="flex flex-row gap-4 items-center">
         <ion-icon :icon="ioniconsBarbell"></ion-icon>
         <ion-label>{{ label }}</ion-label>
       </div>

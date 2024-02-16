@@ -1,6 +1,6 @@
 <template>
   <ion-item-sliding>
-    <ion-item button>
+    <ion-item button @click="onTrainingSetListItemClick">
       <ion-label>{{ label }}</ion-label>
     </ion-item>
     <ion-item-options slot="end" @ion-swipe="onTrainingSetDelete(trainingSet.id)">
@@ -23,7 +23,8 @@ import {
   IonItemSliding,
   IonItemOptions,
   IonItemOption,
-  alertController
+  alertController,
+  IonicSafeString
 } from '@ionic/vue';
 import { useTrainingStore } from '../../model';
 import type { TrainingSetListItemProps } from './types';
@@ -74,6 +75,30 @@ const onTrainingSetDelete = async (setId: string) => {
         }
       }
     ]
+  });
+
+  await alert.present();
+};
+
+const onTrainingSetListItemClick = async () => {
+  const textFragments: string[] = [];
+  const reps = trainingSet.value.reps;
+  const weight = trainingSet.value.weight;
+
+  if (reps) {
+    textFragments.push(`Повторений: ${reps} раз`);
+  }
+
+  if (weight) {
+    textFragments.push(`Вес: ${weight} кг`);
+  }
+
+  const alert = await alertController.create({
+    header: 'Подход',
+    message: new IonicSafeString(
+      `<div>${textFragments.map((item) => `<p>${item}</p>`).join('')}</div>`
+    ),
+    buttons: ['OK']
   });
 
   await alert.present();

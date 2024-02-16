@@ -2,6 +2,7 @@
   <ion-button
     fill="clear"
     color="danger"
+    class="delete-button"
     @click="onTrainingExerciseDeleteButtonClick(trainingExerciseId)"
   >
     <ion-icon slot="icon-only" color="danger" :icon="ioniconsTrash"></ion-icon>
@@ -40,3 +41,12 @@ const onTrainingExerciseDeleteButtonClick = async (exerciseId: string) => {
   await alert.present();
 };
 </script>
+
+<style scoped>
+.delete-button {
+  --padding-bottom: 0;
+  --padding-end: 0;
+  --padding-start: 0;
+  --padding-top: 0;
+}
+</style>

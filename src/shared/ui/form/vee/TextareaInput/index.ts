@@ -1,1 +1,1 @@
-export { default as TextareaInput } from './TextareaInput.vue';
+export { default as TextareaInput } from './component.vue';

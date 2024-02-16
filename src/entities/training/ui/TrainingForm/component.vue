@@ -4,9 +4,6 @@
       <ion-item>
         <date-input name="startedAt" label="Start" type="datetime-local"></date-input>
       </ion-item>
-      <ion-item>
-        <date-input name="endedAt" label="End" type="datetime-local"></date-input>
-      </ion-item>
       <ion-item lines="none">
         <textarea-input name="comment" label="Comment"></textarea-input>
       </ion-item>

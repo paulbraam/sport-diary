@@ -1,10 +1,9 @@
 <template>
-  <ion-header>
+  <app-header>
     <ion-toolbar>
       <ion-buttons slot="start">
         <ion-button @click="onClose">Cancel</ion-button>
       </ion-buttons>
-      <ion-title>Select exercises</ion-title>
       <ion-buttons slot="end">
         <update-user-exercises-button :exercise-ids="userExerciseIds">
         </update-user-exercises-button>
@@ -14,7 +13,7 @@
       <ion-searchbar :debounce="200" @ion-input="onContainsInputChange($event)"></ion-searchbar>
       <exercise-filter-button></exercise-filter-button>
     </ion-toolbar>
-  </ion-header>
+  </app-header>
   <ion-content class="ion-padding">
     <ion-list id="modal-list" :inset="true">
       <ion-item v-for="item in catalogExercises" :key="item.id">
@@ -35,7 +34,6 @@ import {
   IonList,
   IonContent,
   IonItem,
-  IonHeader,
   IonToolbar,
   IonButtons,
   IonSearchbar,
@@ -46,6 +44,7 @@ import {
 import { useCatalogExercisesStore, useUserExerciseFiltersStore } from '~/entities/exercise';
 import { useUserSettingsStore } from '~/entities/user';
 import { ExerciseFilterButton, UpdateUserExercisesButton } from '~/features/exercise';
+import { AppHeader } from '~/shared/ui';
 
 const catalogExercisesStore = useCatalogExercisesStore();
 const userSettingsStore = useUserSettingsStore();

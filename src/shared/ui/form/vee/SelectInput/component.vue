@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import type { IonSelect, IonSelectOption, IonNote } from '@ionic/vue';
-import type { SelectInputProps } from './SelectInput.types';
+import type { SelectInputProps } from './types';
 
 const props = withDefaults(defineProps<SelectInputProps>(), {
   name: ''
