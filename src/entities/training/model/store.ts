@@ -26,10 +26,12 @@ import type {
   GetTrainingExerciseResponse
 } from '~/server/api/trainings/exercises/[id]/types';
 import type { DeleteTrainingSetResponse } from '~/server/api/trainings/sets/[id]/types';
+import type { DeleteUserTrainingByIdResponse } from '~/server/api/trainings/[id]/types';
 
 export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
   const createTrainingRequest = createRequestState<Training>();
   const getTrainingByIdRequest = createRequestState<Training>();
+  const deleteTrainingByIdRequest = createRequestState<Training>();
   const getTrainingsRequest = createRequestState<Training[]>();
   const createTrainingExerciseRequest =
     createRequestState<TrainingExerciseWithCatalogExerciseAndSets>();
@@ -143,6 +145,32 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
     } catch (error) {
       getTrainingByIdRequest.status = RequestStatus.FAILED;
       getTrainingByIdRequest.error = error;
+
+      return null;
+    }
+  };
+
+  const deleteTrainingById = async (
+    trainingId: string
+  ): Promise<DeleteUserTrainingByIdResponse | null> => {
+    deleteTrainingByIdRequest.status = RequestStatus.PENDING;
+    deleteTrainingByIdRequest.error = null;
+
+    try {
+      const { data } = await request<DeleteUserTrainingByIdResponse>(
+        `/api/trainings/${trainingId}`,
+        {
+          method: 'DELETE'
+        }
+      );
+
+      deleteTrainingByIdRequest.status = RequestStatus.SUCCESS;
+      deleteTrainingByIdRequest.data = data;
+
+      return data;
+    } catch (error) {
+      deleteTrainingByIdRequest.status = RequestStatus.FAILED;
+      deleteTrainingByIdRequest.error = error;
 
       return null;
     }
@@ -310,6 +338,7 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
       createTraining: createTrainingRequest,
       getTrainings: getTrainingsRequest,
       getTrainingById: getTrainingByIdRequest,
+      deleteTrainingById: deleteTrainingSetByIdRequest,
       createTrainingExercise: createTrainingExerciseRequest,
       getTrainingExercises: getTrainingExercisesRequest,
       createTrainingSet: createTrainingSetRequest,
@@ -327,6 +356,7 @@ export const useTrainingStore = defineStore(TRAININGS_STORE_NAME, () => {
       createTraining,
       getTrainings,
       getTrainingById,
+      deleteTrainingById,
       createTrainingExercise,
       getTrainingExercises,
       createTrainingSet,

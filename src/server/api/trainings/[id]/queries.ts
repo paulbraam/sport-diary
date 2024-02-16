@@ -17,3 +17,11 @@ export const getTrainingById = async (id: string): Promise<Training> => {
 
   return training;
 };
+
+export const deleteTrainingById = (id: string): Promise<Training> => {
+  return prisma.training.delete({
+    where: {
+      id
+    }
+  });
+};

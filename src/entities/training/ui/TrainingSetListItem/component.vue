@@ -1,7 +1,7 @@
 <template>
   <ion-item-sliding>
     <ion-item button>
-      <ion-label>{{ trainingSet.reps }}</ion-label>
+      <ion-label>{{ label }}</ion-label>
     </ion-item>
     <ion-item-options slot="end" @ion-swipe="onTrainingSetDelete(trainingSet.id)">
       <ion-item-option color="danger" :expandable="true">
@@ -33,6 +33,22 @@ const { actions } = useTrainingStore();
 const props = defineProps<TrainingSetListItemProps>();
 
 const trainingSet = toRef(props, 'trainingSet');
+
+const label = computed(() => {
+  const labelFragments: string[] = [];
+  const reps = trainingSet.value.reps;
+  const weight = trainingSet.value.weight;
+
+  if (reps) {
+    labelFragments.push(`${reps} раз`);
+  }
+
+  if (weight) {
+    labelFragments.push(`${weight} кг`);
+  }
+
+  return labelFragments.join(' ');
+});
 
 const onTrainingSetDelete = async (setId: string) => {
   const alert = await alertController.create({
