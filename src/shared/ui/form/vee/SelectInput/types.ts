@@ -2,7 +2,7 @@ import type { SelectHTMLAttributes } from 'vue';
 
 export interface SelectOption {
   label: string;
-  value: unknown;
+  value: string | number;
 }
 
 export interface SelectInputProps extends /* @vue-ignore */ SelectHTMLAttributes {

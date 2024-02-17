@@ -3,7 +3,7 @@
     <ion-content color="light">
       <ion-list :inset="true">
         <ion-item button :detail="true" router-link="/settings/exercises">
-          <ion-label>My exercises</ion-label>
+          <ion-label>Мои упражнения</ion-label>
         </ion-item>
       </ion-list>
     </ion-content>

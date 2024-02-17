@@ -1,6 +1,8 @@
 <template>
-  <ion-button shape="round" color="primary" @click="onUpdateUserExercisesClick">Done</ion-button>
-  <ion-loading :is-open="isLoading" message="Updating your exercises..."></ion-loading>
+  <ion-button shape="round" color="primary" @click="onUpdateUserExercisesClick"
+    >Сохранить</ion-button
+  >
+  <ion-loading :is-open="isLoading" message="Обновляем упражнение..."></ion-loading>
   <ion-toast
     :is-open="!!error"
     :message="error?.message"

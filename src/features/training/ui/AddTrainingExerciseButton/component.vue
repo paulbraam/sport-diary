@@ -1,7 +1,7 @@
 <template>
   <ion-button shape="round" expand="block" fill="clear" @click="onAddTrainingExerciseButtonClick">
     <ion-icon slot="start" :icon="ioniconsAdd"></ion-icon>
-    Add an exercise
+    Добавить упражнение
   </ion-button>
 </template>
 

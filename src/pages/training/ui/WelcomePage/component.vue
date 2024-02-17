@@ -8,14 +8,14 @@
           :training="training"
         >
           <template #actions>
-            <ion-button shape="round" class="pt-2" :router-link="`/trainings/${training.id}`"
-              >View</ion-button
-            >
+            <ion-button shape="round" class="pt-2" :router-link="`/trainings/${training.id}`">
+              Открыть
+            </ion-button>
           </template>
         </training-card>
       </div>
       <div v-else class="flex h-full">
-        <div class="my-auto w-full flex justify-center">Welcome to your Sport Diary</div>
+        <div class="my-auto w-full flex justify-center">Добро пожаловать в спортивный дневник</div>
       </div>
     </ion-content>
   </ion-page>

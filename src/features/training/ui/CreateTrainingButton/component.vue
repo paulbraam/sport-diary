@@ -1,6 +1,6 @@
 <template>
-  <ion-button shape="round" class="w-full" size="default" type="submit">Create</ion-button>
-  <ion-loading :is-open="isLoading" message="Creating your training..."> </ion-loading>
+  <ion-button shape="round" class="w-full" size="default" type="submit">Создать</ion-button>
+  <ion-loading :is-open="isLoading" message="Создаем тренировку..."> </ion-loading>
   <ion-toast
     :is-open="!!error"
     :message="error?.message"

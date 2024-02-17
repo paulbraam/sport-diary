@@ -1,10 +1,10 @@
 <template>
-  <card title="Training">
+  <card title="Тренировка">
     <template #content>
       <div class="flex flex-col">
-        <div>Start: {{ startedAt }}</div>
-        <div v-if="endedAt">End: {{ endedAt }}</div>
-        <div v-if="comment">Comment: {{ comment }}</div>
+        <div>Начало: {{ startedAt }}</div>
+        <div v-if="endedAt">Окончание: {{ endedAt }}</div>
+        <div v-if="comment">Комментарий: {{ comment }}</div>
         <slot name="actions"></slot>
       </div>
     </template>

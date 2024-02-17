@@ -3,10 +3,10 @@
     <app-header>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-button shape="round" @click="closeFiltersModal">Close</ion-button>
+          <ion-button shape="round" @click="closeFiltersModal">Закрыть</ion-button>
         </ion-buttons>
         <ion-buttons slot="end">
-          <ion-button shape="round" color="primary" type="submit">Apply</ion-button>
+          <ion-button shape="round" color="primary" type="submit">Применить</ion-button>
         </ion-buttons>
       </ion-toolbar>
     </app-header>
@@ -40,7 +40,7 @@
         fill="clear"
         @click="onClearFiltersClick"
       >
-        Clear
+        Сбросить
       </ion-button>
     </ion-content>
   </form>
