@@ -1,6 +1,6 @@
 <template>
   <ion-item-sliding>
-    <ion-item button @click="onTrainingSetListItemClick">
+    <ion-item button detail @click="onTrainingSetListItemClick">
       <ion-label>{{ label }}</ion-label>
     </ion-item>
     <ion-item-options slot="end" @ion-swipe="onTrainingSetDelete(trainingSet.id)">
