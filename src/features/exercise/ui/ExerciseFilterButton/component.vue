@@ -1,5 +1,5 @@
 <template>
-  <ion-button id="filters" slot="end" fill="clear" @click="openFiltersModal">
+  <ion-button id="filters" slot="end" shape="round" fill="clear" @click="openFiltersModal">
     <ion-badge color="primary" class="absolute right-[-10px]">{{ appliedFiltersCount }}</ion-badge>
     <ion-icon slot="icon-only" aria-hidden="true" :icon="ioniconsFilter" color="dark"> </ion-icon>
   </ion-button>

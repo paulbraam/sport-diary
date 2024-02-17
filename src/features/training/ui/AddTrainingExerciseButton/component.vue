@@ -1,5 +1,5 @@
 <template>
-  <ion-button expand="block" fill="clear" @click="onAddTrainingExerciseButtonClick">
+  <ion-button shape="round" expand="block" fill="clear" @click="onAddTrainingExerciseButtonClick">
     <ion-icon slot="start" :icon="ioniconsAdd"></ion-icon>
     Add an exercise
   </ion-button>

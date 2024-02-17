@@ -3,10 +3,10 @@
     <app-header>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-button @click="closeFiltersModal">Close</ion-button>
+          <ion-button shape="round" @click="closeFiltersModal">Close</ion-button>
         </ion-buttons>
         <ion-buttons slot="end">
-          <ion-button color="primary" type="submit">Apply</ion-button>
+          <ion-button shape="round" color="primary" type="submit">Apply</ion-button>
         </ion-buttons>
       </ion-toolbar>
     </app-header>
@@ -33,7 +33,13 @@
           </select-input>
         </ion-item>
       </ion-list>
-      <ion-button class="w-full" size="default" fill="clear" @click="onClearFiltersClick">
+      <ion-button
+        shape="round"
+        class="w-full"
+        size="default"
+        fill="clear"
+        @click="onClearFiltersClick"
+      >
         Clear
       </ion-button>
     </ion-content>

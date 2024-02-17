@@ -1,5 +1,5 @@
 <template>
-  <ion-button expand="block" fill="clear" @click="onAddTrainingSetButtonClick">
+  <ion-button shape="round" expand="block" fill="clear" @click="onAddTrainingSetButtonClick">
     <ion-icon slot="start" :icon="ioniconsAdd"></ion-icon>
     Add a set
   </ion-button>

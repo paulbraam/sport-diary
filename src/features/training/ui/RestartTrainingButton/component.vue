@@ -1,5 +1,7 @@
 <template>
-  <ion-button expand="block" @click="onRestartTrainingButtonClick">Restart</ion-button>
+  <ion-button shape="round" expand="block" @click="onRestartTrainingButtonClick"
+    >Restart</ion-button
+  >
 </template>
 
 <script lang="ts" setup>

@@ -2,7 +2,7 @@
   <app-header>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-button @click="closeModal">Close</ion-button>
+        <ion-button shape="round" @click="closeModal">Close</ion-button>
       </ion-buttons>
       <ion-buttons slot="end">
         <create-training-exercise-submit-button></create-training-exercise-submit-button>

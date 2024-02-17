@@ -1,5 +1,5 @@
 <template>
-  <ion-button class="w-full" size="default" type="submit">Create</ion-button>
+  <ion-button shape="round" class="w-full" size="default" type="submit">Create</ion-button>
   <ion-loading :is-open="isLoading" message="Creating your training..."> </ion-loading>
   <ion-toast
     :is-open="!!error"

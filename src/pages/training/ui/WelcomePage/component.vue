@@ -8,7 +8,9 @@
           :training="training"
         >
           <template #actions>
-            <ion-button class="pt-2" :router-link="`/trainings/${training.id}`">View</ion-button>
+            <ion-button shape="round" class="pt-2" :router-link="`/trainings/${training.id}`"
+              >View</ion-button
+            >
           </template>
         </training-card>
       </div>
