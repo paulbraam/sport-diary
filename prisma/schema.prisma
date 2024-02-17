@@ -102,7 +102,7 @@ model TrainingSet {
   setId              String?
   reps               Int?
   duration           Int?
-  weight             Int?
+  weight             Decimal?
   intensity          Intensity?
   rest               Int?
   TrainingExercise   TrainingExercise? @relation(fields: [trainingExerciseId], references: [id])
