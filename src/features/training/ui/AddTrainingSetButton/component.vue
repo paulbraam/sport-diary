@@ -1,7 +1,7 @@
 <template>
   <ion-button shape="round" expand="block" fill="clear" @click="onAddTrainingSetButtonClick">
     <ion-icon slot="start" :icon="ioniconsAdd"></ion-icon>
-    Add a set
+    Добавить подход
   </ion-button>
 </template>
 

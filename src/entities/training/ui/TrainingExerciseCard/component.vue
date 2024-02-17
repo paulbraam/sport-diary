@@ -6,11 +6,11 @@
     </template>
     <template #content>
       <ion-list v-if="trainingExercise.sets.length" class="m-0">
-        <div v-for="set in trainingExercise.sets" :key="set.id">
+        <template v-for="set in trainingExercise.sets" :key="set.id">
           <training-set-action-list-item v-if="isStarted" :training-set="set">
           </training-set-action-list-item>
           <training-set-view-list-item v-else :training-set="set"></training-set-view-list-item>
-        </div>
+        </template>
       </ion-list>
       <add-training-set-button v-if="isStarted" :training-exercise-id="trainingExercise.id">
       </add-training-set-button>

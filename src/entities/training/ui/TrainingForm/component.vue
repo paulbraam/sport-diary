@@ -2,10 +2,10 @@
   <form :novalidate="true" @submit="onSubmit">
     <ion-list :inset="true">
       <ion-item>
-        <date-input name="startedAt" label="Start" type="datetime-local"></date-input>
+        <date-input name="startedAt" label="Начало" type="datetime-local"></date-input>
       </ion-item>
       <ion-item lines="none">
-        <textarea-input name="comment" label="Comment"></textarea-input>
+        <textarea-input name="comment" label="Комментарий"></textarea-input>
       </ion-item>
       <ion-item>
         <slot name="actions" :values="data" :success="onSuccess" />

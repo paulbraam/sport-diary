@@ -1,5 +1,5 @@
 <template>
-  <ion-item button @click="onTrainingSetListItemClick">
+  <ion-item class="list-item" button @click="onTrainingSetListItemClick">
     <ion-label>{{ label }}</ion-label>
   </ion-item>
 </template>
@@ -52,3 +52,9 @@ const onTrainingSetListItemClick = async () => {
   await alert.present();
 };
 </script>
+
+<style scoped>
+.list-item:last-child {
+  --border-color: rgba(255, 255, 255, 0);
+}
+</style>

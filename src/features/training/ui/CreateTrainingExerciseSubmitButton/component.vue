@@ -2,9 +2,9 @@
 
 <template>
   <ion-button shape="round" color="primary" type="submit" :form="TRAINING_EXERCISE_FORM_ID"
-    >Create</ion-button
+    >Создать</ion-button
   >
-  <ion-loading :is-open="isLoading" message="Creating your training exercise..."> </ion-loading>
+  <ion-loading :is-open="isLoading" message="Создаем упражнение..."> </ion-loading>
   <ion-toast
     :is-open="!!error"
     :message="error?.message"

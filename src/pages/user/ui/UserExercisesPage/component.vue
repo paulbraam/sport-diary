@@ -10,7 +10,7 @@
         </user-exercise-list-item>
       </ion-list>
       <div v-else class="flex h-full">
-        <div class="my-auto w-full flex justify-center">No exercises so far</div>
+        <div class="my-auto w-full flex justify-center">Нет упражнений</div>
       </div>
       <ion-fab slot="fixed" vertical="bottom" horizontal="end">
         <ion-fab-button @click="openUserExercisesModal">

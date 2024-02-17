@@ -42,10 +42,10 @@ const openUserExerciseInfoAlert = async () => {
 
 const onUserExerciseDelete = async (exerciseId: string) => {
   const alert = await alertController.create({
-    header: 'Do you really want to remove your exercise?',
-    message: 'This action is potentially distructive',
+    header: 'Удаление',
+    message: 'Вы действительно хотите удалить упражнение?',
     buttons: [
-      'Cancel',
+      'Отмена',
       {
         text: 'OK',
         role: 'confirm',

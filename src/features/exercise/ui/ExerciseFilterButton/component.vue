@@ -1,5 +1,12 @@
 <template>
-  <ion-button id="filters" slot="end" shape="round" fill="clear" @click="openFiltersModal">
+  <ion-button
+    id="filters"
+    slot="end"
+    class="filter-button"
+    shape="round"
+    fill="clear"
+    @click="openFiltersModal"
+  >
     <ion-badge color="primary" class="absolute right-[-10px]">{{ appliedFiltersCount }}</ion-badge>
     <ion-icon slot="icon-only" aria-hidden="true" :icon="ioniconsFilter" color="dark"> </ion-icon>
   </ion-button>
@@ -33,3 +40,10 @@ const openFiltersModal = async () => {
   }
 };
 </script>
+
+<style scoped>
+.filter-button {
+  --padding-end: 15px;
+  --padding-start: 15px;
+}
+</style>

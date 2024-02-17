@@ -42,10 +42,10 @@ const label = computed(() => formatDate(training.value.createdAt));
 
 const onTrainingDelete = async (id: string) => {
   const alert = await alertController.create({
-    header: 'Do you really want to remove your exercise?',
-    message: 'This action is potentially distructive',
+    header: 'Удаление',
+    message: 'Вы действительно хотите удалить тренировку?',
     buttons: [
-      'Cancel',
+      'Отмена',
       {
         text: 'OK',
         role: 'confirm',

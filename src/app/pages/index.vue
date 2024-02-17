@@ -3,7 +3,7 @@
   <ion-menu menu-id="menu" content-id="main-content" :disabled="isMenuDisabled">
     <app-header class="ion-no-border border-bottom">
       <ion-toolbar class="ion-no-border">
-        <ion-title>Menu</ion-title>
+        <ion-title>Меню</ion-title>
       </ion-toolbar>
     </app-header>
     <ion-content class="ion-padding">
@@ -16,22 +16,9 @@
               :icon="ioniconsFitness"
               color="dark"
             ></ion-icon>
-            <ion-label>Trainings</ion-label>
+            <ion-label>Тренировки</ion-label>
           </ion-item>
         </ion-menu-toggle>
-        <ion-item button>
-          <ion-icon slot="start" aria-hidden="true" :icon="ioniconsFlag" color="dark"></ion-icon>
-          <ion-label>Goals</ion-label>
-        </ion-item>
-        <ion-item button>
-          <ion-icon
-            slot="start"
-            aria-hidden="true"
-            :icon="ioniconsStatsChart"
-            color="dark"
-          ></ion-icon>
-          <ion-label>Statistics</ion-label>
-        </ion-item>
         <ion-menu-toggle>
           <ion-item button router-link="/settings">
             <ion-icon
@@ -40,12 +27,12 @@
               :icon="ioniconsSettings"
               color="dark"
             ></ion-icon>
-            <ion-label>Settings</ion-label>
+            <ion-label>Настройки</ion-label>
           </ion-item>
         </ion-menu-toggle>
         <ion-item button @click="logOut()">
           <ion-icon slot="start" aria-hidden="true" :icon="ioniconsExit" color="danger"></ion-icon>
-          <ion-label>Sign out</ion-label>
+          <ion-label>Выход</ion-label>
         </ion-item>
       </ion-list>
     </ion-content>

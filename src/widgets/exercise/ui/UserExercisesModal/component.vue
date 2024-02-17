@@ -2,15 +2,17 @@
   <app-header>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-button shape="round" @click="onClose">Cancel</ion-button>
+        <ion-button shape="round" @click="onClose">Отмена</ion-button>
       </ion-buttons>
       <ion-buttons slot="end">
         <update-user-exercises-button :exercise-ids="userExerciseIds">
         </update-user-exercises-button>
       </ion-buttons>
     </ion-toolbar>
-    <ion-toolbar>
-      <ion-searchbar :debounce="200" @ion-input="onContainsInputChange($event)"></ion-searchbar>
+    <ion-toolbar class="flex flex-row gap-1 items-center px-4">
+      <ion-input :debounce="200" placeholder="Поиск" @ion-input="onContainsInputChange($event)">
+        <ion-icon slot="start" :icon="ioniconsSearch" aria-hidden="true"></ion-icon>
+      </ion-input>
       <exercise-filter-button></exercise-filter-button>
     </ion-toolbar>
   </app-header>
@@ -36,10 +38,10 @@ import {
   IonItem,
   IonToolbar,
   IonButtons,
-  IonSearchbar,
+  IonInput,
   modalController,
-  type SearchbarCustomEvent,
-  type CheckboxCustomEvent
+  type CheckboxCustomEvent,
+  type InputCustomEvent
 } from '@ionic/vue';
 import { useCatalogExercisesStore, useUserExerciseFiltersStore } from '~/entities/exercise';
 import { useUserSettingsStore } from '~/entities/user';
@@ -70,9 +72,9 @@ const onExerciseCheckboxChange = (event: CheckboxCustomEvent) => {
     : userExerciseIds.value.filter((id) => id !== exerciseId);
 };
 
-const onContainsInputChange = (event: SearchbarCustomEvent) => {
+const onContainsInputChange = (event: InputCustomEvent) => {
   const value = event.target.value;
-  contains.value = value || '';
+  if (typeof value === 'string') contains.value = value || '';
 };
 
 const onClose = () => {
