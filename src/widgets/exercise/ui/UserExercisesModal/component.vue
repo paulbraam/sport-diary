@@ -2,7 +2,7 @@
   <app-header>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-button @click="onClose">Cancel</ion-button>
+        <ion-button shape="round" @click="onClose">Cancel</ion-button>
       </ion-buttons>
       <ion-buttons slot="end">
         <update-user-exercises-button :exercise-ids="userExerciseIds">

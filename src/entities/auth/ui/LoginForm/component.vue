@@ -6,7 +6,7 @@
         <ion-card-title>Sign-In</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <ion-button expand="block" color="dark" @click="logInWithGoogle">
+        <ion-button shape="round" expand="block" color="dark" @click="logInWithGoogle">
           <ion-icon slot="start" :icon="ioniconsLogoGoogle"></ion-icon>
           Google
         </ion-button>

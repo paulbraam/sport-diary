@@ -1,5 +1,5 @@
 <template>
-  <ion-button expand="block" @click="onFinishTrainingButtonClick">Finish</ion-button>
+  <ion-button shape="round" expand="block" @click="onFinishTrainingButtonClick">Finish</ion-button>
 </template>
 
 <script lang="ts" setup>
