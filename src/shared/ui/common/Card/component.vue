@@ -27,6 +27,6 @@ const subtitle = props.subtitle;
 .card {
   box-shadow: none;
   border: 1px solid;
-  border-color: #e5e7eb;
+  border-color: var(--ion-border-color);
 }
 </style>
