@@ -5,6 +5,10 @@
 
 :root {
   --ion-font-family: 'Inter Tight';
+
+  --ion-border-color: #e5e7eb;
+
+  --ion-border-radius: 7px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -130,8 +134,8 @@
     --ion-text-color: #ffffff;
     --ion-text-color-rgb: 255, 255, 255;
 
-    --ion-color-step-50: #1e1e1e;
-    --ion-color-step-100: #2a2a2a;
+    --ion-color-step-50: #101010;
+    --ion-color-step-100: #0d0d0e;
     --ion-color-step-150: #363636;
     --ion-color-step-200: #414141;
     --ion-color-step-250: #4d4d4d;
@@ -163,4 +167,20 @@
 
     --ion-card-background: #0d0d0e;
   }
+}
+
+/* overrides */
+
+ion-datetime {
+  height: 100%;
+  max-width: 100%;
+}
+
+.list-md.list-inset {
+  border-radius: var(--ion-border-radius);
+}
+
+.list-md {
+  padding-top: 0;
+  padding-bottom: 0;
 }

@@ -28,5 +28,6 @@ const subtitle = props.subtitle;
   box-shadow: none;
   border: 1px solid;
   border-color: var(--ion-border-color);
+  border-radius: var(--ion-border-radius);
 }
 </style>
