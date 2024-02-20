@@ -5,6 +5,10 @@
 
 :root {
   --ion-font-family: 'Inter Tight';
+
+  --ion-border-color: #e5e7eb;
+
+  --ion-border-radius: 7px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -170,4 +174,13 @@
 ion-datetime {
   height: 100%;
   max-width: 100%;
+}
+
+.list-md.list-inset {
+  border-radius: var(--ion-border-radius);
+}
+
+.list-md {
+  padding-top: 0;
+  padding-bottom: 0;
 }
