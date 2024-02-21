@@ -10,6 +10,7 @@
     "ionic:build": "npm run generate"
   },
   "devDependencies": {
+    "@capacitor/assets": "^3.0.4",
     "@nuxt/devtools": "latest",
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
     "@nuxtjs/google-fonts": "^3.1.3",
