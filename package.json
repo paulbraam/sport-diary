@@ -1,7 +1,7 @@
 {
   "name": "sport-diary",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.0-beta",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
