@@ -30,6 +30,17 @@
             <ion-label>Настройки</ion-label>
           </ion-item>
         </ion-menu-toggle>
+        <ion-menu-toggle>
+          <ion-item button router-link="/about">
+            <ion-icon
+              slot="start"
+              aria-hidden="true"
+              :icon="ioniconsInformationCircle"
+              color="dark"
+            ></ion-icon>
+            <ion-label>О приложении</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
         <ion-item button @click="logOut()">
           <ion-icon slot="start" aria-hidden="true" :icon="ioniconsExit" color="danger"></ion-icon>
           <ion-label>Выход</ion-label>
