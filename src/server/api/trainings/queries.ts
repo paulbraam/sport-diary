@@ -6,6 +6,9 @@ export const getTrainingsByUserId = (userId: string): Promise<Training[]> => {
   return prisma.training.findMany({
     where: {
       userId
+    },
+    orderBy: {
+      startedAt: 'desc'
     }
   });
 };
