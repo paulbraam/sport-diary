@@ -10,7 +10,7 @@ import { IonApp, IonRouterOutlet } from '@ionic/vue';
 const runtimeConfig = useRuntimeConfig();
 
 useHead({
-  title: 'Sport Diary',
+  title: runtimeConfig.public.appName,
   meta: [
     {
       name: 'description',
