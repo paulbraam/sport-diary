@@ -56,7 +56,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       googleClientId: process.env.GOOGLE_SERVER_CLIENT_ID,
-      apiUrl: process.env.API_URL
+      apiUrl: process.env.API_URL,
+      appName: process.env.APP_NAME
     }
   },
   experimental: {

@@ -44,7 +44,7 @@
           <ion-menu-button v-if="isRootRoute"></ion-menu-button>
           <ion-back-button v-else default-href="/"></ion-back-button>
         </ion-buttons>
-        <ion-title>Sport Diary</ion-title>
+        <ion-title>{{ runtimeConfig.public.appName }}</ion-title>
       </ion-toolbar>
     </app-header>
     <ion-content class="ion-padding"><ion-router-outlet /></ion-content>
@@ -73,6 +73,7 @@ import { AppHeader } from '~/shared/ui';
 
 const router = useIonRouter();
 const route = useRoute();
+const runtimeConfig = useRuntimeConfig();
 
 const {
   state,
