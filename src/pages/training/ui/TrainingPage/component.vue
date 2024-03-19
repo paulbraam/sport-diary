@@ -1,6 +1,6 @@
 <template>
   <ion-page id="training">
-    <ion-content>
+    <ion-content color="light">
       <training-card v-if="training" :training="training">
         <template #actions>
           <finish-training-button v-if="isStarted" class="pt-2" :training-id="training.id">
