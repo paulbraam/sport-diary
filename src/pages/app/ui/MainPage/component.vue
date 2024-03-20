@@ -1,10 +1,12 @@
 <!-- eslint-disable vue/no-multiple-template-root -->
 <template>
-  <app-menu :content-id="CONTENT_ID"></app-menu>
-  <ion-page :id="CONTENT_ID">
-    <app-header></app-header>
-    <ion-content class="ion-padding">
-      <ion-router-outlet />
+  <ion-page>
+    <app-menu :content-id="CONTENT_ID"></app-menu>
+    <ion-content :id="CONTENT_ID">
+      <app-header></app-header>
+      <ion-content class="ion-padding">
+        <ion-router-outlet />
+      </ion-content>
     </ion-content>
   </ion-page>
 </template>

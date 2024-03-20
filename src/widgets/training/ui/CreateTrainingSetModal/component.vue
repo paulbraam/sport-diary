@@ -11,7 +11,7 @@
       </apply-create-training-set-modal-submit-button>
     </template>
     <template #default>
-      <training-set-form @submit="onSubmit"></training-set-form>
+      <training-set-form @on-submit="onSubmit"></training-set-form>
     </template>
   </app-modal>
 </template>

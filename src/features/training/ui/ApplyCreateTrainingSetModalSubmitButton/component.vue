@@ -1,7 +1,7 @@
 <template>
-  <ion-button shape="round" color="primary" type="submit" :form="TRAINING_SET_FORM_ID"
-    >Создать</ion-button
-  >
+  <ion-button shape="round" color="primary" type="submit" :form="TRAINING_SET_FORM_ID">
+    Создать
+  </ion-button>
   <ion-loading :is-open="isLoading" message="Создаем подход..."> </ion-loading>
   <ion-toast
     :is-open="!!error"
