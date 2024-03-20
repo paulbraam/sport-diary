@@ -4,8 +4,8 @@
       <close-create-training-exercise-modal-button></close-create-training-exercise-modal-button>
     </template>
     <template #endActions>
-      <create-training-exercise-modal-submit-button @on-submit-register="onSubmitRegister">
-      </create-training-exercise-modal-submit-button>
+      <apply-create-training-exercise-modal-submit-button @on-submit-register="onSubmitRegister">
+      </apply-create-training-exercise-modal-submit-button>
     </template>
     <template #default>
       <training-exercise-form @on-submit="onSubmit"></training-exercise-form>
@@ -18,7 +18,7 @@ import type { SubmitEventHandler, CreateTrainingExerciseModalProps } from './typ
 import { TrainingExerciseForm } from '~/entities/training';
 import {
   CloseCreateTrainingExerciseModalButton,
-  CreateTrainingExerciseModalSubmitButton
+  ApplyCreateTrainingExerciseModalSubmitButton
 } from '~/features/training';
 import type { CreateTrainingExerciseRequestBody } from '~/server/api/trainings/exercises/types';
 import { AppModal } from '~/shared/ui';

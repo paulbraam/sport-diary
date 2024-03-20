@@ -17,7 +17,7 @@
         <div class="my-auto w-full flex justify-center">Нет упражнений</div>
       </div>
       <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-        <open-user-exercises-floatin-action-button></open-user-exercises-floatin-action-button>
+        <open-user-exercises-floating-action-button></open-user-exercises-floating-action-button>
       </ion-fab>
     </ion-content>
   </ion-page>
@@ -29,7 +29,7 @@ import { UserExerciseListItem } from '~/entities/exercise';
 import { useUserSettingsStore } from '~/entities/user';
 import {
   DeleteUserExerciseListItemOption,
-  OpenUserExercisesFloatinActionButton
+  OpenUserExercisesFloatingActionButton
 } from '~/features/exercise';
 
 const { actions, state } = useUserSettingsStore();

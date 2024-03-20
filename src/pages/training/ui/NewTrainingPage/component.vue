@@ -3,9 +3,8 @@
     <ion-content>
       <training-form>
         <template #actions="{ onSubmitRegister }">
-          <create-training-submit-button
-            @on-register-submit="onSubmitRegister"
-          ></create-training-submit-button>
+          <create-training-submit-button @on-register-submit="onSubmitRegister">
+          </create-training-submit-button>
         </template>
       </training-form>
     </ion-content>

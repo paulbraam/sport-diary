@@ -4,6 +4,6 @@ export type SubmitPayload = CreateTrainingExerciseRequestBody;
 
 export type SubmitEventHandler = (data: SubmitPayload) => void;
 
-export interface CreateTrainingExerciseSubmitButtonEmits {
+export interface ApplyCreateTrainingExerciseModalSubmitButtonEmits {
   (eventName: 'onSubmitRegister', data: SubmitEventHandler): void;
 }

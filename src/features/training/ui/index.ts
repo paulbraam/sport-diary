@@ -1,6 +1,6 @@
 export * from './CreateTrainingSubmitButton';
 export * from './AddTrainingExerciseButton';
-export * from './CreateTrainingExerciseModalSubmitButton';
+export * from './ApplyCreateTrainingExerciseModalSubmitButton';
 export * from './AddTrainingSetButton';
 export * from './ApplyCreateTrainingSetModalSubmitButton';
 export * from './DeleteTrainingExerciseCardButton';

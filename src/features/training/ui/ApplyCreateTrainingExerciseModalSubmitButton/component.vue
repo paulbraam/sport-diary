@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import { IonButton, modalController } from '@ionic/vue';
-import type { CreateTrainingExerciseSubmitButtonEmits, SubmitPayload } from './types';
+import type { ApplyCreateTrainingExerciseModalSubmitButtonEmits, SubmitPayload } from './types';
 import {
   CREATE_TRAINING_EXERCISE_MODAL_ID,
   CreateTrainingExerciseModalRoles,
@@ -23,7 +23,7 @@ import {
 } from '~/entities/training';
 import { RequestStatus } from '~/shared/lib/const';
 
-const emit = defineEmits<CreateTrainingExerciseSubmitButtonEmits>();
+const emit = defineEmits<ApplyCreateTrainingExerciseModalSubmitButtonEmits>();
 
 const { actions } = useTrainingStore();
 
