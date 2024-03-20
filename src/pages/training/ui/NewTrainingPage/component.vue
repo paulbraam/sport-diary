@@ -2,9 +2,10 @@
   <ion-page id="new-training">
     <ion-content>
       <training-form>
-        <template #actions="{ values, success }">
-          <create-training-button :values="values" @success="() => success()">
-          </create-training-button>
+        <template #actions="{ onSubmitRegister }">
+          <create-training-submit-button
+            @on-register-submit="onSubmitRegister"
+          ></create-training-submit-button>
         </template>
       </training-form>
     </ion-content>
@@ -14,5 +15,5 @@
 <script setup lang="ts">
 import { IonPage, IonContent } from '@ionic/vue';
 import { TrainingForm } from '~/entities/training';
-import { CreateTrainingButton } from '~/features/training';
+import { CreateTrainingSubmitButton } from '~/features/training';
 </script>

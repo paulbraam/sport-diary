@@ -4,7 +4,7 @@ import type { TrainingSetPayload } from '~/server/api/trainings/sets/types';
 export type TrainingSetFormValidationSchema = TrainingSetPayload;
 
 export type TrainingExerciseFormEmits = {
-  (eventName: 'submit', value: TrainingSetPayload): void;
+  (eventName: 'onSubmit', value: TrainingSetPayload): void;
 };
 
 export type IntensityMap<T> = {

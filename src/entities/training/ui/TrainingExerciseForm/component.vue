@@ -13,7 +13,7 @@
 import { IonList, IonItem } from '@ionic/vue';
 import { TRAINING_EXERCISE_FORM_ID } from '../../model/const';
 import { trainingExerciseFormValidationSchema } from './const';
-import type { TrainingExerciseFormEmits } from './types';
+import { type TrainingExerciseForm, type TrainingExerciseFormEmits } from './types';
 import { useUserSettingsStore } from '~/entities/user';
 import { SelectInput } from '~/shared/ui/form';
 
@@ -28,12 +28,12 @@ const userExerciseSelectOptions = computed(() =>
   }))
 );
 
-const { handleSubmit } = useForm({
+const { handleSubmit } = useForm<TrainingExerciseForm>({
   validationSchema: trainingExerciseFormValidationSchema
 });
 
 const onSubmit = handleSubmit((values) => {
-  emit('submit', values);
+  emit('onSubmit', values);
 });
 
 onBeforeMount(() => {

@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
 import type { CatalogExercise } from '@prisma/client';
-import type { CatalogExercisesState, ExerciseFiltersForm } from './types';
+import type { CatalogExercisesState, ExerciseFilters } from './types';
 import {
   CATALOG_EXERCISES_INITIAL_STATE,
   CATALOG_EXERCISES_STORE_NAME,
-  exerciseFiltersInitialValues
+  EXERCISE_FILTERS_INITIAL_STATE
 } from './const';
 import type { NullableObjectValues } from '~/shared/lib/types';
 import { RequestStatus } from '~/shared/lib/const';
@@ -59,15 +59,15 @@ export const useCatalogExercisesStore = defineStore(CATALOG_EXERCISES_STORE_NAME
 });
 
 export const useUserExerciseFiltersStore = () => {
-  const state = useState<ExerciseFiltersForm>(
+  const state = useState<ExerciseFilters>(
     'user_exercise_filters',
-    () => exerciseFiltersInitialValues
+    () => EXERCISE_FILTERS_INITIAL_STATE
   );
 
   return {
     state,
     reset: () => {
-      state.value = exerciseFiltersInitialValues;
+      state.value = EXERCISE_FILTERS_INITIAL_STATE;
     }
   };
 };

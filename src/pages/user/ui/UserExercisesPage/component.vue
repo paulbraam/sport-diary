@@ -7,42 +7,34 @@
           :key="exercise.id"
           :exercise="exercise"
         >
+          <template #options>
+            <delete-user-exercise-list-item-option :exercise-id="exercise.id">
+            </delete-user-exercise-list-item-option>
+          </template>
         </user-exercise-list-item>
       </ion-list>
       <div v-else class="flex h-full">
         <div class="my-auto w-full flex justify-center">Нет упражнений</div>
       </div>
       <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-        <ion-fab-button @click="openUserExercisesModal">
-          <ion-icon :icon="ioniconsAdd"></ion-icon>
-        </ion-fab-button>
+        <open-user-exercises-floatin-action-button></open-user-exercises-floatin-action-button>
       </ion-fab>
     </ion-content>
   </ion-page>
 </template>
 
 <script setup lang="ts">
-import { IonList, IonPage, IonContent, modalController } from '@ionic/vue';
-import { UserExerciseListItem, useUserExerciseFiltersStore } from '~/entities/exercise';
+import { IonList, IonPage, IonContent } from '@ionic/vue';
+import { UserExerciseListItem } from '~/entities/exercise';
 import { useUserSettingsStore } from '~/entities/user';
-import { UserExercisesModal } from '~/widgets/exercise';
+import {
+  DeleteUserExerciseListItemOption,
+  OpenUserExercisesFloatinActionButton
+} from '~/features/exercise';
 
 const { actions, state } = useUserSettingsStore();
-const { reset: resetUserExerciseFilters } = useUserExerciseFiltersStore();
 
 const userExercises = computed(() => state.settings?.exercises ?? []);
-
-const openUserExercisesModal = async () => {
-  const modal = await modalController.create({
-    component: UserExercisesModal
-  });
-
-  modal.present();
-
-  await modal.onWillDismiss();
-
-  resetUserExerciseFilters();
-};
 
 onBeforeMount(() => {
   actions.getUserSettings();

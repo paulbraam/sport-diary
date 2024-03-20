@@ -1,4 +1,5 @@
 import { Prisma, TrainingSet } from '@prisma/client';
+import { TrainingExerciseWithCatalogExerciseAndSets } from '../exercises/types';
 import { ApiRequest } from '~/shared/lib/types';
 
 export type TrainingSetPayload = Omit<
@@ -9,7 +10,7 @@ export type TrainingSetPayload = Omit<
 // POST
 
 export type CreateTrainingSetRequestBody = {
-  trainingExerciseId: string;
+  trainingExerciseId: TrainingExerciseWithCatalogExerciseAndSets['id'];
   data: TrainingSetPayload;
 };
 

@@ -8,7 +8,7 @@
         <textarea-input name="comment" label="Комментарий"></textarea-input>
       </ion-item>
       <ion-item>
-        <slot name="actions" :values="data" :success="onSuccess" />
+        <slot name="actions" :on-submit-register="onSubmitRegister" />
       </ion-item>
     </ion-list>
   </form>
@@ -17,21 +17,25 @@
 <script setup lang="ts">
 import { IonList, IonItem } from '@ionic/vue';
 import { useForm } from 'vee-validate';
-import type { ITrainingForm } from '../../model';
-import { trainingFormValidationSchema } from '../../model';
+import type { SubmitEventHandler, TrainingForm } from './types';
+import { trainingFormValidationSchema } from './utils';
 import { DateInput, TextareaInput } from '~/shared/ui/form';
 
-const data = ref<ITrainingForm | null>(null);
+const onSubmitted = ref<SubmitEventHandler>(() => {});
 
-const { handleSubmit, resetForm } = useForm<ITrainingForm>({
+const { handleSubmit, resetForm } = useForm<TrainingForm>({
   validationSchema: trainingFormValidationSchema
 });
 
+const onSubmitRegister = (submitEventHandler: SubmitEventHandler) => {
+  onSubmitted.value = submitEventHandler;
+};
+
 const onSubmit = handleSubmit((values) => {
-  data.value = values;
+  onSubmitted.value(values);
 });
 
-const onSuccess = () => {
+onIonViewDidLeave(() => {
   resetForm();
-};
+});
 </script>
