@@ -1,5 +1,5 @@
 <template>
-  <card :title="trainingExercise.exercise.name">
+  <card :subtitle="trainingExercise.exercise.name">
     <template v-if="isStarted" #actions>
       <delete-training-exercise-button :training-exercise-id="trainingExercise.id">
       </delete-training-exercise-button>
