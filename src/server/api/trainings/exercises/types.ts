@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client';
+import { Prisma, Training } from '@prisma/client';
 import { ApiRequest } from '~/shared/lib/types';
 
 export type TrainingExerciseWithCatalogExerciseAndSets = Prisma.TrainingExerciseGetPayload<{
@@ -11,8 +11,8 @@ export type TrainingExerciseWithCatalogExerciseAndSets = Prisma.TrainingExercise
 // POST
 
 export type CreateTrainingExerciseRequestBody = {
-  exerciseId: string;
-  trainingId: string;
+  exerciseId: TrainingExerciseWithCatalogExerciseAndSets['id'];
+  trainingId: Training['id'];
 };
 
 export type CreateTrainingExerciseRequest = ApiRequest<CreateTrainingExerciseRequestBody>;
@@ -22,7 +22,7 @@ export type CreateTrainingExerciseResponse = TrainingExerciseWithCatalogExercise
 // GET
 
 export type GetTrainingExercisesRequestParams = {
-  trainingId: string;
+  trainingId: Training['id'];
 };
 
 export type GetTrainingExercisesRequest = ApiRequest<unknown, GetTrainingExercisesRequestParams>;

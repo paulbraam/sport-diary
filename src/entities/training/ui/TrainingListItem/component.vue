@@ -1,5 +1,5 @@
 <template>
-  <ion-item-sliding @ion-swipe="onTrainingDelete(training.id)">
+  <ion-item-sliding @ion-swipe="onTrainingListItemSpiwe">
     <ion-item button detail :router-link="`/trainings/${training.id}`">
       <div class="flex flex-row gap-4 items-center">
         <ion-icon :icon="ioniconsBarbell"></ion-icon>
@@ -7,13 +7,7 @@
       </div>
     </ion-item>
     <ion-item-options slot="end">
-      <ion-item-option color="danger" :expandable="true">
-        <ion-icon
-          slot="icon-only"
-          :icon="ioniconsTrash"
-          @click="onTrainingDelete(training.id)"
-        ></ion-icon>
-      </ion-item-option>
+      <slot name="options"></slot>
     </ion-item-options>
   </ion-item-sliding>
 </template>
@@ -21,7 +15,6 @@
 <script setup lang="ts">
 import {
   IonItemSliding,
-  IonItemOption,
   IonIcon,
   IonLabel,
   IonItem,
@@ -40,7 +33,7 @@ const training = toRef(props, 'training');
 
 const label = computed(() => formatDate(training.value.createdAt));
 
-const onTrainingDelete = async (id: string) => {
+const onTrainingListItemSpiwe = async () => {
   const alert = await alertController.create({
     header: 'Удаление',
     message: 'Вы действительно хотите удалить тренировку?',
@@ -50,7 +43,7 @@ const onTrainingDelete = async (id: string) => {
         text: 'OK',
         role: 'confirm',
         handler: async () => {
-          const deletedTraining = await actions.deleteTrainingById(id);
+          const deletedTraining = await actions.deleteTrainingById(props.training.id);
 
           if (deletedTraining) {
             actions.removeTrainingFromState(deletedTraining.id);

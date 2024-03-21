@@ -3,10 +3,10 @@
     <ion-content color="light">
       <training-card v-if="training" :training="training">
         <template #actions>
-          <finish-training-button v-if="isStarted" class="pt-2" :training-id="training.id">
-          </finish-training-button>
-          <restart-training-button v-else class="pt-2" :training-id="training.id">
-          </restart-training-button>
+          <finish-training-card-button v-if="isStarted" class="pt-2" :training-id="training.id">
+          </finish-training-card-button>
+          <restart-training-card-button v-else class="pt-2" :training-id="training.id">
+          </restart-training-card-button>
         </template>
       </training-card>
       <div v-if="trainingExercises.length">
@@ -15,6 +15,10 @@
           :key="trainingExercise.id"
           :training-exercise="trainingExercise"
         >
+          <template #actions>
+            <delete-training-exercise-card-button :training-exercise-id="trainingExercise.id">
+            </delete-training-exercise-card-button>
+          </template>
         </training-exercise-card>
       </div>
       <add-training-exercise-button v-if="isStarted" :training-id="trainingId">
@@ -28,8 +32,9 @@ import { IonPage, IonContent } from '@ionic/vue';
 import { TrainingCard, TrainingExerciseCard, useTrainingStore } from '~/entities/training';
 import {
   AddTrainingExerciseButton,
-  FinishTrainingButton,
-  RestartTrainingButton
+  DeleteTrainingExerciseCardButton,
+  FinishTrainingCardButton,
+  RestartTrainingCardButton
 } from '~/features/training';
 
 const route = useRoute();

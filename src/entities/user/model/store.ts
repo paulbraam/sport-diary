@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import type { CatalogExercise } from '@prisma/client';
 import type { UserSettingsState } from './types';
 import { USER_SETTINGS_INITIAL_STATE, USER_SETTINGS_STORE_NAME } from './const';
 import { RequestStatus } from '~/shared/lib/const';
@@ -53,7 +54,7 @@ export const useUserSettingsStore = defineStore(USER_SETTINGS_STORE_NAME, () => 
   };
 
   const updateUserExercises = async (
-    exerciseIds: string[]
+    exerciseIds: Array<CatalogExercise['id']>
   ): Promise<UpdateUserExercisesResponse | null> => {
     updateUserExercisesRequest.status = RequestStatus.PENDING;
     updateUserExercisesRequest.error = null;

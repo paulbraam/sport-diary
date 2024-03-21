@@ -3,24 +3,14 @@
     <ion-item button detail @click="openUserExerciseInfoAlert">
       <ion-label>{{ exercise.name }}</ion-label>
     </ion-item>
-    <ion-item-options slot="end" @ion-swipe="onUserExerciseDelete(exercise.id)">
-      <ion-item-option color="danger" :expandable="true">
-        <ion-icon slot="icon-only" :icon="ioniconsTrash" @click="onUserExerciseDelete(exercise.id)">
-        </ion-icon>
-      </ion-item-option>
+    <ion-item-options slot="end" @ion-swipe="onUserExerciseListItemSwipe(exercise.id)">
+      <slot name="options"></slot>
     </ion-item-options>
   </ion-item-sliding>
 </template>
 
 <script setup lang="ts">
-import {
-  IonLabel,
-  IonItem,
-  IonItemSliding,
-  IonItemOptions,
-  IonItemOption,
-  alertController
-} from '@ionic/vue';
+import { IonLabel, IonItem, IonItemSliding, IonItemOptions, alertController } from '@ionic/vue';
 import type { UserExerciseListItemProps } from './types';
 import { useUserSettingsStore } from '~/entities/user';
 
@@ -40,7 +30,7 @@ const openUserExerciseInfoAlert = async () => {
   await alert.present();
 };
 
-const onUserExerciseDelete = async (exerciseId: string) => {
+const onUserExerciseListItemSwipe = async (exerciseId: string) => {
   const alert = await alertController.create({
     header: 'Удаление',
     message: 'Вы действительно хотите удалить упражнение?',

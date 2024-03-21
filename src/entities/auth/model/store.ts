@@ -4,7 +4,7 @@ import { mapGoogleUserToAccount, mapGoogleUserToUser } from '../lib';
 import { AUTH_STORE_NAME, AuthProvider, INITIAL_AUTH_STATE } from './constants';
 import type { AuthState } from './types';
 import type { SignInRequestBody, SignInResponse } from '~/server/api/auth/signin/types';
-import type { NullableObjectValues } from '~/shared/lib/types/common';
+import type { NullableObjectValues } from '~/shared/lib/types';
 import type { RefreshResponse } from '~/server/api/auth/refresh/types';
 import { RequestStatus } from '~/shared/lib/const';
 import { createRequestState } from '~/shared/lib/utils';

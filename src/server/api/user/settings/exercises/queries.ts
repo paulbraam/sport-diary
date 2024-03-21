@@ -1,9 +1,9 @@
-import { CatalogExercise } from '@prisma/client';
+import { CatalogExercise, User } from '@prisma/client';
 import { prisma } from '~/server/db';
 
 export const updateUserExercises = async (
-  userId: string,
-  exerciseIds: string[]
+  userId: User['id'],
+  exerciseIds: Array<CatalogExercise['id']>
 ): Promise<CatalogExercise[]> => {
   const currentSettings = await prisma.userSettings.findFirst({
     where: {

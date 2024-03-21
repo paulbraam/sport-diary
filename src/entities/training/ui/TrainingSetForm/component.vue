@@ -32,7 +32,7 @@ const { handleSubmit } = useForm({
 });
 
 const onSubmit = handleSubmit((values) => {
-  emit('submit', values);
+  emit('onSubmit', values);
 });
 
 onBeforeMount(() => {

@@ -1,7 +1,5 @@
 export type TrainingExerciseForm = { exerciseId: string };
 
-export type TrainingExerciseFormValidationSchema = TrainingExerciseForm;
-
-export type TrainingExerciseFormEmits = {
-  (eventName: 'submit', value: TrainingExerciseForm): void;
-};
+export interface TrainingExerciseFormEmits {
+  (eventName: 'onSubmit', data: TrainingExerciseForm): void;
+}

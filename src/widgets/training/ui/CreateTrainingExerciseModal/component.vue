@@ -1,44 +1,37 @@
 <template>
-  <app-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-button shape="round" @click="closeModal">Закрыть</ion-button>
-      </ion-buttons>
-      <ion-buttons slot="end">
-        <create-training-exercise-submit-button></create-training-exercise-submit-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </app-header>
-  <ion-content class="ion-padding">
-    <training-exercise-form @submit="onSubmit"></training-exercise-form>
-  </ion-content>
+  <app-modal>
+    <template #startActions>
+      <close-create-training-exercise-modal-button></close-create-training-exercise-modal-button>
+    </template>
+    <template #endActions>
+      <apply-create-training-exercise-modal-submit-button @on-submit-register="onSubmitRegister">
+      </apply-create-training-exercise-modal-submit-button>
+    </template>
+    <template #default>
+      <training-exercise-form @on-submit="onSubmit"></training-exercise-form>
+    </template>
+  </app-modal>
 </template>
 
 <script setup lang="ts">
-import { IonContent, IonToolbar, IonButtons, IonButton, modalController } from '@ionic/vue';
-import type { CreateTrainingExerciseModalProps } from './types';
-import { TrainingExerciseForm, useTrainingStore } from '~/entities/training';
-import { CreateTrainingExerciseSubmitButton } from '~/features/training';
+import type { SubmitEventHandler, CreateTrainingExerciseModalProps } from './types';
+import { TrainingExerciseForm } from '~/entities/training';
+import {
+  CloseCreateTrainingExerciseModalButton,
+  ApplyCreateTrainingExerciseModalSubmitButton
+} from '~/features/training';
 import type { CreateTrainingExerciseRequestBody } from '~/server/api/trainings/exercises/types';
-import { AppHeader } from '~/shared/ui';
+import { AppModal } from '~/shared/ui';
 
 const { trainingId } = defineProps<CreateTrainingExerciseModalProps>();
 
-const { actions } = useTrainingStore();
+const onSubmitted = ref<SubmitEventHandler>(() => {});
 
-const closeModal = () => {
-  modalController.dismiss(null, 'close');
+const onSubmit = (values: Pick<CreateTrainingExerciseRequestBody, 'exerciseId'>) => {
+  onSubmitted.value({ ...values, trainingId });
 };
 
-const onSubmit = async ({ exerciseId }: Pick<CreateTrainingExerciseRequestBody, 'exerciseId'>) => {
-  const trainingExercise = await actions.createTrainingExercise({
-    trainingId,
-    exerciseId
-  });
-
-  if (trainingExercise) {
-    actions.addTrainingExerciseToState(trainingExercise);
-    modalController.dismiss(null, 'apply');
-  }
+const onSubmitRegister = (submitEventHandler: SubmitEventHandler) => {
+  onSubmitted.value = submitEventHandler;
 };
 </script>

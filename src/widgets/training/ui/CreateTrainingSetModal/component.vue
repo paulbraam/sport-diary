@@ -1,46 +1,39 @@
 <template>
-  <app-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-button shape="round" @click="closeModal">Закрыть</ion-button>
-      </ion-buttons>
-      <ion-buttons slot="end">
-        <create-training-set-submit-button></create-training-set-submit-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </app-header>
-  <ion-content class="ion-padding">
-    <training-set-form @submit="onSubmit"></training-set-form>
-  </ion-content>
+  <app-modal>
+    <template #startActions>
+      <close-create-training-set-modal-button></close-create-training-set-modal-button>
+    </template>
+    <template #endActions>
+      <apply-create-training-set-modal-submit-button
+        :training-exercise-id="trainingExerciseId"
+        @on-submit-register="onSubmitRegister"
+      >
+      </apply-create-training-set-modal-submit-button>
+    </template>
+    <template #default>
+      <training-set-form @on-submit="onSubmit"></training-set-form>
+    </template>
+  </app-modal>
 </template>
 
 <script setup lang="ts">
-import { IonContent, IonToolbar, IonButtons, IonButton, modalController } from '@ionic/vue';
-import type { CreateTrainingSetModalProps } from './types';
-import { TrainingSetForm, useTrainingStore } from '~/entities/training';
-import type { TrainingSetPayload } from '~/server/api/trainings/sets/types';
-import { CreateTrainingSetSubmitButton } from '~/features/training';
-import { AppHeader } from '~/shared/ui';
+import type { CreateTrainingSetModalProps, SubmitEventHandler } from './types';
+import { TrainingSetForm } from '~/entities/training';
+import {
+  ApplyCreateTrainingSetModalSubmitButton,
+  CloseCreateTrainingSetModalButton
+} from '~/features/training';
+import { AppModal } from '~/shared/ui';
 
 const { trainingExerciseId } = defineProps<CreateTrainingSetModalProps>();
 
-const { actions } = useTrainingStore();
+const onSubmitted = ref<SubmitEventHandler>(() => {});
 
-const closeModal = () => {
-  modalController.dismiss(null, 'close');
+const onSubmitRegister = (submitEventHandler: SubmitEventHandler) => {
+  onSubmitted.value = submitEventHandler;
 };
 
-const onSubmit = async (data: TrainingSetPayload) => {
-  const trainingSet = await actions.createTrainingSet({
-    trainingExerciseId,
-    data
-  });
-
-  if (trainingSet) {
-    const trainingExercise = await actions.getTrainingExerciseById(trainingExerciseId);
-    if (trainingExercise) actions.addTrainingExerciseToState(trainingExercise);
-
-    await modalController.dismiss(null, 'apply');
-  }
+const onSubmit: SubmitEventHandler = (data) => {
+  onSubmitted.value(data);
 };
 </script>
