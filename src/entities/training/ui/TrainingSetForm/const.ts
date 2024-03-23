@@ -6,11 +6,11 @@ export const trainingSetFormValidationSchema = toTypedSchema<
   z.ZodType<TrainingSetFormValidationSchema>
 >(
   z.object({
-    reps: z.number().optional(),
-    duration: z.number().optional(),
-    weight: z.number().optional(),
+    reps: z.coerce.number().optional(),
+    duration: z.coerce.number().optional(),
+    weight: z.coerce.number().optional(),
     intensity: z.nativeEnum(Intensity).optional(),
-    rest: z.number().optional()
+    rest: z.coerce.number().optional()
   })
 );
 
