@@ -7,6 +7,7 @@
       :interface-options="{
         cssClass: 'select-alert'
       }"
+      label-placement="floating"
       v-bind="$attrs"
     >
       <ion-select-option v-for="item in options" :key="item.value" :value="item.value">

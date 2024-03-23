@@ -1,5 +1,11 @@
 <template>
-  <ion-textarea v-model="value" auto-grow :rows="DEFAULT_TEXTAREA_INPUT_ROWS" v-bind="$attrs" />
+  <ion-textarea
+    v-model="value"
+    auto-grow
+    :rows="DEFAULT_TEXTAREA_INPUT_ROWS"
+    label-placement="floating"
+    v-bind="$attrs"
+  />
   <ion-note v-if="errorMessage" color="danger">
     {{ errorMessage }}
   </ion-note>
