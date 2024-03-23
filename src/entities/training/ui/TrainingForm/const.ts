@@ -1,0 +1,1 @@
+export const DEFAULT_COMMENT_LENGTH = 200;
