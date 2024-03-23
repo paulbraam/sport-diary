@@ -1,5 +1,5 @@
 <template>
-  <ion-input v-model.number="value" v-bind="$attrs" type="number" />
+  <ion-input v-model.number="value" label-placement="floating" v-bind="$attrs" type="number" />
   <ion-note v-if="errorMessage" color="danger">
     {{ errorMessage }}
   </ion-note>
