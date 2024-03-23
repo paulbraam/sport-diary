@@ -8,25 +8,31 @@
     @click="onExerciseFilterButtonClick"
   >
     <ion-badge color="primary" class="absolute right-[-10px]">{{ appliedFiltersCount }}</ion-badge>
-    <ion-icon slot="icon-only" aria-hidden="true" :icon="ioniconsFilter" color="dark"> </ion-icon>
+    <app-icon
+      slot="icon-only"
+      aria-hidden="true"
+      name="ListFilter"
+      color="var(--ion-color-dark)"
+    ></app-icon>
   </ion-button>
 </template>
 
 <script setup lang="ts">
-import { IonButton, IonBadge, IonIcon, modalController } from '@ionic/vue';
+import { IonButton, IonBadge, modalController } from '@ionic/vue';
 import {
   EXERCISE_FILTERS_MODAL_ID,
   ExerciseFiltersModalRoles,
   useUserExerciseFiltersStore
 } from '~/entities/exercise';
 import type { GetCatalogExercisesQueryParams } from '~/server/api/catalog/exercises/types';
+import { AppIcon } from '~/shared/ui';
 import { ExerciseFiltersModal } from '~/widgets/exercise';
 
 const { state: userExerciseFilters } = useUserExerciseFiltersStore();
 
 const appliedFiltersCount = computed(() =>
-  Object.values(userExerciseFilters.value).reduce((acc, value) => {
-    if (value) {
+  Object.entries(userExerciseFilters.value).reduce((acc, [key, value]) => {
+    if (key !== 'contains' && value) {
       const newAcc = acc + 1;
       return newAcc;
     }

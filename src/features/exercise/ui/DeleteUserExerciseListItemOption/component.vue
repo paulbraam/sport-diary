@@ -1,7 +1,11 @@
 <template>
   <ion-item-option color="danger" :expandable="true">
-    <ion-icon slot="icon-only" :icon="ioniconsTrash" @click="onExerciseDeleteButtonClick">
-    </ion-icon>
+    <app-icon
+      slot="icon-only"
+      name="Trash2"
+      class="m-1"
+      @click="onExerciseDeleteButtonClick"
+    ></app-icon>
   </ion-item-option>
 </template>
 
@@ -9,6 +13,7 @@
 import { IonItemOption, alertController } from '@ionic/vue';
 import type { DeleteUserExerciseListItemOptionProps } from './types';
 import { useUserSettingsStore } from '~/entities/user';
+import { AppIcon } from '~/shared/ui';
 
 const props = defineProps<DeleteUserExerciseListItemOptionProps>();
 

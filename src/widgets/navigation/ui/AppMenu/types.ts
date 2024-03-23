@@ -1,3 +1,5 @@
+import * as icons from 'lucide-vue-next';
+
 export interface AppMenuProps {
   contentId: string;
 }
@@ -5,5 +7,5 @@ export interface AppMenuProps {
 export interface MenuRouteOption {
   label: string;
   route: string;
-  icon: string;
+  icon: keyof typeof icons;
 }

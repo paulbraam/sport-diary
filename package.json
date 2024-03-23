@@ -59,6 +59,7 @@
     "dotenv": "^16.3.1",
     "ionic": "^5.4.16",
     "jwt-decode": "^4.0.0",
+    "lucide-vue-next": "^0.360.0",
     "nuxt-proxy": "^0.4.1",
     "pinia": "^2.1.7",
     "vee-validate": "^4.12.4",

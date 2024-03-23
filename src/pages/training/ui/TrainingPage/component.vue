@@ -21,7 +21,7 @@
           </template>
         </training-exercise-card>
       </div>
-      <add-training-exercise-button v-if="isStarted" :training-id="trainingId">
+      <add-training-exercise-button v-if="isStarted" :training-id="trainingId" class="mb-6 mx-4">
       </add-training-exercise-button>
     </ion-content>
   </ion-page>
