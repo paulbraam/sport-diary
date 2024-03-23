@@ -5,14 +5,15 @@
     class="delete-button"
     @click="onDeleteTrainingExerciseCardButtonClick"
   >
-    <ion-icon slot="icon-only" color="danger" :icon="ioniconsTrash"></ion-icon>
+    <app-icon name="Trash2" class="m-1"></app-icon>
   </ion-button>
 </template>
 
 <script lang="ts" setup>
-import { IonButton, IonIcon, alertController } from '@ionic/vue';
+import { IonButton, alertController } from '@ionic/vue';
 import type { DeleteTrainingExerciseCardButtonProps } from './types';
 import { useTrainingStore } from '~/entities/training';
+import { AppIcon } from '~/shared/ui';
 
 const { actions } = useTrainingStore();
 

@@ -2,7 +2,7 @@
   <ion-item-sliding @ion-swipe="onTrainingListItemSpiwe">
     <ion-item button detail :router-link="`/trainings/${training.id}`">
       <div class="flex flex-row gap-4 items-center">
-        <ion-icon :icon="ioniconsBarbell"></ion-icon>
+        <app-icon name="Dumbbell" :size="16"></app-icon>
         <ion-label>{{ label }}</ion-label>
       </div>
     </ion-item>
@@ -13,17 +13,11 @@
 </template>
 
 <script setup lang="ts">
-import {
-  IonItemSliding,
-  IonIcon,
-  IonLabel,
-  IonItem,
-  IonItemOptions,
-  alertController
-} from '@ionic/vue';
+import { IonItemSliding, IonLabel, IonItem, IonItemOptions, alertController } from '@ionic/vue';
 import { useTrainingStore } from '../../model';
 import type { TrainingListItemProps } from './types';
 import { formatDate } from '~/shared/lib/utils';
+import { AppIcon } from '~/shared/ui';
 
 const props = defineProps<TrainingListItemProps>();
 

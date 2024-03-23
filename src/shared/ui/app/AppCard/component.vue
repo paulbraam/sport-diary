@@ -1,5 +1,5 @@
 <template>
-  <ion-card class="card">
+  <ion-card class="card m-[16px]">
     <ion-card-header class="py-2">
       <div class="flex flex-row items-center">
         <div class="flex-grow">
@@ -17,9 +17,9 @@
 
 <script setup lang="ts">
 import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/vue';
-import { type CardProps } from './types';
+import { type AppCardProps } from './types';
 
-const props = defineProps<CardProps>();
+const props = defineProps<AppCardProps>();
 
 const title = props.title;
 const subtitle = props.subtitle;
@@ -31,6 +31,7 @@ const subtitle = props.subtitle;
   border: 1px solid;
   border: none;
   border-radius: var(--ion-border-radius);
-  margin: 16px;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 </style>

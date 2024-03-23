@@ -4,16 +4,16 @@ export const MENU_ROUTE_OPTIONS: MenuRouteOption[] = [
   {
     label: 'Тренировки',
     route: '/trainings',
-    icon: ioniconsFitness
+    icon: 'HeartPulse'
   },
   {
     label: 'Настройки',
     route: '/settings',
-    icon: ioniconsSettings
+    icon: 'Settings2'
   },
   {
     label: 'О приложении',
     route: '/about',
-    icon: ioniconsInformationCircle
+    icon: 'Info'
   }
 ];

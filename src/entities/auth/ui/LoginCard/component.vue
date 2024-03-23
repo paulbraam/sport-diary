@@ -1,20 +1,20 @@
 <template>
   <div class="flex h-full">
-    <card class="my-auto w-full">
+    <app-card class="w-full h-fit my-auto">
       <template #content>
         <ion-card-header class="flex items-center">
-          <ion-icon color="dark" :icon="ioniconsLockClosedOutline" class="text-[40px]"></ion-icon>
+          <app-icon name="Lock"></app-icon>
           <ion-card-title>Вход</ion-card-title>
         </ion-card-header>
         <ion-card-content>
           <slot name="buttons"></slot>
         </ion-card-content>
       </template>
-    </card>
+    </app-card>
   </div>
 </template>
 
 <script setup lang="ts">
-import { IonCardContent, IonCardHeader, IonCardTitle, IonIcon } from '@ionic/vue';
-import { Card } from '~/shared/ui';
+import { IonCardContent, IonCardHeader, IonCardTitle } from '@ionic/vue';
+import { AppIcon, AppCard } from '~/shared/ui';
 </script>

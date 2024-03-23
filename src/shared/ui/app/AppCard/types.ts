@@ -1,4 +1,4 @@
-export interface CardProps {
+export interface AppCardProps {
   title?: string;
   subtitle?: string;
 }

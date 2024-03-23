@@ -1,15 +1,16 @@
 <template>
   <ion-button shape="round" expand="block" fill="clear" @click="onAddTrainingExerciseButtonClick">
-    <ion-icon slot="start" :icon="ioniconsAdd"></ion-icon>
+    <app-icon slot="start" name="Plus" class="m-2"></app-icon>
     Добавить упражнение
   </ion-button>
 </template>
 
 <script lang="ts" setup>
-import { IonButton, IonIcon, modalController } from '@ionic/vue';
+import { IonButton, modalController } from '@ionic/vue';
 import type { AddTrainingExerciseButtonProps } from './types';
 import { CreateTrainingExerciseModal } from '~/widgets/training';
 import { CREATE_TRAINING_EXERCISE_MODAL_ID } from '~/entities/training';
+import { AppIcon } from '~/shared/ui';
 
 const { trainingId } = defineProps<AddTrainingExerciseButtonProps>();
 

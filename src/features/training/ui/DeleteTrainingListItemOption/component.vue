@@ -1,17 +1,19 @@
 <template>
   <ion-item-option color="danger" :expandable="true">
-    <ion-icon
+    <app-icon
       slot="icon-only"
-      :icon="ioniconsTrash"
+      name="Trash2"
+      class="m-1"
       @click="onDeleteTrainingButtonClick"
-    ></ion-icon>
+    ></app-icon>
   </ion-item-option>
 </template>
 
 <script setup lang="ts">
-import { IonItemOption, IonIcon, alertController } from '@ionic/vue';
+import { IonItemOption, alertController } from '@ionic/vue';
 import type { DeleteTrainingListItemOptionProps } from './types';
 import { useTrainingStore } from '~/entities/training';
+import { AppIcon } from '~/shared/ui';
 
 const props = defineProps<DeleteTrainingListItemOptionProps>();
 

@@ -1,7 +1,11 @@
 <template>
   <ion-item-option color="danger" :expandable="true">
-    <ion-icon slot="icon-only" :icon="ioniconsTrash" @click="onDeleteTrainingSetButtonClick">
-    </ion-icon>
+    <app-icon
+      slot="icon-only"
+      name="Trash2"
+      class="m-1"
+      @click="onDeleteTrainingSetButtonClick"
+    ></app-icon>
   </ion-item-option>
 </template>
 
@@ -9,6 +13,7 @@
 import { IonItemOption, alertController } from '@ionic/vue';
 import type { DeleteTrainingSetListItemOptionProps } from './types';
 import { useTrainingStore } from '~/entities/training';
+import { AppIcon } from '~/shared/ui';
 
 const { actions } = useTrainingStore();
 

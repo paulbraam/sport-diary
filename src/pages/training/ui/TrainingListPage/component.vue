@@ -12,7 +12,7 @@
       <div v-else class="h-full w-full flex justify-center items-center">Нет тренировок</div>
       <ion-fab slot="fixed" vertical="bottom" horizontal="end">
         <ion-fab-button router-link="/trainings/new">
-          <ion-icon :icon="ioniconsAdd"></ion-icon>
+          <app-icon name="Plus"></app-icon>
         </ion-fab-button>
       </ion-fab>
     </ion-content>
@@ -20,9 +20,10 @@
 </template>
 
 <script setup lang="ts">
-import { IonFab, IonList, IonIcon, IonPage, IonContent, IonFabButton } from '@ionic/vue';
+import { IonFab, IonList, IonPage, IonContent, IonFabButton } from '@ionic/vue';
 import { TrainingListItem, useTrainingStore } from '~/entities/training';
 import { DeleteTrainingListItemOption } from '~/features/training';
+import { AppIcon } from '~/shared/ui';
 
 const { actions, state } = useTrainingStore();
 

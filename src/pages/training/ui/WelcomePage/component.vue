@@ -1,6 +1,6 @@
 <template>
   <ion-page id="welcome">
-    <ion-content>
+    <ion-content color="light">
       <div v-if="unfinishedTrainings.length">
         <training-card
           v-for="training in unfinishedTrainings"

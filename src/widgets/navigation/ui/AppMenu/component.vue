@@ -9,17 +9,17 @@
       <ion-list>
         <ion-menu-toggle v-for="menuOption in MENU_ROUTE_OPTIONS" :key="menuOption.label">
           <ion-item button :router-link="menuOption.route">
-            <ion-icon
-              slot="start"
-              aria-hidden="true"
-              :icon="menuOption.icon"
-              color="dark"
-            ></ion-icon>
+            <app-icon slot="start" aria-hidden="true" :name="menuOption.icon"></app-icon>
             <ion-label>{{ menuOption.label }}</ion-label>
           </ion-item>
         </ion-menu-toggle>
         <ion-item button @click="onLogoutMenuButtonClick">
-          <ion-icon slot="start" aria-hidden="true" :icon="ioniconsExit" color="danger"></ion-icon>
+          <app-icon
+            slot="start"
+            aria-hidden="true"
+            name="LogOutIcon"
+            color="var(--ion-color-danger)"
+          ></app-icon>
           <ion-label>Выход</ion-label>
         </ion-item>
       </ion-list>
@@ -37,13 +37,12 @@ import {
   IonLabel,
   IonList,
   IonMenuToggle,
-  IonIcon,
   useIonRouter
 } from '@ionic/vue';
 import type { AppMenuProps } from './types';
 import { MENU_ROUTE_OPTIONS } from './const';
 import { useAuthStore } from '~/entities/auth';
-import { AppHeader } from '~/shared/ui';
+import { AppHeader, AppIcon } from '~/shared/ui';
 
 const props = defineProps<AppMenuProps>();
 const contentId = toRef(props, 'contentId');
